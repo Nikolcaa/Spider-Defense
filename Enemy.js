@@ -5,7 +5,7 @@ function Enemy(ID, x, y, speed, hp, size, color){
     this.speed = speed
     this.hp = hp
     this.size = size
-    this.color = color
+    this.color = color;
     this.show = function(){
         fill(this.color)
         rect(this.x, this.y, this.size, this.size)
