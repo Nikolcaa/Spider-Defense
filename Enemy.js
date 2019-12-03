@@ -1,9 +1,42 @@
-function Enemy(x, y, r){
+function Enemy(ID, x, y, speed, hp, size, color){
+    this.ID = ID
     this.x = x
     this.y = y
-    this.r = r
+    this.speed = speed
+    this.hp = hp
+    this.size = size
+    this.color = color
     this.show = function(){
-        fill("red")
-        ellipse(this.x, this.y, this.r, this.r)
+        fill(this.color)
+        rect(this.x, this.y, this.size, this.size)
     }
+    this.move = function(){
+        this.ySpeed = Math.sqrt(Math.pow(this.speed, 2) / (Math.pow(Math.abs(this.x - width/2) / Math.abs(this.y - height/2), 2) + 1))
+        this.xSpeed = (Math.abs(this.x - width/2) / Math.abs(this.y - height/2)) * this.ySpeed
+
+        if (this.x < width/2 && this.y < height/2) {
+            this.x += this.xSpeed
+            this.y += this.ySpeed
+
+            /* if (this.y >= height/2 && this.x >= width/2) {
+                console.log("enemie hit spider")
+                this.speed = 0
+            } */
+        } else if (this.x < width/2 && this.y > height/2) {
+            this.x += this.xSpeed
+            this.y -= this.ySpeed
+        } else if (this.x > width/2 && this.y < height/2) {
+            this.x -= this.xSpeed
+            this.y += this.ySpeed
+            /* if (this.x <= width/2 && this.y >= height/2) {
+                console.log("enemie hit spider")
+                this.speed = 0
+            } */
+        } else if (this.x > width/2 && this.y > height/2) {
+            this.x -= this.xSpeed
+            this.y -= this.ySpeed
+        } 
+
+    }
+
 }
