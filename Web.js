@@ -42,7 +42,6 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     this.collision = function (enemy) {
         //-- changing enemies --
-
         enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
 
         //-- changing webs --

@@ -1,22 +1,21 @@
-var webs
-var enemiesDefinitions
-var enemies = []
-
-var currentLevel = 0
-var lvls = [
-    {
-        ID: 0,
-        default: 2,
-        tank: 1
-    },
-    {
-        ID: 0,
-        default: 3,
-        tank: 2
-    },
-]
-var spider
-var skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9
+var webs,
+    enemiesDefinitions,
+    enemies = [],
+    currentLevel = 0,
+    lvls = [
+        {
+            ID: 0,
+            default: 2,
+            tank: 1
+        },
+        {
+            ID: 0,
+            default: 3,
+            tank: 2
+        },
+    ],
+    spider,
+    skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
@@ -40,7 +39,7 @@ function setup() {
     spider = new Spider(skin9)
 
     // ------------ webs ------------
-    for (var i = 0; i < webs.length; i++) {
+    for (let i = 0; i < webs.length; i++) {
         webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
     }
 
@@ -52,11 +51,6 @@ function setup() {
 
         enemies.push(new Enemy(enemiesDefinitions[grade].ID, xPos, yPos, enemiesDefinitions[grade].speed, enemiesDefinitions[grade].hp, enemiesDefinitions[grade].size, enemiesDefinitions[grade].color))
     });
-
-    /* 
-    
-        enemiesDefinitions[key] = new Enemy(enemy.ID, xPos, yPos, enemy.speed, enemy.hp, enemy.size, enemy.color) */
-
 
     // ------------ levels ------------
 
@@ -71,7 +65,7 @@ function draw() {
     spider.show()
 
     // ------------ webs ------------
-    for (var i = 0; i < webs.length; i++) {
+    for (let i = 0; i < webs.length; i++) {
         webs[i].show()
         if (webs[i].active === false) {
             webs[i].move()
@@ -80,7 +74,7 @@ function draw() {
 
     // ------------ enemies ------------
 
-    for(var i = 0; i < enemies.length; i++){
+    for (let i = 0; i < enemies.length; i++) {
         enemies[i].show()
         enemies[i].move()
 
@@ -104,12 +98,12 @@ function mousePressed() {
         })
     ]
 
-    for (var i = 0; i < enemies.length; i++) {
+    for (let i = 0; i < enemies.length; i++) {
         if (mouseX <= enemies[i].x + enemies[i].size &&
             mouseX >= enemies[i].x &&
             mouseY <= enemies[i].y + enemies[i].size &&
             mouseY >= enemies[i].y) {
-                web.collision(enemies[i])
+            web.collision(enemies[i])
         }
     }
 }
