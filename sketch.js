@@ -51,7 +51,6 @@ function setup() {
         let yPos = randomEnemyPositionY(height)
 
         enemies.push(new Enemy(enemiesDefinitions[grade].ID, xPos, yPos, enemiesDefinitions[grade].speed, enemiesDefinitions[grade].hp, enemiesDefinitions[grade].size, enemiesDefinitions[grade].color))
-        console.log(enemies)
     });
 
     /* 
@@ -87,12 +86,7 @@ function draw() {
 
         spider.collision(enemies[i])
     }
-
-    
-
 }
-
-
 
 function mousePressed() {
     let web = getRandomWeb()
@@ -111,26 +105,11 @@ function mousePressed() {
     ]
 
     for (var i = 0; i < enemies.length; i++) {
-        for (var j = 0; j < webs.length; j++) {
-            if (webs[j].collision(enemies[i])) {
-                //console.log("you hit the enemy")
-
-                //-- changing enemies --
-                enemies.splice(i, 1)
-
-                //-- changing webs --
-                webs = [
-                    ...webs.map((item) => {
-                        if (item.ID === web.ID) {
-                            return {
-                                ...item,
-                                speed: 10
-                            }
-                        }
-                        return item;
-                    })
-                ]
-            }
+        if (mouseX <= enemies[i].x + enemies[i].size &&
+            mouseX >= enemies[i].x &&
+            mouseY <= enemies[i].y + enemies[i].size &&
+            mouseY >= enemies[i].y) {
+                web.collision(enemies[i])
         }
     }
 }

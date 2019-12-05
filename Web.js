@@ -19,7 +19,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.y2 += this.ySpeed
             if (this.y2 >= this.y && this.x2 >= this.x) {
                 this.active = true
-                //console.log("Web come back")
+
                 this.speed = 2
             }
         } else if (this.x2 < this.x && this.y2 > this.y) {
@@ -30,34 +30,32 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.y2 += this.ySpeed
             if (this.x2 <= this.x && this.y2 >= this.y) {
                 this.active = true
-                //console.log("web come back")
+
                 this.speed = 2
 
             }
         } else if (this.x2 > this.x && this.y2 > this.y) {
             this.x2 -= this.xSpeed
             this.y2 -= this.ySpeed
-        } 
+        }
     }
 
     this.collision = function (enemy) {
-        /* if (this.x2 <= enemy.x + enemy.size &&
-            this.x2 >= enemy.x &&
-            this.y2 <= enemy.y + enemy.size &&
-            this.y2 >= enemy.y) {
-            return true
-        } */
-     
-        if(!enemy) {
-            return false;
-        }
-        
-        if (mouseX <= enemy.x + enemy.size &&
-            mouseX >= enemy.x &&
-            mouseY <= enemy.y + enemy.size &&
-            mouseY >= enemy.y) {
-            return true
-        } 
-        return false;
+        //-- changing enemies --
+
+        enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
+
+        //-- changing webs --
+        webs = [
+            ...webs.map((item) => {
+                if (item.ID === this.ID) {
+                    return {
+                        ...item,
+                        speed: 10
+                    }
+                }
+                return item;
+            })
+        ]
     }
 }
