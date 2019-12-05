@@ -240,7 +240,7 @@ function mousePressed() {
     let web = getRandomWeb()
     webs = [
         ...webs.map((item) => {
-            if (item.ID === web.ID) {
+            if (web && item.ID === web.ID) {
                 return {
                     ...item,
                     x2: mouseX,
@@ -255,7 +255,7 @@ function mousePressed() {
     for (var i = 0; i < enemies.length; i++) {
         for(var j = 0; j < webs.length; j++){
             if(webs[j].collision(enemies[i])){
-                console.log("you hit the enemy")
+                //console.log("you hit the enemy")
                 //-- changing enemies --
                 enemies = [
                     ...enemies.map((item) => {
@@ -282,9 +282,9 @@ function mousePressed() {
                     })
                 ]
             }else{
-                console.log("promasio si")
+                //console.log("promasio si")
                 //-- changing webs --
-                webs = [
+                /* webs = [
                     ...webs.map((item) => {
                         if (item.ID === web.ID) {
                             return {
@@ -294,7 +294,7 @@ function mousePressed() {
                         }
                         return item;
                     })
-                ]
+                ] */
             }
         }
     }
@@ -332,8 +332,5 @@ function getRandomWeb() {
 }
 
 function filteredWebs() {
-    return webs.filter((item) => {
-        if (item.active) return true;
-        else return false;
-    })
+    return webs.filter(item => item.active)
 }
