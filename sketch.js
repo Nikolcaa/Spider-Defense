@@ -1,80 +1,5 @@
-var webs = [
-    {
-        ID: 0,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-    {
-        ID: 1,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-
-        speed: 2,
-    },
-    {
-        ID: 2,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-    {
-        ID: 3,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-    //------
-    {
-        ID: 4,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-    {
-        ID: 5,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-    {
-        ID: 6,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-    {
-        ID: 7,
-        active: true,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        x2: window.innerWidth / 2,
-        y2: window.innerHeight / 2,
-        speed: 2,
-    },
-]
-
+var webs
+var enemies
 var lvls = [
     {
         ID: 0,
@@ -92,79 +17,17 @@ var currentLevel = 0
 //Kako map-ovati ako imamo object inside object
 
 
-var enemies = [
-    {
-        ID: 0,
-        speed: 2,
-        hp: 1,
-        size: 20,
-        color: "orange",
-        grade: "default",
-    },
-    {
-        ID: 1,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 2,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 3,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 4,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 5,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 6,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 7,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },{
-        ID: 8,
-        speed: 2,
-        hp: 2,
-        size: 40,
-        color: "red",
-        grade: "tank",
-    },
-]
+
 
 var spider
 var skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
+
+    // ------------ Data------------
+    webs = new websData()
+    enemies = new enemiesData()
 
     // ------------ skins ------------
     skin1 = loadImage('imagesOfSpider/spider1.png')
@@ -230,7 +93,7 @@ function draw() {
         enemies[i].move()
 
         spider.collision(enemies[i])
-        
+
     }
 }
 
@@ -253,8 +116,8 @@ function mousePressed() {
     ]
 
     for (var i = 0; i < enemies.length; i++) {
-        for(var j = 0; j < webs.length; j++){
-            if(webs[j].collision(enemies[i])){
+        for (var j = 0; j < webs.length; j++) {
+            if (webs[j].collision(enemies[i])) {
                 //console.log("you hit the enemy")
                 //-- changing enemies --
                 enemies = [
@@ -281,7 +144,7 @@ function mousePressed() {
                         return item;
                     })
                 ]
-            }else{
+            } else {
                 //console.log("promasio si")
                 //-- changing webs --
                 /* webs = [
@@ -310,20 +173,20 @@ function mousePressed() {
 function randomEnemyPositionX(w) {
     let rnd01 = Math.floor(Math.random() * 2)
 
-    if(rnd01 === 0){
-        return random(w, w+500) 
-    }else{
-        return random(0, -500) 
+    if (rnd01 === 0) {
+        return random(w, w + 500)
+    } else {
+        return random(0, -500)
     }
 }
 
 function randomEnemyPositionY(h) {
     let rnd01 = Math.floor(Math.random() * 2)
 
-    if(rnd01 === 0){
-        return random(h, h+500) 
-    }else{
-        return random(0, -500) 
+    if (rnd01 === 0) {
+        return random(h, h + 500)
+    } else {
+        return random(0, -500)
     }
 }
 
