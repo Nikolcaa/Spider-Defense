@@ -17,21 +17,13 @@ function Enemy(ID, x, y, speed, hp, size, color){
         if (this.x < width/2 && this.y < height/2) {
             this.x += this.xSpeed
             this.y += this.ySpeed
-
-            /* if (this.y >= height/2 && this.x >= width/2) {
-                console.log("enemie hit spider")
-                this.speed = 0
-            } */
         } else if (this.x < width/2 && this.y > height/2) {
             this.x += this.xSpeed
             this.y -= this.ySpeed
         } else if (this.x > width/2 && this.y < height/2) {
             this.x -= this.xSpeed
             this.y += this.ySpeed
-            /* if (this.x <= width/2 && this.y >= height/2) {
-                console.log("enemie hit spider")
-                this.speed = 0
-            } */
+ 
         } else if (this.x > width/2 && this.y > height/2) {
             this.x -= this.xSpeed
             this.y -= this.ySpeed

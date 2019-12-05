@@ -1,5 +1,8 @@
 var webs
-var enemies
+var enemiesDefinitions
+var enemies = []
+
+var currentLevel = 0
 var lvls = [
     {
         ID: 0,
@@ -12,13 +15,6 @@ var lvls = [
         tank: 2
     },
 ]
-var currentLevel = 0
-
-//Kako map-ovati ako imamo object inside object
-
-
-
-
 var spider
 var skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9
 
@@ -27,7 +23,7 @@ function setup() {
 
     // ------------ Data------------
     webs = new websData()
-    enemies = new enemiesData()
+    enemiesDefinitions = new enemiesData()
 
     // ------------ skins ------------
     skin1 = loadImage('imagesOfSpider/spider1.png')
@@ -43,29 +39,25 @@ function setup() {
     // ------------ spider ------------
     spider = new Spider(skin9)
 
-
     // ------------ webs ------------
     for (var i = 0; i < webs.length; i++) {
         webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
     }
 
     // ------------ enemies ------------
-    lvls.map((lvl, key) => {
-        if (lvl.ID === currentLevel) {
-            enemies.map((enemy, key) => {
-                let xPos = randomEnemyPositionX(width)
-                let yPos = randomEnemyPositionY(height)
 
-                //Kako na dalje
+    Object.keys(enemiesDefinitions).map((grade, index) => {
+        let xPos = randomEnemyPositionX(width)
+        let yPos = randomEnemyPositionY(height)
 
-                /* for(var i = 0; i < lvl.enemy.grade; i++){
-                    console.log(lvl)
-                } */
+        enemies.push(new Enemy(enemiesDefinitions[grade].ID, xPos, yPos, enemiesDefinitions[grade].speed, enemiesDefinitions[grade].hp, enemiesDefinitions[grade].size, enemiesDefinitions[grade].color))
+        console.log(enemies)
+    });
 
-                enemies[key] = new Enemy(enemy.ID, xPos, yPos, enemy.speed, enemy.hp, enemy.size, enemy.color)
-            })
-        }
-    })
+    /* 
+    
+        enemiesDefinitions[key] = new Enemy(enemy.ID, xPos, yPos, enemy.speed, enemy.hp, enemy.size, enemy.color) */
+
 
     // ------------ levels ------------
 
@@ -74,7 +66,7 @@ function setup() {
 
 function draw() {
     background('grey')
-    frameRate(200)
+    frameRate(120)
 
     // ------------ spider ------------
     spider.show()
@@ -88,13 +80,16 @@ function draw() {
     }
 
     // ------------ enemies ------------
-    for (var i = 0; i < enemies.length; i++) {
+
+    for(var i = 0; i < enemies.length; i++){
         enemies[i].show()
         enemies[i].move()
 
         spider.collision(enemies[i])
-
     }
+
+    
+
 }
 
 
@@ -119,18 +114,9 @@ function mousePressed() {
         for (var j = 0; j < webs.length; j++) {
             if (webs[j].collision(enemies[i])) {
                 //console.log("you hit the enemy")
+
                 //-- changing enemies --
-                enemies = [
-                    ...enemies.map((item) => {
-                        if (item.ID === enemies[i].ID) {
-                            return {
-                                ...item,
-                                speed: 0
-                            }
-                        }
-                        return item;
-                    })
-                ]
+                enemies.splice(i, 1)
 
                 //-- changing webs --
                 webs = [
@@ -144,28 +130,9 @@ function mousePressed() {
                         return item;
                     })
                 ]
-            } else {
-                //console.log("promasio si")
-                //-- changing webs --
-                /* webs = [
-                    ...webs.map((item) => {
-                        if (item.ID === web.ID) {
-                            return {
-                                ...item,
-                                speed: 2
-                            }
-                        }
-                        return item;
-                    })
-                ] */
             }
         }
     }
-
-
-
-
-
 }
 
 //--------- Random f-s -----------

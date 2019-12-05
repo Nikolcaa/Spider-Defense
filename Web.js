@@ -19,7 +19,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.y2 += this.ySpeed
             if (this.y2 >= this.y && this.x2 >= this.x) {
                 this.active = true
-                console.log("Web come back")
+                //console.log("Web come back")
                 this.speed = 2
             }
         } else if (this.x2 < this.x && this.y2 > this.y) {
@@ -30,7 +30,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.y2 += this.ySpeed
             if (this.x2 <= this.x && this.y2 >= this.y) {
                 this.active = true
-                console.log("web come back")
+                //console.log("web come back")
                 this.speed = 2
 
             }
@@ -48,11 +48,16 @@ function Web(ID, active, x, y, x2, y2, speed) {
             return true
         } */
      
+        if(!enemy) {
+            return false;
+        }
+        
         if (mouseX <= enemy.x + enemy.size &&
             mouseX >= enemy.x &&
             mouseY <= enemy.y + enemy.size &&
             mouseY >= enemy.y) {
             return true
-        }
+        } 
+        return false;
     }
 }

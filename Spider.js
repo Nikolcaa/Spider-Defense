@@ -2,8 +2,8 @@ function Spider(skin) {
     this.show = function () {
 
         this.skin = skin
-        this.w = this.skin.width / 4
-        this.h = this.skin.height / 4
+        this.w = this.skin.width / 6
+        this.h = this.skin.height / 6
         this.x = width / 2 - this.w / 2
         this.y = height / 2 - this.h / 2
 
@@ -22,8 +22,8 @@ function Spider(skin) {
             this.x + this.w >= enemy.x &&
             this.y <= enemy.y + enemy.size / 2 &&
             this.y + this.h >= enemy.y) {
-            //console.log("enemy hit the spider")
-            enemy.speed = 0
+            enemies.splice(enemy, 1)
+            
         }
     }
 }
