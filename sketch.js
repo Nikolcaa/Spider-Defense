@@ -3,7 +3,7 @@ var webs,
     enemies = [],
 
     lvls,
-    currentLevel = {},
+    currentLevel = 0,
 
     spider,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
@@ -30,31 +30,30 @@ function setup() {
     // ------------ spider ------------
     spider = new Spider(skin9)
 
-    // ------------ levels ------------
+    renderingEnemies()
+}
+
+function renderingEnemies() {
+    // ------------ levels ------------ // ------------ enemies ------------
     var newEnemyID = 0
-    Object.keys(lvls[0]).map((classes, index) => {
+    Object.keys(lvls[currentLevel]).map((classes, index) => {
         Object.keys(enemiesClasses).map((grade, index) => {
             if (classes === grade) {
-                for (let i = 0; i < lvls[0][classes]; i++) {
+                for (let i = 0; i < lvls[currentLevel][classes]; i++) {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
                     enemies.push(new Enemy(newEnemyID, xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
-    
+
                     newEnemyID += 1
                 }
             }
         })
 
     })
-
-    // ------------ enemies ------------
-
-
-
-
-
 }
+
+
 
 function draw() {
     background('grey')
@@ -79,6 +78,11 @@ function draw() {
         enemies[i].move()
 
         spider.collision(enemies[i])
+    }
+
+    if (!enemies.length) {
+        currentLevel += 1
+        renderingEnemies()
     }
 }
 

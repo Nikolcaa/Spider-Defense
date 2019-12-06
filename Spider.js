@@ -24,5 +24,6 @@ function Spider(skin) {
             this.y + this.h >= enemy.y) {
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
         }
+        
     }
 }
