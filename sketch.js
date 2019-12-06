@@ -1,19 +1,10 @@
 var webs,
-    enemiesDefinitions,
+    enemiesClasses,
     enemies = [],
-    currentLevel = 0,
-    lvls = [
-        {
-            ID: 0,
-            default: 2,
-            tank: 1
-        },
-        {
-            ID: 0,
-            default: 3,
-            tank: 2
-        },
-    ],
+
+    lvls,
+    currentLevel = {},
+
     spider,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
@@ -22,7 +13,8 @@ function setup() {
 
     // ------------ Data------------
     webs = new websData()
-    enemiesDefinitions = new enemiesData()
+    enemiesClasses = new enemiesData()
+    lvls = new lvls()
 
     // ------------ skins ------------
     skin1 = loadImage('imagesOfSpider/spider1.png')
@@ -38,16 +30,28 @@ function setup() {
     // ------------ spider ------------
     spider = new Spider(skin9)
 
+    // ------------ levels ------------
+    var newEnemyID = 0
+    Object.keys(lvls[0]).map((classes, index) => {
+        Object.keys(enemiesClasses).map((grade, index) => {
+            if (classes === grade) {
+                for (let i = 0; i < lvls[0][classes]; i++) {
+                    let xPos = randomEnemyPositionX(width)
+                    let yPos = randomEnemyPositionY(height)
+
+                    enemies.push(new Enemy(newEnemyID, xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
+    
+                    newEnemyID += 1
+                }
+            }
+        })
+
+    })
+
     // ------------ enemies ------------
 
-    Object.keys(enemiesDefinitions).map((grade, index) => {
-        let xPos = randomEnemyPositionX(width)
-        let yPos = randomEnemyPositionY(height)
 
-        enemies.push(new Enemy(enemiesDefinitions[grade].ID, xPos, yPos, enemiesDefinitions[grade].speed, enemiesDefinitions[grade].hp, enemiesDefinitions[grade].size, enemiesDefinitions[grade].color))
-    });
 
-    // ------------ levels ------------
 
 
 }
@@ -105,7 +109,6 @@ function mousePressed() {
         }
     }
 }
-
 //--------- Random f-s -----------
 
 function randomEnemyPositionX(w) {

@@ -12,7 +12,7 @@ function Spider(skin) {
         rotate(PI / 2.0);
         let a = atan2(mouseY - height / 2, mouseX - width / 2);
         rotate(a);
-        image(this.skin, -this.w/2, -this.h/2, this.w, this.h)
+        image(this.skin, -this.w / 2, -this.h / 2, this.w, this.h)
         pop()
 
 
@@ -22,8 +22,7 @@ function Spider(skin) {
             this.x + this.w >= enemy.x &&
             this.y <= enemy.y + enemy.size / 2 &&
             this.y + this.h >= enemy.y) {
-            enemies.splice(enemy, 1)
-            
+            enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
         }
     }
 }
