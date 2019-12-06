@@ -38,11 +38,6 @@ function setup() {
     // ------------ spider ------------
     spider = new Spider(skin9)
 
-    // ------------ webs ------------
-    for (let i = 0; i < webs.length; i++) {
-        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
-    }
-
     // ------------ enemies ------------
 
     Object.keys(enemiesDefinitions).map((grade, index) => {
@@ -66,6 +61,7 @@ function draw() {
 
     // ------------ webs ------------
     for (let i = 0; i < webs.length; i++) {
+        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
         webs[i].show()
         if (webs[i].active === false) {
             webs[i].move()
@@ -103,7 +99,9 @@ function mousePressed() {
             mouseX >= enemies[i].x &&
             mouseY <= enemies[i].y + enemies[i].size &&
             mouseY >= enemies[i].y) {
-            web.collision(enemies[i])
+            if (web) {
+                web.collision(enemies[i])
+            }
         }
     }
 }

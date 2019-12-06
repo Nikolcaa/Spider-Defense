@@ -8,8 +8,10 @@ function Web(ID, active, x, y, x2, y2, speed) {
     this.speed = speed
 
     this.show = function () {
-        fill(0)
+        push()
+        stroke(255);
         line(this.x, this.y, this.x2, this.y2);
+        pop()
     }
     this.move = function () {
         this.ySpeed = Math.sqrt(Math.pow(this.speed, 2) / (Math.pow(Math.abs(this.x2 - this.x) / Math.abs(this.y2 - this.y), 2) + 1))
@@ -18,8 +20,9 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.x2 += this.xSpeed
             this.y2 += this.ySpeed
             if (this.y2 >= this.y && this.x2 >= this.x) {
+                this.y2 = this.y
+                this.x2 = this.x
                 this.active = true
-
                 this.speed = 2
             }
         } else if (this.x2 < this.x && this.y2 > this.y) {
@@ -29,10 +32,10 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.x2 -= this.xSpeed
             this.y2 += this.ySpeed
             if (this.x2 <= this.x && this.y2 >= this.y) {
+                this.y2 = this.y
+                this.x2 = this.x
                 this.active = true
-
                 this.speed = 2
-
             }
         } else if (this.x2 > this.x && this.y2 > this.y) {
             this.x2 -= this.xSpeed
