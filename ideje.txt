@@ -1,5 +1,11 @@
-Dodati:
+Work in progress:
+	1) 
+
+Add:
 	Score.
 	Likove koji ispustaju bonus kartice.
-	Mapu podeliti na regione ili napraviti stage-ove.
-	 
+	Svi neprijatelji su podeljeni u grupe/faze, u svakom trenutku napada jedna gupa
+	Mapu sadrži nekoliko regiona, ukoliko se user fokusira na sadržaje istih dobija power-up kartice
+
+Mehanika igrice:
+(Kako igrica funkcioniše)
