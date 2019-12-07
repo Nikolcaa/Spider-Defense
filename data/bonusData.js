@@ -1,4 +1,4 @@
-function bonusData(){
+function bonusData() {
     return {
         lasta: {
             ID: 0,
@@ -7,12 +7,12 @@ function bonusData(){
             size: 20,
             color: "green",
         },
-/*         tank: {
+        žaba: {
             ID: 1,
             speed: 3,
             hp: 2,
-            size: 40,
-            color: "red",
-        } */
+            size: 10,
+            color: "blue",
+        }
     }
 }
