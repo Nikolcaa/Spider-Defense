@@ -1,0 +1,5 @@
+Dodati:
+	Score.
+	Likove koji ispustaju bonus kartice.
+	Mapu podeliti na regione ili napraviti stage-ove.
+	 

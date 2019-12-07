@@ -53,8 +53,6 @@ function renderingEnemies() {
     })
 }
 
-
-
 function draw() {
     background('grey')
     frameRate(120)
