@@ -5,6 +5,9 @@ var webs,
     lvls,
     currentLevel = 0,
 
+    bonusClasses,
+    bonuses = [],
+
     spider,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
@@ -15,6 +18,7 @@ function setup() {
     webs = new websData()
     enemiesClasses = new enemiesData()
     lvls = new lvlsData()
+    bonusClasses = new bonusData()
 
     // ------------ skins ------------
     skin1 = loadImage('imagesOfSpider/spider1.png')
@@ -31,11 +35,12 @@ function setup() {
     spider = new Spider(skin9)
 
     renderingEnemies()
+    renderingBonuses()
 }
 
 function renderingEnemies() {
     // ------------ levels ------------ // ------------ enemies ------------
-    var newEnemyID = 0
+    let newEnemyID = 0
     Object.keys(lvls[currentLevel]).map((classes, index) => {
         Object.keys(enemiesClasses).map((grade, index) => {
             if (classes === grade) {
@@ -49,9 +54,29 @@ function renderingEnemies() {
                 }
             }
         })
-
     })
 }
+
+function renderingBonuses() {
+    // ------------ levels ------------ // ------------ bonuses ------------
+    let newBonusID = 0
+    Object.keys(lvls[currentLevel]).map((classes, index) => {
+        Object.keys(bonusClasses).map((grade, index) => {
+            if (classes === grade) {
+                for (let i = 0; i < lvls[currentLevel][classes]; i++) {
+                    let xPos = randomBonusPositionX(width)
+                    let yPos = randomBonusPositionY(height)
+
+                    bonuses.push(new Bonus(newBonusID, xPos, yPos, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].color))
+
+                    newBonusID += 1
+                }
+            }
+        })
+    })
+}
+
+
 
 function draw() {
     background('grey')
@@ -78,12 +103,20 @@ function draw() {
         if(collision(spider, enemies[i])){
             enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)];
         }
+    }
+
+    for (let i = 0; i < bonuses.length; i++) {
+        bonuses[i].show()
+        bonuses[i].move()
 
     }
 
+
+    // ------------ level-up ------------
     if (!enemies.length) {
         currentLevel += 1
         renderingEnemies()
+        renderingBonuses()
     }
 }
 
@@ -129,6 +162,17 @@ function collision(player1, player2) {
 
 
 //--------- Random f-s -----------
+
+// -- Bonuses --
+function randomBonusPositionX(w) {
+    return random(-500, 0)
+}
+
+function randomBonusPositionY(h) {
+    return random(-500, 0)
+}
+
+// -- Enemies--
 
 function randomEnemyPositionX(w) {
     let rnd01 = Math.floor(Math.random() * 2)
