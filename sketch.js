@@ -8,8 +8,11 @@ var webs,
     bonusClasses,
     bonuses = [],
 
+    score = 0,
+
     spider,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
+
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
@@ -76,11 +79,23 @@ function renderingBonuses() {
     })
 }
 
+function scoreUpdate() {
+    var scoreupdate = setInterval(function(){
+        score += 1
+    }, 1000)
+}
 
 
 function draw() {
     background('grey')
     frameRate(120)
+
+
+    // ------------ score ------------
+    scoreUpdate()
+    textSize(32)
+    fill("white");
+    text("SCORE: " + score, width-200, 30)
 
     // ------------ spider ------------
     spider.show()
@@ -100,7 +115,8 @@ function draw() {
         enemies[i].show()
         enemies[i].move()
 
-        if(collision(spider, enemies[i])){
+
+        if (collision(spider, enemies[i])) {
             enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)];
         }
     }
@@ -108,7 +124,6 @@ function draw() {
     for (let i = 0; i < bonuses.length; i++) {
         bonuses[i].show()
         bonuses[i].move()
-
     }
 
 
@@ -155,7 +170,7 @@ function collision(player1, player2) {
         player1.y <= player2.y + player2.size / 2 &&
         player1.y + player1.h >= player2.y) {
         return true
-    }else{
+    } else {
         return false
     }
 }
