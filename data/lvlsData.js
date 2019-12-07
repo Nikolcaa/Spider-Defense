@@ -1,4 +1,4 @@
-function lvls() {
+function lvlsData() {
     return [
         {
             ID: 0,

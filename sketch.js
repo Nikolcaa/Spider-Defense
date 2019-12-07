@@ -14,7 +14,7 @@ function setup() {
     // ------------ Data------------
     webs = new websData()
     enemiesClasses = new enemiesData()
-    lvls = new lvls()
+    lvls = new lvlsData()
 
     // ------------ skins ------------
     skin1 = loadImage('imagesOfSpider/spider1.png')
@@ -75,7 +75,10 @@ function draw() {
         enemies[i].show()
         enemies[i].move()
 
-        spider.collision(enemies[i])
+        if(collision(spider, enemies[i])){
+            enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)];
+        }
+
     }
 
     if (!enemies.length) {
@@ -111,6 +114,20 @@ function mousePressed() {
         }
     }
 }
+
+//--------- collision -----------
+function collision(player1, player2) {
+    if (player1.x <= player2.x + player2.size / 2 &&
+        player1.x + player1.w >= player2.x &&
+        player1.y <= player2.y + player2.size / 2 &&
+        player1.y + player1.h >= player2.y) {
+        return true
+    }else{
+        return false
+    }
+}
+
+
 //--------- Random f-s -----------
 
 function randomEnemyPositionX(w) {

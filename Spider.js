@@ -17,7 +17,11 @@ function Spider(skin) {
 
 
     }
-    this.collision = function (enemy) {
+    /* this.collision = function (enemy) {
+
+        collision()
+
+
         if (this.x <= enemy.x + enemy.size / 2 &&
             this.x + this.w >= enemy.x &&
             this.y <= enemy.y + enemy.size / 2 &&
@@ -25,5 +29,5 @@ function Spider(skin) {
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
         }
         
-    }
+    } */
 }
