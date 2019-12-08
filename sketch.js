@@ -9,6 +9,9 @@ var webs,
     bonuses = [],
 
     score = 0,
+    
+    heart,
+    hearts = [],
 
     spider,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
@@ -24,6 +27,7 @@ function setup() {
     bonusClasses = new bonusData()
 
     // ------------ skins ------------
+        // spider
     skin1 = loadImage('imagesOfSpider/spider1.png')
     skin2 = loadImage('imagesOfSpider/spider2.png')
     skin3 = loadImage('imagesOfSpider/spider3.png')
@@ -34,9 +38,23 @@ function setup() {
     skin8 = loadImage('imagesOfSpider/spider8.png')
     skin9 = loadImage('imagesOfSpider/spider9.png')
 
+        // heart
+    skinHeart = loadImage('imagesOfHeart/heart.png')
+
     // ------------ spider ------------
     spider = new Spider(skin9)
 
+    // ------------ heart ------------
+    var xPosOfHeart = width/2
+    var yPosOfHeart = 0
+    for(let i = 0; i < 8; i++){
+        heart = new Heart(xPosOfHeart, yPosOfHeart, skinHeart)
+        hearts.push(heart)
+
+        xPosOfHeart += 30
+    }
+
+    // ------------ rendering functions ------------
     renderingEnemies()
     renderingBonuses()
 }
@@ -91,6 +109,9 @@ function draw() {
     background('grey')
     frameRate(120)
 
+    for(let i = 0; i < hearts.length; i++){
+        hearts[i].show()
+    }
 
     // ------------ score ------------
     textSize(32)

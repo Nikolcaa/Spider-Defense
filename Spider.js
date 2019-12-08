@@ -1,11 +1,12 @@
 function Spider(skin) {
     this.show = function () {
-
         this.skin = skin
         this.w = this.skin.width / 6
         this.h = this.skin.height / 6
         this.x = width / 2 - this.w / 2
         this.y = height / 2 - this.h / 2
+
+        this.hp = 8
 
         push()
         translate(width / 2, height / 2);
