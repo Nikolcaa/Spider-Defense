@@ -14,7 +14,8 @@ var webs,
     hearts = [],
 
     spider,
-    spiderHp = 8,
+    spiderHp = 4,
+    maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
 
@@ -94,7 +95,7 @@ function setup() {
     // ------------ heart ------------
     var xPosOfHeart = width / 2
     var yPosOfHeart = 0
-    for (let i = 0; i < spiderHp; i++) {
+    for (let i = 0; i < maxSpiderHp; i++) {
         heart = new Heart(xPosOfHeart, yPosOfHeart, skinHeart)
         hearts.push(heart)
 
@@ -110,7 +111,9 @@ function draw() {
     background('grey')
     frameRate(120)
 
-    for (let i = 0; i < hearts.length; i++) {
+
+    // ------------ hearts ------------
+    for (let i = 0; i < spiderHp; i++) {
         hearts[i].show()
     }
 
@@ -137,16 +140,19 @@ function draw() {
         enemies[i].show()
         enemies[i].move()
 
-        if (collision(spider, enemies[i])) {
+        if (Collision(spider, enemies[i])) {
             enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)]
-            spiderHp -= 1    
-            hearts.splice(spiderHp, 1)
+            spiderHp -= 1
+            console.log(hearts)
+            //hearts.splice(spiderHp, 1)
 
-            if(spiderHp <= 0){
+            if (spiderHp <= 0) {
                 alert("izgubio si")
             }
         }
     }
+
+    // ------------ bonuses ------------
 
     for (let i = 0; i < bonuses.length; i++) {
         bonuses[i].show()
@@ -178,20 +184,22 @@ function mousePressed() {
         })
     ]
 
+
     for (let i = 0; i < enemies.length; i++) {
-        if (mouseX <= enemies[i].x + enemies[i].size &&
-            mouseX >= enemies[i].x &&
-            mouseY <= enemies[i].y + enemies[i].size &&
-            mouseY >= enemies[i].y) {
-            if (web) {
-                web.collision(enemies[i])
-            }
+        if (MouseCollision(enemies[i])) {
+            web.collisionEnemy(enemies[i])
+        }
+    }
+
+    for (let i = 0; i < bonuses.length; i++) {
+        if (MouseCollision(bonuses[i])) {
+            web.collisionBonus(bonuses[i])
         }
     }
 }
 
 //--------- collision -----------
-function collision(player1, player2) {
+function Collision(player1, player2) {
     if (player1.x <= player2.x + player2.size / 2 &&
         player1.x + player1.w >= player2.x &&
         player1.y <= player2.y + player2.size / 2 &&
@@ -201,6 +209,18 @@ function collision(player1, player2) {
         return false
     }
 }
+
+function MouseCollision(player2) {
+    if (mouseX <= player2.x + player2.size &&
+        mouseX >= player2.x &&
+        mouseY <= player2.y + player2.size &&
+        mouseY >= player2.y) {
+        return true
+    } else {
+        return false
+    }
+}
+
 
 
 //--------- Random f-s -----------
@@ -214,8 +234,7 @@ function randomBonusPositionY(h) {
     return random(-500, 0)
 }
 
-// -- Enemies--
-
+// -- Enemies --
 function randomEnemyPositionX(w) {
     let rnd01 = Math.floor(Math.random() * 2)
 
@@ -236,6 +255,7 @@ function randomEnemyPositionY(h) {
     }
 }
 
+// -- Webs --
 function getRandomWeb() {
     return filteredWebs()[Math.floor(Math.random() * filteredWebs().length)]
 }

@@ -43,9 +43,9 @@ function Web(ID, active, x, y, x2, y2, speed) {
         }
     }
 
-    this.collision = function (enemy) {
+    // --------- Enemy collision ----------
+    this.collisionEnemy = function (enemy) {
         //-- changing enemy hp --
-        enemy.update()
         enemy.hp -= 1
   
         //-- deleting enemy --
@@ -65,5 +65,12 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 return item;
             })
         ]
+    }
+
+    // --------- Bonus collision ----------
+    this.collisionBonus = function (bonus) {
+        if(spiderHp <= maxSpiderHp){
+            spiderHp += 1
+        }
     }
 }
