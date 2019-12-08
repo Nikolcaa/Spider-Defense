@@ -79,12 +79,13 @@ function renderingBonuses() {
     })
 }
 
-function scoreUpdate() {
+
+    // ------------ score updating ------------
+function preload(){
     var scoreupdate = setInterval(function(){
         score += 1
-    }, 1000)
+    }, 10)
 }
-
 
 function draw() {
     background('grey')
@@ -92,10 +93,9 @@ function draw() {
 
 
     // ------------ score ------------
-    scoreUpdate()
     textSize(32)
     fill("white");
-    text("SCORE: " + score, width-200, 30)
+    text("SCORE: " + score, 0, 30)
 
     // ------------ spider ------------
     spider.show()

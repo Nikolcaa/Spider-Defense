@@ -45,6 +45,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     this.collision = function (enemy) {
         //-- changing enemy hp --
+        enemy.update()
         enemy.hp -= 1
   
         //-- deleting enemy --
