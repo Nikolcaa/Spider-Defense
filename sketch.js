@@ -9,55 +9,14 @@ var webs,
     bonuses = [],
 
     score = 0,
-    
+
     heart,
     hearts = [],
 
     spider,
+    spiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
-
-function setup() {
-    createCanvas(window.innerWidth, window.innerHeight)
-
-    // ------------ Data------------
-    webs = new websData()
-    enemiesClasses = new enemiesData()
-    lvls = new lvlsData()
-    bonusClasses = new bonusData()
-
-    // ------------ skins ------------
-        // spider
-    skin1 = loadImage('imagesOfSpider/spider1.png')
-    skin2 = loadImage('imagesOfSpider/spider2.png')
-    skin3 = loadImage('imagesOfSpider/spider3.png')
-    skin4 = loadImage('imagesOfSpider/spider4.png')
-    skin5 = loadImage('imagesOfSpider/spider5.png')
-    skin6 = loadImage('imagesOfSpider/spider6.png')
-    skin7 = loadImage('imagesOfSpider/spider7.png')
-    skin8 = loadImage('imagesOfSpider/spider8.png')
-    skin9 = loadImage('imagesOfSpider/spider9.png')
-
-        // heart
-    skinHeart = loadImage('imagesOfHeart/heart.png')
-
-    // ------------ spider ------------
-    spider = new Spider(skin9)
-
-    // ------------ heart ------------
-    var xPosOfHeart = width/2
-    var yPosOfHeart = 0
-    for(let i = 0; i < 8; i++){
-        heart = new Heart(xPosOfHeart, yPosOfHeart, skinHeart)
-        hearts.push(heart)
-
-        xPosOfHeart += 30
-    }
-
-    // ------------ rendering functions ------------
-    renderingEnemies()
-    renderingBonuses()
-}
 
 function renderingEnemies() {
     // ------------ levels ------------ // ------------ enemies ------------
@@ -98,18 +57,60 @@ function renderingBonuses() {
 }
 
 
-    // ------------ score updating ------------
-function preload(){
-    var scoreupdate = setInterval(function(){
+// ------------ score updating ------------
+function preload() {
+    var scoreupdate = setInterval(function () {
         score += 1
     }, 10)
+}
+
+function setup() {
+    createCanvas(window.innerWidth, window.innerHeight)
+
+    // ------------ Data------------
+    webs = new websData()
+    enemiesClasses = new enemiesData()
+    lvls = new lvlsData()
+    bonusClasses = new bonusData()
+
+    // ------------ skins ------------
+    // spider
+    skin1 = loadImage('imagesOfSpider/spider1.png')
+    skin2 = loadImage('imagesOfSpider/spider2.png')
+    skin3 = loadImage('imagesOfSpider/spider3.png')
+    skin4 = loadImage('imagesOfSpider/spider4.png')
+    skin5 = loadImage('imagesOfSpider/spider5.png')
+    skin6 = loadImage('imagesOfSpider/spider6.png')
+    skin7 = loadImage('imagesOfSpider/spider7.png')
+    skin8 = loadImage('imagesOfSpider/spider8.png')
+    skin9 = loadImage('imagesOfSpider/spider9.png')
+
+    // heart
+    skinHeart = loadImage('imagesOfHeart/heart.png')
+
+    // ------------ spider ------------
+    spider = new Spider(skin9, spiderHp)
+
+    // ------------ heart ------------
+    var xPosOfHeart = width / 2
+    var yPosOfHeart = 0
+    for (let i = 0; i < spiderHp; i++) {
+        heart = new Heart(xPosOfHeart, yPosOfHeart, skinHeart)
+        hearts.push(heart)
+
+        xPosOfHeart += 30
+    }
+
+    // ------------ rendering functions ------------
+    renderingEnemies()
+    renderingBonuses()
 }
 
 function draw() {
     background('grey')
     frameRate(120)
 
-    for(let i = 0; i < hearts.length; i++){
+    for (let i = 0; i < hearts.length; i++) {
         hearts[i].show()
     }
 
@@ -136,9 +137,14 @@ function draw() {
         enemies[i].show()
         enemies[i].move()
 
-
         if (collision(spider, enemies[i])) {
-            enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)];
+            enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)]
+            spiderHp -= 1    
+            hearts.splice(spiderHp, 1)
+
+            if(spiderHp <= 0){
+                alert("izgubio si")
+            }
         }
     }
 
