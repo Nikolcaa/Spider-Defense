@@ -87,6 +87,7 @@ function setup() {
 
     // heart
     skinHeart = loadImage('imagesOfHeart/heart.png')
+    skinEmptyHeart = loadImage('imagesOfHeart/emptyHeart.png')
 
     // ------------ spider ------------
     spider = new Spider(skin9, spiderHp)
@@ -113,8 +114,15 @@ function draw() {
     var xPosOfHeart = width / 2
     var yPosOfHeart = 0
 
+        // -- full hearts --
     for (let i = 0; i < spiderHp; i++) {
         image(skinHeart, xPosOfHeart, yPosOfHeart, skinHeart.width/20, skinHeart.height/20)
+        xPosOfHeart += 30
+    }
+
+        // -- empty hearts --
+    for (let i = 0; i < maxSpiderHp - spiderHp; i++) {
+        image(skinEmptyHeart, xPosOfHeart, yPosOfHeart, skinHeart.width/20, skinHeart.height/20)
         xPosOfHeart += 30
     }
 
