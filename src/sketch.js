@@ -11,8 +11,7 @@ var webs,
     score = 0,
 
     heart,
-    hearts = [],
-
+    
     spider,
     spiderHp = 4,
     maxSpiderHp = 8,
@@ -93,14 +92,12 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ heart ------------
-    var xPosOfHeart = width / 2
-    var yPosOfHeart = 0
+    /* 
     for (let i = 0; i < maxSpiderHp; i++) {
-        heart = new Heart(xPosOfHeart, yPosOfHeart, skinHeart)
+        heart = new Heart( skinHeart)
         hearts.push(heart)
 
-        xPosOfHeart += 30
-    }
+    } */
 
     // ------------ rendering functions ------------
     renderingEnemies()
@@ -113,8 +110,12 @@ function draw() {
 
 
     // ------------ hearts ------------
+    var xPosOfHeart = width / 2
+    var yPosOfHeart = 0
+
     for (let i = 0; i < spiderHp; i++) {
-        hearts[i].show()
+        image(skinHeart, xPosOfHeart, yPosOfHeart, skinHeart.width/20, skinHeart.height/20)
+        xPosOfHeart += 30
     }
 
     // ------------ score ------------
@@ -143,8 +144,6 @@ function draw() {
         if (Collision(spider, enemies[i])) {
             enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)]
             spiderHp -= 1
-            console.log(hearts)
-            //hearts.splice(spiderHp, 1)
 
             if (spiderHp <= 0) {
                 alert("izgubio si")

@@ -69,6 +69,23 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     // --------- Bonus collision ----------
     this.collisionBonus = function (bonus) {
+        // -- deleting bonus --
+        bonuses = [...bonuses.filter(el => el.ID !== bonus.ID)];
+
+        // -- changing webs --
+        webs = [
+            ...webs.map((item) => {
+                if (item.ID === this.ID) {
+                    return {
+                        ...item,
+                        speed: 10
+                    }
+                }
+                return item;
+            })
+        ]
+
+        // -- spiderHp += 1 --
         if(spiderHp <= maxSpiderHp){
             spiderHp += 1
         }

@@ -2,7 +2,7 @@ function bonusData() {
     return {
         lasta: {
             ID: 0,
-            speed: 3,
+            speed: 1,
             hp: 1,
             size: 20,
             color: "green",

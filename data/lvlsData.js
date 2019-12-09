@@ -4,7 +4,7 @@ function lvlsData() {
             ID: 0,
             default: 1,
             tank: 1,
-            lasta: 0,
+            lasta: 10,
         },
         {
             ID: 1,
