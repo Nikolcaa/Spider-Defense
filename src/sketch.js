@@ -111,7 +111,7 @@ function draw() {
 
 
     // ------------ hearts ------------
-    var xPosOfHeart = width / 2
+    var xPosOfHeart = width / 2 - skinHeart.width/5
     var yPosOfHeart = 0
 
         // -- full hearts --
