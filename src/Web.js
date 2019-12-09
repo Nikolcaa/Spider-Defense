@@ -86,7 +86,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
         ]
 
         // -- spiderHp += 1 --
-        if(spiderHp <= maxSpiderHp){
+        if(spiderHp < maxSpiderHp){
             spiderHp += 1
         }
     }
