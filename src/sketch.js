@@ -193,7 +193,8 @@ function draw() {
 
     // ------------ level-up ------------
     if (!enemies.length) {
-        currentLevel += 1
+        // currentLevel += 1
+        currentLevel = Math.floor(Math.random()*lvls.length);
         renderingEnemies()
         renderingBonuses()
     }
