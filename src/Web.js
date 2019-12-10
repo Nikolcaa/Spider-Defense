@@ -84,10 +84,31 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 return item;
             })
         ]
+    }
 
-        // -- spiderHp += 1 --
+    // --------- CARDS COLLISIONS ----------
+
+    // -- cardHeart --
+    this.collisionCardHeart = function(card){
+        // -- deleting card --
+        cards = [...cards.filter(el => el.ID !== card.ID)];
+
         if(spiderHp < maxSpiderHp){
             spiderHp += 1
         }
+
+        // -- changing webs --
+        webs = [
+            ...webs.map((item) => {
+                if (item.ID === this.ID) {
+                    return {
+                        ...item,
+                        speed: 10
+                    }
+                }
+                return item;
+            })
+        ]
+        
     }
 }

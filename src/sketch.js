@@ -11,7 +11,10 @@ var webs,
     score = 0,
 
     heart,
-    
+
+    cardsData,
+    cards = [],
+
     spider,
     spiderHp = 4,
     maxSpiderHp = 8,
@@ -20,7 +23,6 @@ var webs,
 
 function renderingEnemies() {
     // ------------ levels ------------ // ------------ enemies ------------
-    let newEnemyID = 0
     Object.keys(lvls[currentLevel]).map((classes, index) => {
         Object.keys(enemiesClasses).map((grade, index) => {
             if (classes === grade) {
@@ -28,9 +30,7 @@ function renderingEnemies() {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
-                    enemies.push(new Enemy(newEnemyID, xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
-
-                    newEnemyID += 1
+                    enemies.push(new Enemy(parseInt(_.uniqueId(), 10), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
                 }
             }
         })
@@ -39,23 +39,19 @@ function renderingEnemies() {
 
 function renderingBonuses() {
     // ------------ levels ------------ // ------------ bonuses ------------
-    let newBonusID = 0
     Object.keys(lvls[currentLevel]).map((classes, index) => {
         Object.keys(bonusClasses).map((grade, index) => {
             if (classes === grade) {
                 for (let i = 0; i < lvls[currentLevel][classes]; i++) {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
-
-                    bonuses.push(new Bonus(newBonusID, xPos, yPos, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].color))
-
-                    newBonusID += 1
+                 
+                    bonuses.push(new Bonus(parseInt(_.uniqueId(), 10), xPos, yPos, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].color))
                 }
             }
         })
     })
 }
-
 
 // ------------ score updating ------------
 function preload() {
@@ -72,6 +68,7 @@ function setup() {
     enemiesClasses = new enemiesData()
     lvls = new lvlsData()
     bonusClasses = new bonusData()
+    cardsClasses = new cardsData()
 
     // ------------ skins ------------
     // spider
@@ -92,14 +89,6 @@ function setup() {
     // ------------ spider ------------
     spider = new Spider(skin9, spiderHp)
 
-    // ------------ heart ------------
-    /* 
-    for (let i = 0; i < maxSpiderHp; i++) {
-        heart = new Heart( skinHeart)
-        hearts.push(heart)
-
-    } */
-
     // ------------ rendering functions ------------
     renderingEnemies()
     renderingBonuses()
@@ -109,20 +98,19 @@ function draw() {
     background('grey')
     frameRate(120)
 
-
     // ------------ hearts ------------
-    var xPosOfHeart = width / 2 - skinHeart.width/5
+    var xPosOfHeart = width / 2 - skinHeart.width / 5
     var yPosOfHeart = 0
 
-        // -- full hearts --
+    // -- full hearts --
     for (let i = 0; i < spiderHp; i++) {
-        image(skinHeart, xPosOfHeart, yPosOfHeart, skinHeart.width/20, skinHeart.height/20)
+        image(skinHeart, xPosOfHeart, yPosOfHeart, skinHeart.width / 20, skinHeart.height / 20)
         xPosOfHeart += 30
     }
 
-        // -- empty hearts --
+    // -- empty hearts --
     for (let i = 0; i < maxSpiderHp - spiderHp; i++) {
-        image(skinEmptyHeart, xPosOfHeart, yPosOfHeart, skinHeart.width/20, skinHeart.height/20)
+        image(skinEmptyHeart, xPosOfHeart, yPosOfHeart, skinHeart.width / 20, skinHeart.height / 20)
         xPosOfHeart += 30
     }
 
@@ -144,7 +132,6 @@ function draw() {
     }
 
     // ------------ enemies ------------
-
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].show()
         enemies[i].move()
@@ -160,10 +147,14 @@ function draw() {
     }
 
     // ------------ bonuses ------------
-
     for (let i = 0; i < bonuses.length; i++) {
         bonuses[i].show()
         bonuses[i].move()
+    }
+
+    // ------------ cards ------------
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].show()
     }
 
 
@@ -191,16 +182,36 @@ function mousePressed() {
         })
     ]
 
-
+    // -- Collisions --
+    // - Enemies -
     for (let i = 0; i < enemies.length; i++) {
         if (MouseCollision(enemies[i])) {
             web.collisionEnemy(enemies[i])
         }
     }
 
+    // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
         if (MouseCollision(bonuses[i])) {
             web.collisionBonus(bonuses[i])
+
+            // -- cards.push() --
+            Object.keys(cardsClasses).map((grade, index) => {
+                let xPos = mouseX - cardsClasses[grade].size / 4
+                let yPos = mouseY - cardsClasses[grade].size / 4
+                setTimeout(function () {
+                    cards.push(new Card(parseInt(_.uniqueId(), 10), xPos, yPos, cardsClasses[grade].size, cardsClasses[grade].color))
+                }, 1)
+
+            })
+        }
+    }
+
+    // - cards -
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].show()
+        if (MouseCollision(cards[i])) {
+            web.collisionCardHeart(cards[i])
         }
     }
 }
@@ -228,17 +239,15 @@ function MouseCollision(player2) {
     }
 }
 
-
-
 //--------- Random f-s -----------
 
 // -- Bonuses --
 function randomBonusPositionX(w) {
-    return random(-500, 0)
+    return random(-100, 0)
 }
 
 function randomBonusPositionY(h) {
-    return random(-500, 0)
+    return random(-100, 0)
 }
 
 // -- Enemies --
