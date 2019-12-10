@@ -40,5 +40,13 @@ function lvlsData() {
             tank: 3,
             emptyHeart: 1,
         },
+        {
+            ID: 7,
+            tank: 5,
+        },
+        {
+            ID: 7,
+            tank: 6,
+        },
     ]
 } 
