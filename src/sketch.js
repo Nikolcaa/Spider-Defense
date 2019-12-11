@@ -55,23 +55,22 @@ function renderingBonuses() {
     })
 }
 
-/* function renderingCards(currentBonus) {
+function renderingCards(currentBonus) {
     // -- bonuses --  -- cards --
     Object.keys(cardsClasses).map((classes, index) => {
-        let xPos = mouseX - cardsClasses[classes].size / 4
-        let yPos = mouseY - cardsClasses[classes].size / 4
-        if (currentBonus.card === classes) {
+        let xPos = mouseX - cardsClasses[classes].size / 2
+        let yPos = mouseY - cardsClasses[classes].size / 2
+
+        if (currentBonus.drop === classes) {
             setTimeout(function () {
-                cards.push(new Card(parseInt(_.uniqueId()), xPos, yPos, cardsClasses[classes].size, cardsClasses[classes].color, classes))
+                cards.push(new Card(parseInt(_.uniqueId()), xPos, yPos, cardsClasses[classes].img, cardsClasses[classes].size, classes))
             }, 1)
         }
-
     })
-} */
+}
 
 
 
-// ------------ score updating ------------
 function preload() {
 
     // ------------ skins ------------
@@ -90,6 +89,13 @@ function preload() {
     skinHeart = loadImage('imagesOfHeart/heart.png')
     skinEmptyHeart = loadImage('imagesOfHeart/emptyHeart.png')
 
+    // cards
+    skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
+
+    // bonuses
+    skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.gif')
+
+    // -- score updating --
     var scoreupdate = setInterval(function () {
         score += 1
     }, 10)
@@ -115,7 +121,7 @@ function setup() {
 
 function draw() {
     background('grey')
-    frameRate(120)
+    frameRate(60)
 
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -213,19 +219,17 @@ function mousePressed() {
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
         if (web && MouseCollision(bonuses[i])) {
-            //renderingCards(bonuses[i])
-
-            // -- deleting bonus, drop... --
+            renderingCards(bonuses[i])
             web.collisionBonus(bonuses[i])
         }
     }
 
     // - cards -
-    /* for (let i = 0; i < cards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
         if (web && MouseCollision(cards[i])) {
-            web.collisions(cards[i], cards[i].grade)
+            web.collisionCard(cards[i], cards[i].grade)
         }
-    } */
+    }
 }
 
 //--------- collision -----------

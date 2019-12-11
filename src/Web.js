@@ -69,17 +69,20 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     // --------- Bonus collision ----------
     this.collisionBonus = function (bonus) {
-        // -- drop --
-        if(bonus.drop === "heart"){
-            if (spiderHp < maxSpiderHp) {
-                spiderHp += 1
-            } 
-        }else if(bonus.drop === "emptyHeart"){
-            maxSpiderHp += 1
-        }
+        bonus.hp -= 1
+        if (bonus.hp === 0) {
+            // -- drop --
+            if (bonus.drop === "heart") {
+                if (spiderHp < maxSpiderHp) {
+                    spiderHp += 1
+                }
+            } else if (bonus.drop === "emptyHeart") {
+                maxSpiderHp += 1
+            }
 
-        // -- deleting bonus --
-        bonuses = [...bonuses.filter(el => el.ID !== bonus.ID)];
+            // -- deleting bonus --
+            bonuses = [...bonuses.filter(el => el.ID !== bonus.ID)];
+        }
 
         // -- changing webs --
         webs = [
@@ -98,16 +101,12 @@ function Web(ID, active, x, y, x2, y2, speed) {
     // --------- CARDS COLLISIONS ----------
 
     // -- cardHeart --
-    this.collisions = function (card, grade) {
+    this.collisionCard = function (card, grade) {
         // -- chacking what is grade of card --
-        if (grade === "heartCard") {
-            if (spiderHp < maxSpiderHp) {
-                spiderHp += 1
-            } 
-        } else if (grade === "maxHeartCard") {
-            maxSpiderHp += 1
+        if (grade === "freezeCard") {
+            console.log("pokupio sam freezeCard")
         }
-        
+
         // -- deleting card --
         cards = [...cards.filter(el => el.ID !== card.ID)];
 

@@ -15,6 +15,14 @@ function bonusData() {
             size: 40,
             img: skinEmptyHeart,
             drop: "emptyHeart",
+        },
+        freezeBonus: {
+            ID: 2,
+            speed: 1.5,
+            hp: 1,
+            size: 40,
+            img: skinFreezeBonus,
+            drop: "freezeCard",
         }
     }
 }

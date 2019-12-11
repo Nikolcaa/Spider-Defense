@@ -1,10 +1,9 @@
 function cardsData() {
     return {
-        heartCard: {
+        freezeCard: {
             ID: 0,
-        },
-        maxHeartCard: {
-            ID: 1,
+            size: 50,
+            img: skinFreezeCard,
         }
     }
 }

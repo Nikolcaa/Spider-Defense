@@ -6,6 +6,7 @@ function lvlsData() {
             tank: 0,
             heart: 2,
             emptyHeart: 2,
+            freezeBonus: 1,
         },
         /* {
             ID: 1,

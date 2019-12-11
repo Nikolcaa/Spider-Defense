@@ -13,10 +13,6 @@ function Enemy(ID, x, y, speed, hp, size, color){
         pop()
     }
 
-    this.update = function(){
-        
-    }
-
     this.move = function(){
         this.ySpeed = Math.sqrt(Math.pow(this.speed, 2) / (Math.pow(Math.abs(this.x - width/2) / Math.abs(this.y - height/2), 2) + 1))
         this.xSpeed = (Math.abs(this.x - width/2) / Math.abs(this.y - height/2)) * this.ySpeed
