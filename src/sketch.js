@@ -115,7 +115,7 @@ function setup() {
 
 function draw() {
     background('grey')
-    frameRate(100)
+    frameRate(120)
 
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -205,14 +205,14 @@ function mousePressed() {
     // -- Collisions --
     // - Enemies -
     for (let i = 0; i < enemies.length; i++) {
-        if (MouseCollision(enemies[i])) {
+        if (web && MouseCollision(enemies[i])) {
             web.collisionEnemy(enemies[i])
         }
     }
 
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
-        if (MouseCollision(bonuses[i])) {
+        if (web && MouseCollision(bonuses[i])) {
             //renderingCards(bonuses[i])
 
             // -- deleting bonus, drop... --
