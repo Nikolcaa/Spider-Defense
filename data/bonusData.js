@@ -23,6 +23,14 @@ function bonusData() {
             size: 40,
             img: skinFreezeBonus,
             drop: "freezeCard",
+        },
+        sloweBonus: {
+            ID: 3,
+            speed: 1.5,
+            hp: 1,
+            size: 40,
+            img: skinSloweBonus,
+            drop: "sloweCard",
         }
     }
 }

@@ -2,7 +2,7 @@ function enemiesData() {
     return {
         default: {
             ID: 0,
-            speed: 0,
+            speed: 4,
             hp: 1,
             size: 50,
             color: "orange",

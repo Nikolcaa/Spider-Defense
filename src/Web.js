@@ -103,13 +103,22 @@ function Web(ID, active, x, y, x2, y2, speed) {
     // -- cardHeart --
     this.collisionCard = function (card, grade) {
         // -- chacking what is grade of card --
-        if (grade === "freezeCard") {
+        /* if (grade === "freezeCard") {
             console.log("pokupio sam freezeCard")
+        } */
+
+        // -- pushing card in cardsCollection
+        let xPos = 10
+        let yPos = height - card.size - 10
+        for(let i = 0; i < cardsCollection.length; i++){
+            xPos += card.size
         }
+        cardsCollection.push(new Card(card.ID, xPos, yPos, card.img, card.size, grade))
 
-        // -- deleting card --
+
+
+        // -- deleting card from cards --
         cards = [...cards.filter(el => el.ID !== card.ID)];
-
 
         // -- changing webs --
         webs = [

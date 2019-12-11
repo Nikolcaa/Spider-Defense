@@ -16,6 +16,7 @@ var webs,
 
     cardsData,
     cards = [],
+    cardsCollection = [],
 
     spider,
     spiderHp = 4,
@@ -89,11 +90,14 @@ function preload() {
     skinHeart = loadImage('imagesOfHeart/heart.png')
     skinEmptyHeart = loadImage('imagesOfHeart/emptyHeart.png')
 
-    // cards
-    skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
-
     // bonuses
     skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.png')
+    skinSloweBonus = loadImage('imagesOfBonuses/sloweBonus.png')
+
+    // cards
+    skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
+    skinSloweCard = loadImage('imagesOfCards/sloweCard.png')
+
 
     // -- score updating --
     var scoreupdate = setInterval(function () {
@@ -180,6 +184,10 @@ function draw() {
     // ------------ cards ------------
     for (let i = 0; i < cards.length; i++) {
         cards[i].show()
+    }
+
+    for (let i = 0; i < cardsCollection.length; i++) {
+        cardsCollection[i].show()
     }
 
 
