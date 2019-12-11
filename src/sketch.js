@@ -14,6 +14,7 @@ var webs,
 
     cardsData,
     cards = [],
+    currentCardsClasses = [],
 
     spider,
     spiderHp = 4,
@@ -22,7 +23,7 @@ var webs,
 
 
 function renderingEnemies() {
-    // ------------ levels ------------ // ------------ enemies ------------
+    // -- levels --  -- enemies --
     Object.keys(lvls[currentLevel]).map((classes, index) => {
         Object.keys(enemiesClasses).map((grade, index) => {
             if (classes === grade) {
@@ -30,7 +31,7 @@ function renderingEnemies() {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
-                    enemies.push(new Enemy(parseInt(_.uniqueId(), 10), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
+                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
                 }
             }
         })
@@ -38,19 +39,35 @@ function renderingEnemies() {
 }
 
 function renderingBonuses() {
-    // ------------ levels ------------ // ------------ bonuses ------------
+    // -- levels --  -- bonuses --
     Object.keys(lvls[currentLevel]).map((classes, index) => {
         Object.keys(bonusClasses).map((grade, index) => {
             if (classes === grade) {
                 for (let i = 0; i < lvls[currentLevel][classes]; i++) {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
-                 
-                    bonuses.push(new Bonus(parseInt(_.uniqueId(), 10), xPos, yPos, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].color))
+
+                    bonuses.push(new Bonus(parseInt(_.uniqueId()) - 1, xPos, yPos, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].color, bonusClasses[grade].card))
                 }
             }
         })
     })
+}
+
+function renderingCards(currentBonus) {
+    // -- bonuses --  -- cards --
+    Object.keys(cardsClasses).map((classes, index) => {
+        let xPos = mouseX - cardsClasses[classes].size / 4
+        let yPos = mouseY - cardsClasses[classes].size / 4
+        if (currentBonus.card === classes) {
+            setTimeout(function () {
+                cards.push(new Card(parseInt(_.uniqueId()), xPos, yPos, cardsClasses[classes].size, cardsClasses[classes].color, classes))
+                //currentCardsClasses.push(classes)
+            }, 1)
+        }
+
+    })
+
 }
 
 // ------------ score updating ------------
@@ -193,27 +210,21 @@ function mousePressed() {
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
         if (MouseCollision(bonuses[i])) {
+            renderingCards(bonuses[i])
+
+            // -- deleting bonus... --
             web.collisionBonus(bonuses[i])
-
-            // -- cards.push() --
-            Object.keys(cardsClasses).map((grade, index) => {
-                let xPos = mouseX - cardsClasses[grade].size / 4
-                let yPos = mouseY - cardsClasses[grade].size / 4
-                setTimeout(function () {
-                    cards.push(new Card(parseInt(_.uniqueId(), 10), xPos, yPos, cardsClasses[grade].size, cardsClasses[grade].color))
-                }, 1)
-
-            })
         }
     }
 
     // - cards -
     for (let i = 0; i < cards.length; i++) {
-        cards[i].show()
-        if (MouseCollision(cards[i])) {
-            web.collisionCardHeart(cards[i])
+        if (web && MouseCollision(cards[i])) {
+            web.collisions(cards[i], cards[i].grade)
         }
     }
+
+
 }
 
 //--------- collision -----------

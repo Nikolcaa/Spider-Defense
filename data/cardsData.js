@@ -5,12 +5,10 @@ function cardsData() {
             size: 50,
             color: "purple",
         },
-        /* žaba: {
+        maxHeartCard: {
             ID: 1,
-            speed: 3,
-            hp: 2,
-            size: 10,
-            color: "blue",
-        } */
+            size: 50,
+            color: "white",
+        }
     }
 }

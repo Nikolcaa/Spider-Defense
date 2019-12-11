@@ -5,14 +5,16 @@ function bonusData() {
             speed: 1,
             hp: 1,
             size: 20,
-            color: "green",
+            color: "black",
+            card: "heartCard",
         },
         žaba: {
             ID: 1,
-            speed: 3,
-            hp: 2,
-            size: 10,
-            color: "blue",
+            speed: 2,
+            hp: 1,
+            size: 30,
+            color: "green",
+            card: "maxHeartCard",
         }
     }
 }

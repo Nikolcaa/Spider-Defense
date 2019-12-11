@@ -1,4 +1,4 @@
-function Bonus(ID, x, y, speed, hp, size, color){
+function Bonus(ID, x, y, speed, hp, size, color, card){
     this.ID = ID
     this.x = x
     this.y = y
@@ -6,6 +6,7 @@ function Bonus(ID, x, y, speed, hp, size, color){
     this.hp = hp
     this.size = size
     this.color = color
+    this.card = card
     this.show = function(){
         push()
         fill(this.color)

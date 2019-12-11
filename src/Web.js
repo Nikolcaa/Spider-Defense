@@ -47,9 +47,9 @@ function Web(ID, active, x, y, x2, y2, speed) {
     this.collisionEnemy = function (enemy) {
         //-- changing enemy hp --
         enemy.hp -= 1
-  
+
         //-- deleting enemy --
-        if(enemy.hp === 0){
+        if (enemy.hp === 0) {
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
         }
 
@@ -89,13 +89,19 @@ function Web(ID, active, x, y, x2, y2, speed) {
     // --------- CARDS COLLISIONS ----------
 
     // -- cardHeart --
-    this.collisionCardHeart = function(card){
+    this.collisions = function (card, grade) {
+        // -- chacking what is grade of card --
+        if (grade === "heartCard") {
+            if (spiderHp < maxSpiderHp) {
+                spiderHp += 1
+            } 
+        } else if (grade === "maxHeartCard") {
+            maxSpiderHp += 1
+        }
+        
         // -- deleting card --
         cards = [...cards.filter(el => el.ID !== card.ID)];
 
-        if(spiderHp < maxSpiderHp){
-            spiderHp += 1
-        }
 
         // -- changing webs --
         webs = [
@@ -109,6 +115,6 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 return item;
             })
         ]
-        
+
     }
 }
