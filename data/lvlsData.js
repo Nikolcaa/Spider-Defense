@@ -19,5 +19,34 @@ function lvlsData() {
             tank: 1,
             heart: 1,
         },
+        {
+            ID: 3,
+            default: 8,
+            heart: 3,
+        },
+        {
+            ID: 4,
+            default: 4,
+            heart: 1,
+        },
+        {
+            ID: 5,
+            default: 5,
+            tank: 2,
+        },
+        {
+            ID: 6,
+            default: 1,
+            tank: 3,
+            emptyHeart: 1,
+        },
+        {
+            ID: 7,
+            tank: 5,
+        },
+        {
+            ID: 7,
+            tank: 6,
+        },
     ]
 } 
