@@ -93,7 +93,7 @@ function preload() {
     skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
 
     // bonuses
-    skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.gif')
+    skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.png')
 
     // -- score updating --
     var scoreupdate = setInterval(function () {
