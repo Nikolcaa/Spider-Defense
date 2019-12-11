@@ -4,8 +4,8 @@ function lvlsData() {
             ID: 0,
             default: 1,
             tank: 0,
-            lasta: 10,
-            žaba: 1,
+            heart: 2,
+            emptyHeart: 2,
         },
         /* {
             ID: 1,

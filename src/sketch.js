@@ -12,9 +12,10 @@ var webs,
 
     heart,
 
+    hearts = [],
+
     cardsData,
     cards = [],
-    currentCardsClasses = [],
 
     spider,
     spiderHp = 4,
@@ -47,14 +48,14 @@ function renderingBonuses() {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
 
-                    bonuses.push(new Bonus(parseInt(_.uniqueId()) - 1, xPos, yPos, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].color, bonusClasses[grade].card))
+                    bonuses.push(new Bonus(parseInt(_.uniqueId()) - 1, xPos, yPos, bonusClasses[grade].img, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].drop))
                 }
             }
         })
     })
 }
 
-function renderingCards(currentBonus) {
+/* function renderingCards(currentBonus) {
     // -- bonuses --  -- cards --
     Object.keys(cardsClasses).map((classes, index) => {
         let xPos = mouseX - cardsClasses[classes].size / 4
@@ -62,30 +63,16 @@ function renderingCards(currentBonus) {
         if (currentBonus.card === classes) {
             setTimeout(function () {
                 cards.push(new Card(parseInt(_.uniqueId()), xPos, yPos, cardsClasses[classes].size, cardsClasses[classes].color, classes))
-                //currentCardsClasses.push(classes)
             }, 1)
         }
 
     })
+} */
 
-}
+
 
 // ------------ score updating ------------
 function preload() {
-    var scoreupdate = setInterval(function () {
-        score += 1
-    }, 10)
-}
-
-function setup() {
-    createCanvas(window.innerWidth, window.innerHeight)
-
-    // ------------ Data------------
-    webs = new websData()
-    enemiesClasses = new enemiesData()
-    lvls = new lvlsData()
-    bonusClasses = new bonusData()
-    cardsClasses = new cardsData()
 
     // ------------ skins ------------
     // spider
@@ -103,6 +90,21 @@ function setup() {
     skinHeart = loadImage('imagesOfHeart/heart.png')
     skinEmptyHeart = loadImage('imagesOfHeart/emptyHeart.png')
 
+    var scoreupdate = setInterval(function () {
+        score += 1
+    }, 10)
+}
+
+function setup() {
+    createCanvas(window.innerWidth, window.innerHeight)
+
+    // ------------ Data------------
+    webs = new websData()
+    enemiesClasses = new enemiesData()
+    lvls = new lvlsData()
+    bonusClasses = new bonusData()
+    cardsClasses = new cardsData()
+
     // ------------ spider ------------
     spider = new Spider(skin9, spiderHp)
 
@@ -113,7 +115,7 @@ function setup() {
 
 function draw() {
     background('grey')
-    frameRate(120)
+    frameRate(100)
 
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -185,6 +187,7 @@ function draw() {
 
 function mousePressed() {
     let web = getRandomWeb()
+    // -- changing web --
     webs = [
         ...webs.map((item) => {
             if (web && item.ID === web.ID) {
@@ -210,21 +213,19 @@ function mousePressed() {
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
         if (MouseCollision(bonuses[i])) {
-            renderingCards(bonuses[i])
+            //renderingCards(bonuses[i])
 
-            // -- deleting bonus... --
+            // -- deleting bonus, drop... --
             web.collisionBonus(bonuses[i])
         }
     }
 
     // - cards -
-    for (let i = 0; i < cards.length; i++) {
+    /* for (let i = 0; i < cards.length; i++) {
         if (web && MouseCollision(cards[i])) {
             web.collisions(cards[i], cards[i].grade)
         }
-    }
-
-
+    } */
 }
 
 //--------- collision -----------

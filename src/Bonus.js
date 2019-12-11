@@ -1,17 +1,14 @@
-function Bonus(ID, x, y, speed, hp, size, color, card){
+function Bonus(ID, x, y, img, speed, hp, size, drop){
     this.ID = ID
     this.x = x
     this.y = y
+    this.img = img
     this.speed = speed
     this.hp = hp
     this.size = size
-    this.color = color
-    this.card = card
+    this.drop = drop
     this.show = function(){
-        push()
-        fill(this.color)
-        rect(this.x, this.y, this.size, this.size)
-        pop()
+        image(this.img, this.x, this.y, this.size, this.size)
     }
     this.move = function(){
         this.ySpeed = speed

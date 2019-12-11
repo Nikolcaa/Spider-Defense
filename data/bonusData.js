@@ -1,20 +1,20 @@
 function bonusData() {
     return {
-        lasta: {
+        heart: {
             ID: 0,
             speed: 1,
             hp: 1,
-            size: 20,
-            color: "black",
-            card: "heartCard",
+            size: 40,
+            img: skinHeart,
+            drop: "heart",
         },
-        žaba: {
+        emptyHeart: {
             ID: 1,
-            speed: 2,
+            speed: 1.2,
             hp: 1,
-            size: 30,
-            color: "green",
-            card: "maxHeartCard",
+            size: 40,
+            img: skinEmptyHeart,
+            drop: "emptyHeart",
         }
     }
 }

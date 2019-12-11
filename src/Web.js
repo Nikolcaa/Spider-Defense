@@ -69,6 +69,15 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     // --------- Bonus collision ----------
     this.collisionBonus = function (bonus) {
+        // -- drop --
+        if(bonus.drop === "heart"){
+            if (spiderHp < maxSpiderHp) {
+                spiderHp += 1
+            } 
+        }else if(bonus.drop === "emptyHeart"){
+            maxSpiderHp += 1
+        }
+
         // -- deleting bonus --
         bonuses = [...bonuses.filter(el => el.ID !== bonus.ID)];
 
