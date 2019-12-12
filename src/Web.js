@@ -115,8 +115,6 @@ function Web(ID, active, x, y, x2, y2, speed) {
         }
         cardsCollection.push(new Card(card.ID, xPos, yPos, card.img, card.size, grade))
 
-
-
         // -- deleting card from cards --
         cards = [...cards.filter(el => el.ID !== card.ID)];
 

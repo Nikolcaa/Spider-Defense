@@ -2,8 +2,9 @@ var webs,
     enemiesClasses,
     enemies = [],
 
-    lvls,
-    currentLevel = 0,
+    lvlsData,
+    currentStage,
+    currentGroup = 0,
 
     bonusClasses,
     bonuses = [],
@@ -23,29 +24,36 @@ var webs,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
+// ---------------- render functions -----------------
+
+function renderingStages() {
+    // if (score === toliko) {
+        currentStage = lvlsData.stage1
+    //}
+}
 
 function renderingEnemies() {
     // -- levels --  -- enemies --
-    Object.keys(lvls[currentLevel]).map((classes, index) => {
-        Object.keys(enemiesClasses).map((grade, index) => {
-            if (classes === grade) {
-                for (let i = 0; i < lvls[currentLevel][classes]; i++) {
-                    let xPos = randomEnemyPositionX(width)
-                    let yPos = randomEnemyPositionY(height)
-
-                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
+    Object.keys(currentStage[currentGroup]).map((classes, index) => {
+            Object.keys(enemiesClasses).map((grade, key) => {
+                if (classes === grade) {
+                    for (let i = 0; i < currentStage[currentGroup][classes]; i++) {
+                        let xPos = randomEnemyPositionX(width)
+                        let yPos = randomEnemyPositionY(height)
+    
+                        enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
+                    }
                 }
-            }
-        })
+            })
     })
 }
 
 function renderingBonuses() {
     // -- levels --  -- bonuses --
-    Object.keys(lvls[currentLevel]).map((classes, index) => {
+    Object.keys(currentStage[currentGroup]).map((classes, index) => {
         Object.keys(bonusClasses).map((grade, index) => {
             if (classes === grade) {
-                for (let i = 0; i < lvls[currentLevel][classes]; i++) {
+                for (let i = 0; i < currentStage[currentGroup][classes]; i++) {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
 
@@ -111,7 +119,7 @@ function setup() {
     // ------------ Data------------
     webs = new websData()
     enemiesClasses = new enemiesData()
-    lvls = new lvlsData()
+    lvlsData = new lvlsData()
     bonusClasses = new bonusData()
     cardsClasses = new cardsData()
 
@@ -119,7 +127,9 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ rendering functions ------------
+    renderingStages()
     renderingEnemies()
+
     renderingBonuses()
 }
 
@@ -193,8 +203,8 @@ function draw() {
 
     // ------------ level-up ------------
     if (!enemies.length) {
-        // currentLevel += 1
-        currentLevel = Math.floor(Math.random()*lvls.length);
+        currentGroup = int(random(0, currentStage.length))
+        console.log(currentGroup)
         renderingEnemies()
         renderingBonuses()
     }
