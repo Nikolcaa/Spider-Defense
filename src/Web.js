@@ -59,7 +59,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 if (item.ID === this.ID) {
                     return {
                         ...item,
-                        speed: 10
+                        speed: webFastComeBackSpeed
                     }
                 }
                 return item;
@@ -90,7 +90,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 if (item.ID === this.ID) {
                     return {
                         ...item,
-                        speed: 10
+                        speed: webFastComeBackSpeed
                     }
                 }
                 return item;
@@ -124,7 +124,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 if (item.ID === this.ID) {
                     return {
                         ...item,
-                        speed: 10
+                        speed: webFastComeBackSpeed
                     }
                 }
                 return item;

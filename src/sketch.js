@@ -1,4 +1,5 @@
 var webs,
+    webFastComeBackSpeed = 8,
     enemiesClasses,
     enemies = [],
 
