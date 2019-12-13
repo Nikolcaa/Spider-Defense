@@ -1,6 +1,17 @@
 function lvlsData() {
     return {
-        stage1: [
+        tutorial: [
+            {
+                ID: 0,
+                default: 1,
+            },
+            {
+                ID: 1,
+                tank: 1,
+            },
+            
+        ],
+        /*stage1: [
             {
                 ID: 0,
                 default: 1,
@@ -14,7 +25,7 @@ function lvlsData() {
                 emptyHeart: 1,
                 sloweBonus: 2,
             },
-            {
+            /*{
                 ID: 2,
                 default: 3,
                 tank: 1,
@@ -48,7 +59,7 @@ function lvlsData() {
             {
                 ID: 8,
                 tank: 6,
-            },
-        ],
+            }, 
+        ],*/
     }
 } 

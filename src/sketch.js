@@ -20,7 +20,7 @@ var webs,
     cardsCollection = [],
 
     spider,
-    spiderHp = 4,
+    spiderHp = 400,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
@@ -28,23 +28,25 @@ var webs,
 
 function renderingStages() {
     // if (score === toliko) {
-        currentStage = lvlsData.stage1
+        currentStage = lvlsData.tutorial
+    //} else {
+        //currentStage = lvlsData.stage2
     //}
 }
 
 function renderingEnemies() {
     // -- levels --  -- enemies --
     Object.keys(currentStage[currentGroup]).map((classes, index) => {
-            Object.keys(enemiesClasses).map((grade, key) => {
-                if (classes === grade) {
-                    for (let i = 0; i < currentStage[currentGroup][classes]; i++) {
-                        let xPos = randomEnemyPositionX(width)
-                        let yPos = randomEnemyPositionY(height)
-    
-                        enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
-                    }
+        Object.keys(enemiesClasses).map((grade, key) => {
+            if (classes === grade) {
+                for (let i = 0; i < currentStage[currentGroup][classes]; i++) {
+                    let xPos = randomEnemyPositionX(width)
+                    let yPos = randomEnemyPositionY(height)
+
+                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
                 }
-            })
+            }
+        })
     })
 }
 
@@ -110,7 +112,7 @@ function preload() {
     // -- score updating --
     var scoreupdate = setInterval(function () {
         score += 1
-    }, 10)
+    }, 1000)
 }
 
 function setup() {
@@ -135,7 +137,6 @@ function setup() {
 
 function draw() {
     background('grey')
-    frameRate(60)
 
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -176,14 +177,11 @@ function draw() {
         enemies[i].move()
 
         if (Collision(spider, enemies[i])) {
-            enemies = [...enemies.filter(el => el.ID !== enemies[i].ID)]
-            spiderHp -= 1
-
-            if (spiderHp <= 0) {
-                alert("izgubio si")
-            }
+                enemies[i].collisionSpider(i)
         }
     }
+
+
 
     // ------------ bonuses ------------
     for (let i = 0; i < bonuses.length; i++) {
@@ -203,8 +201,11 @@ function draw() {
 
     // ------------ level-up ------------
     if (!enemies.length) {
-        currentGroup = int(random(0, currentStage.length))
-        console.log(currentGroup)
+        if(currentStage === lvlsData.tutorial){
+            currentGroup += 1
+        }else{
+            currentGroup = int(random(0, currentStage.length))
+        }
         renderingEnemies()
         renderingBonuses()
     }
@@ -231,7 +232,7 @@ function mousePressed() {
     // - Enemies -
     for (let i = 0; i < enemies.length; i++) {
         if (web && MouseCollision(enemies[i])) {
-            web.collisionEnemy(enemies[i])
+            web.collisionEnemy(enemies[i], i)
         }
     }
 

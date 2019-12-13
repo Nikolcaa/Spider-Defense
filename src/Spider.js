@@ -14,4 +14,6 @@ function Spider(skin, hp) {
         image(this.skin, -this.w / 2, -this.h / 2, this.w, this.h)
         pop()
     }
+
+    
 }

@@ -44,13 +44,13 @@ function Web(ID, active, x, y, x2, y2, speed) {
     }
 
     // --------- Enemy collision ----------
-    this.collisionEnemy = function (enemy) {
+    this.collisionEnemy = function (enemy, i) {
         //-- changing enemy hp --
         enemy.hp -= 1
 
         //-- deleting enemy --
         if (enemy.hp === 0) {
-            enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
+            enemies.splice(i, 1)
         }
 
         //-- changing webs --
