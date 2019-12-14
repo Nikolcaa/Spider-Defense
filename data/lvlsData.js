@@ -40,7 +40,7 @@ function lvlsData() {
                 emptyHeart: 1,
                 sloweBonus: 2,
             },
-            /*{
+            {
                 ID: 2,
                 default: 3,
                 tank: 1,

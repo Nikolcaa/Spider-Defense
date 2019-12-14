@@ -117,7 +117,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(window.innerWidth, window.innerHeight)
+    createCanvas(windowWidth, windowHeight)
 
     // ------------ Data------------
     webs = new websData()
@@ -133,6 +133,10 @@ function setup() {
     renderingStages()
     renderingEnemies()
     renderingBonuses()
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
@@ -210,7 +214,6 @@ function draw() {
         renderingEnemies()
         renderingBonuses()
     }
-
 }
 
 function mousePressed() {
