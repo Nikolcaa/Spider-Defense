@@ -29,9 +29,9 @@ var webs,
 
 function renderingStages() {
     // if (score === toliko) {
-        currentStage = lvlsData.tutorial
+    currentStage = lvlsData.tutorial
     //} else {
-        //currentStage = lvlsData.stage2
+    //currentStage = lvlsData.stage2
     //}
 }
 
@@ -178,7 +178,7 @@ function draw() {
         enemies[i].move()
 
         if (Collision(spider, enemies[i])) {
-                enemies[i].collisionSpider(i)
+            enemies[i].collisionSpider(i)
         }
     }
 
@@ -201,15 +201,18 @@ function draw() {
 
 
     // ------------ level-up ------------
-    if (!enemies.length) {
-        if(currentStage === lvlsData.tutorial){
-            currentGroup += 1
-        }else{
-            currentGroup = int(random(0, currentStage.length))
+    setTimeout(function () {
+        if (!enemies.length && !bonuses.length) {
+            if (currentStage === lvlsData.tutorial) {
+                currentGroup += 1
+            }/*  else {
+                currentGroup = int(random(0, currentStage.length))
+            } */
+            renderingEnemies()
+            renderingBonuses()
         }
-        renderingEnemies()
-        renderingBonuses()
-    }
+    }, 5000)
+
 }
 
 function mousePressed() {

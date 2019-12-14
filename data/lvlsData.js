@@ -23,17 +23,7 @@ function lvlsData() {
             },
             {
                 ID: 5,
-                default: 1,
-                tank: 1,
-            },
-            {
-                ID: 6,
                 sloweBonus: 1,
-            },
-            {
-                ID: 7,
-                default: 1,
-                tank: 1,
             },
         ],
         /*stage1: [
