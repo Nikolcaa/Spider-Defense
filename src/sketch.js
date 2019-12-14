@@ -132,7 +132,6 @@ function setup() {
     // ------------ rendering functions ------------
     renderingStages()
     renderingEnemies()
-
     renderingBonuses()
 }
 
@@ -201,17 +200,16 @@ function draw() {
 
 
     // ------------ level-up ------------
-    setTimeout(function () {
-        if (!enemies.length && !bonuses.length) {
-            if (currentStage === lvlsData.tutorial) {
-                currentGroup += 1
-            }/*  else {
+    if (!enemies.length && !bonuses.length) {
+        if (currentStage === lvlsData.tutorial) {
+
+            currentGroup += 1
+        }/*  else {
                 currentGroup = int(random(0, currentStage.length))
             } */
-            renderingEnemies()
-            renderingBonuses()
-        }
-    }, 5000)
+        renderingEnemies()
+        renderingBonuses()
+    }
 
 }
 
