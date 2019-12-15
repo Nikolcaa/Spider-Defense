@@ -2,12 +2,14 @@ function cardsData() {
     return {
         freezeCard: {
             ID: 0,
-            size: 50,
+            w: 40,
+            h: 40,
             img: skinFreezeCard,
         },
         sloweCard: {
             ID: 1,
-            size: 50,
+            w: 40,
+            h: 40,
             img: skinSloweCard,
         }
     }

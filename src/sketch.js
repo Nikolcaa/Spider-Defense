@@ -19,6 +19,10 @@ var webs,
     cardsData,
     cards = [],
     cardsCollection = [],
+    cardsCollectionBg,
+
+    cardsToShow = [],
+
 
     spider,
     spiderHp = 400,
@@ -26,7 +30,6 @@ var webs,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
 
 // ---------------- render functions -----------------
-
 function renderingStages() {
     // if (score === toliko) {
     currentStage = lvlsData.tutorial
@@ -44,7 +47,7 @@ function renderingEnemies() {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
-                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].size, enemiesClasses[grade].color))
+                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].w, enemiesClasses[grade].h, enemiesClasses[grade].color))
                 }
             }
         })
@@ -60,7 +63,7 @@ function renderingBonuses() {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
 
-                    bonuses.push(new Bonus(parseInt(_.uniqueId()) - 1, xPos, yPos, bonusClasses[grade].img, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].size, bonusClasses[grade].drop))
+                    bonuses.push(new Bonus(parseInt(_.uniqueId()) - 1, xPos, yPos, bonusClasses[grade].img, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].w, bonusClasses[grade].h, bonusClasses[grade].drop))
                 }
             }
         })
@@ -70,18 +73,32 @@ function renderingBonuses() {
 function renderingCards(currentBonus) {
     // -- bonuses --  -- cards --
     Object.keys(cardsClasses).map((classes, index) => {
-        let xPos = mouseX - cardsClasses[classes].size / 2
-        let yPos = mouseY - cardsClasses[classes].size / 2
+        let xPos = mouseX - cardsClasses[classes].w / 2
+        let yPos = mouseY - cardsClasses[classes].h / 2
 
         if (currentBonus.drop === classes) {
             setTimeout(function () {
-                cards.push(new Card(parseInt(_.uniqueId()), xPos, yPos, cardsClasses[classes].img, cardsClasses[classes].size, classes))
+                cards.push(new Card(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].w, cardsClasses[classes].h, classes, xPos, yPos))
             }, 1)
         }
     })
 }
 
+function renderingCardsCollection() {
+    let yPos = height - 50;
+    let xPos = 0;
 
+    cardsToShow = [];
+
+    for (let i = 0; i < cardsCollection.length; i++) {
+        cardsToShow.push(new Card(
+            ...Object.values(cardsCollection[i]),
+            xPos,
+            yPos
+        ))
+        xPos += 40
+    }
+}
 
 function preload() {
 
@@ -119,6 +136,7 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight)
 
+    cardsCollectionBg = new CardsCollectionBg(0, height - 70, width, 70)
     // ------------ Data------------
     webs = new websData()
     enemiesClasses = new enemiesData()
@@ -130,9 +148,11 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ rendering functions ------------
+    
     renderingStages()
     renderingEnemies()
     renderingBonuses()
+
 }
 
 function windowResized() {
@@ -141,6 +161,9 @@ function windowResized() {
 
 function draw() {
     background('grey')
+
+    // -- collectionBg --
+    cardsCollectionBg.show()
 
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -185,8 +208,6 @@ function draw() {
         }
     }
 
-
-
     // ------------ bonuses ------------
     for (let i = 0; i < bonuses.length; i++) {
         bonuses[i].show()
@@ -198,8 +219,8 @@ function draw() {
         cards[i].show()
     }
 
-    for (let i = 0; i < cardsCollection.length; i++) {
-        cardsCollection[i].show()
+    for (let i = 0; i < cardsToShow.length; i++) {
+        cardsToShow[i].show()
     }
 
 
@@ -218,6 +239,17 @@ function draw() {
 
 function mousePressed() {
     let web = getRandomWeb()
+
+    if (MouseCollision(cardsCollectionBg)) {
+        for (let i = 0; i < cardsToShow.length; i++) {
+            if (MouseCollision(cardsToShow[i])) {
+                cardsToShow[i].mouseCollision(i)
+                break;
+            }
+        }
+        return null
+    }
+
     // -- changing web --
     webs = [
         ...webs.map((item) => {
@@ -259,9 +291,9 @@ function mousePressed() {
 
 //--------- collision -----------
 function Collision(player1, player2) {
-    if (player1.x <= player2.x + player2.size / 2 &&
+    if (player1.x <= player2.x + player2.w / 2 &&
         player1.x + player1.w >= player2.x &&
-        player1.y <= player2.y + player2.size / 2 &&
+        player1.y <= player2.y + player2.h / 2 &&
         player1.y + player1.h >= player2.y) {
         return true
     } else {
@@ -270,9 +302,9 @@ function Collision(player1, player2) {
 }
 
 function MouseCollision(player2) {
-    if (mouseX <= player2.x + player2.size &&
+    if (mouseX <= player2.x + player2.w &&
         mouseX >= player2.x &&
-        mouseY <= player2.y + player2.size &&
+        mouseY <= player2.y + player2.h &&
         mouseY >= player2.y) {
         return true
     } else {

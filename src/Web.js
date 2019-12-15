@@ -108,12 +108,9 @@ function Web(ID, active, x, y, x2, y2, speed) {
         } */
 
         // -- pushing card in cardsCollection
-        let xPos = 10
-        let yPos = height - card.size - 10
-        for(let i = 0; i < cardsCollection.length; i++){
-            xPos += card.size
-        }
-        cardsCollection.push(new Card(card.ID, xPos, yPos, card.img, card.size, grade))
+        
+        cardsCollection.push({ID: card.ID,img: card.img,w: card.w,h: card.h, grade})
+        renderingCardsCollection()
 
         // -- deleting card from cards --
         cards = [...cards.filter(el => el.ID !== card.ID)];
@@ -130,6 +127,5 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 return item;
             })
         ]
-
     }
 }

@@ -1,15 +1,16 @@
-function Enemy(ID, x, y, speed, hp, size, color) {
+function Enemy(ID, x, y, speed, hp, w, h, color) {
     this.ID = ID
     this.x = x
     this.y = y
     this.speed = speed
     this.hp = hp
-    this.size = size
+    this.w = w
+    this.h = h
     this.color = color
     this.show = function () {
         push()
         fill(this.color)
-        rect(this.x, this.y, this.size, this.size)
+        rect(this.x, this.y, this.w, this.h)
         pop()
     }
 

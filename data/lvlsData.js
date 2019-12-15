@@ -1,7 +1,7 @@
 function lvlsData() {
     return {
         tutorial: [
-            {
+            /* {
                 ID: 0,
                 default: 1,
             },
@@ -16,13 +16,21 @@ function lvlsData() {
             {
                 ID: 3,
                 emptyHeart: 1,
-            },
+            }, */
             {
-                ID: 4,
+                ID: 1,
                 freezeBonus: 1,
             },
             {
-                ID: 5,
+                ID: 2,
+                sloweBonus: 1,
+            },
+            {
+                ID: 3,
+                sloweBonus: 1,
+            },
+            {
+                ID: 4,
                 sloweBonus: 1,
             },
         ],
