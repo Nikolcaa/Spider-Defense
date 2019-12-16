@@ -65,6 +65,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
                 return item;
             })
         ]
+
     }
 
     // --------- Bonus collision ----------
@@ -102,18 +103,12 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     // -- cardHeart --
     this.collisionCard = function (card, grade) {
-        // -- chacking what is grade of card --
-        /* if (grade === "freezeCard") {
-            console.log("pokupio sam freezeCard")
-        } */
-
         // -- pushing card in cardsCollection
-        
-        cardsCollection.push({ID: card.ID,img: card.img,w: card.w,h: card.h, grade})
-        renderingCardsCollection()
+
+        renderingUseableCards(card, grade)
 
         // -- deleting card from cards --
-        cards = [...cards.filter(el => el.ID !== card.ID)];
+        floatingCards = [...floatingCards.filter(el => el.ID !== card.ID)];
 
         // -- changing webs --
         webs = [

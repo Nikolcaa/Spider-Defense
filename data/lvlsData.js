@@ -18,20 +18,25 @@ function lvlsData() {
                 emptyHeart: 1,
             }, */
             {
+                ID: 0,
+                freezeBonus: 1,
+                sloweBonus: 1
+            },
+            {
                 ID: 1,
                 freezeBonus: 1,
+                tank: 5,
+                default: 3,
             },
             {
                 ID: 2,
-                sloweBonus: 1,
+                freezeBonus: 1,
+                default: 2,
             },
             {
                 ID: 3,
-                sloweBonus: 1,
-            },
-            {
-                ID: 4,
-                sloweBonus: 1,
+                freezeBonus: 1,
+                tank: 2
             },
         ],
         /*stage1: [

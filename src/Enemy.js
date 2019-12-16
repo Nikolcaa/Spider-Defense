@@ -1,4 +1,4 @@
-function Enemy(ID, x, y, speed, hp, w, h, color) {
+function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.ID = ID
     this.x = x
     this.y = y
@@ -7,6 +7,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color) {
     this.w = w
     this.h = h
     this.color = color
+    this.grade = grade
     this.show = function () {
         push()
         fill(this.color)
@@ -34,11 +35,10 @@ function Enemy(ID, x, y, speed, hp, w, h, color) {
         }
     }
 
-    this.collisionSpider = function (i) {
+    this.collisionSpider = function (enemy) {
         setTimeout(function () {
-            enemies.splice(i, 1)
             spiderHp -= 1
-
+            enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
             if (spiderHp <= 0) {
                 alert("izgubio si")
             }

@@ -17,6 +17,10 @@ function Bonus(ID, x, y, img, speed, hp, w, h, drop){
 
         this.x += this.xSpeed
         this.y += this.ySpeed
+
+        if(this.x >= width || this.y >= height){
+            bonuses = [...bonuses.filter(el => el.ID !== this.ID)];
+        }
     }
 
 }

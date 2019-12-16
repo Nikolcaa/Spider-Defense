@@ -1,5 +1,6 @@
 var webs,
     webFastComeBackSpeed = 8,
+
     enemiesClasses,
     enemies = [],
 
@@ -17,12 +18,14 @@ var webs,
     hearts = [],
 
     cardsData,
-    cards = [],
-    cardsCollection = [],
+    floatingCards = [],
+    useableCards = [],
     cardsCollectionBg,
+    cardsPower,
 
-    cardsToShow = [],
+    disabledCards = [],
 
+    bgColor = 'gray',
 
     spider,
     spiderHp = 400,
@@ -47,7 +50,7 @@ function renderingEnemies() {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
-                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].w, enemiesClasses[grade].h, enemiesClasses[grade].color))
+                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].w, enemiesClasses[grade].h, enemiesClasses[grade].color, enemiesClasses[grade].grade))
                 }
             }
         })
@@ -70,7 +73,7 @@ function renderingBonuses() {
     })
 }
 
-function renderingCards(currentBonus) {
+function renderingFloatingCards(currentBonus) {
     // -- bonuses --  -- cards --
     Object.keys(cardsClasses).map((classes, index) => {
         let xPos = mouseX - cardsClasses[classes].w / 2
@@ -78,26 +81,22 @@ function renderingCards(currentBonus) {
 
         if (currentBonus.drop === classes) {
             setTimeout(function () {
-                cards.push(new Card(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].w, cardsClasses[classes].h, classes, xPos, yPos))
+                floatingCards.push(new FloatingCard(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].w, cardsClasses[classes].h, xPos, yPos, classes))
             }, 1)
         }
     })
 }
 
-function renderingCardsCollection() {
-    let yPos = height - 50;
-    let xPos = 0;
+function renderingUseableCards(card, grade) {
+    let yPos = height - 55;
+    let xPos = 10;
 
-    cardsToShow = [];
-
-    for (let i = 0; i < cardsCollection.length; i++) {
-        cardsToShow.push(new Card(
-            ...Object.values(cardsCollection[i]),
-            xPos,
-            yPos
-        ))
+    for (let i = 0; i < useableCards.length; i++) {
         xPos += 40
     }
+
+    useableCards.push(new UseableCard(card.ID, card.img, card.w, card.h, xPos, yPos, grade))
+
 }
 
 function preload() {
@@ -137,6 +136,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight)
 
     cardsCollectionBg = new CardsCollectionBg(0, height - 70, width, 70)
+
     // ------------ Data------------
     webs = new websData()
     enemiesClasses = new enemiesData()
@@ -148,7 +148,7 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ rendering functions ------------
-    
+
     renderingStages()
     renderingEnemies()
     renderingBonuses()
@@ -160,7 +160,7 @@ function windowResized() {
 }
 
 function draw() {
-    background('grey')
+    background(bgColor)
 
     // -- collectionBg --
     cardsCollectionBg.show()
@@ -204,7 +204,7 @@ function draw() {
         enemies[i].move()
 
         if (Collision(spider, enemies[i])) {
-            enemies[i].collisionSpider(i)
+            enemies[i].collisionSpider(enemies[i])
         }
     }
 
@@ -215,14 +215,13 @@ function draw() {
     }
 
     // ------------ cards ------------
-    for (let i = 0; i < cards.length; i++) {
-        cards[i].show()
+    for (let i = 0; i < floatingCards.length; i++) {
+        floatingCards[i].show()
     }
 
-    for (let i = 0; i < cardsToShow.length; i++) {
-        cardsToShow[i].show()
+    for (let i = 0; i < useableCards.length; i++) {
+        useableCards[i].show()
     }
-
 
     // ------------ level-up ------------
     if (!enemies.length && !bonuses.length) {
@@ -241,9 +240,9 @@ function mousePressed() {
     let web = getRandomWeb()
 
     if (MouseCollision(cardsCollectionBg)) {
-        for (let i = 0; i < cardsToShow.length; i++) {
-            if (MouseCollision(cardsToShow[i])) {
-                cardsToShow[i].mouseCollision(i)
+        for (let i = 0; i < useableCards.length; i++) {
+            if (MouseCollision(useableCards[i]) && disabledCards.indexOf(useableCards[i].grade) === -1) {
+                useableCards[i].mouseCollision()
                 break;
             }
         }
@@ -276,15 +275,15 @@ function mousePressed() {
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
         if (web && MouseCollision(bonuses[i])) {
-            renderingCards(bonuses[i])
+            renderingFloatingCards(bonuses[i])
             web.collisionBonus(bonuses[i])
         }
     }
 
     // - cards -
-    for (let i = 0; i < cards.length; i++) {
-        if (web && MouseCollision(cards[i])) {
-            web.collisionCard(cards[i], cards[i].grade)
+    for (let i = 0; i < floatingCards.length; i++) {
+        if (web && MouseCollision(floatingCards[i])) {
+            web.collisionCard(floatingCards[i], floatingCards[i].grade)
         }
     }
 }
