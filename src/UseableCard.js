@@ -1,38 +1,21 @@
-function UseableCard(ID, img, w, h, x, y, grade) {
+function UseableCard(ID, img, w, h, grade, x, y, ) {
     this.ID = ID
     this.img = img
     this.w = w
     this.h = h
+    this.grade = grade
     this.x = x
     this.y = y
-    this.grade = grade
     this.show = function(){
         image(this.img, this.x, this.y, this.w, this.h)
     } 
 
-    this.mouseCollision = function(){
-        useableCards = [...useableCards.filter(el => el.ID !== this.ID)];
+    this.mouseCollision = function(card){
+        cardsCollection = [...cardsCollection.filter(el => el.ID !== card.ID)];
+        renderingCardsCollection()
         
-        
-        disabledCards = [
-            ...disabledCards,
-            this.grade
-        ]
+        disabledCards.push(this.grade)
 
-
-        switch(this.grade) {
-            case 'freezeCard': {
-                PowerOfCards(this.grade)
-                break;
-            };
-            case 'sloweCard': {
-                PowerOfCards(this.grade)
-                break;
-            };
-            default: {
-                console.log('undefined grade')
-                break;
-            }
-        }
+        PowerOfCards(this.grade)
     }
 }

@@ -14,13 +14,16 @@ var webs,
     score = 0,
 
     heart,
-
     hearts = [],
 
     cardsData,
     floatingCards = [],
+
     useableCards = [],
-    cardsCollectionBg,
+    cardsCollection = [],
+
+    fields = 21,
+    fieldsForCards = [],
     cardsPower,
 
     disabledCards = [],
@@ -87,16 +90,32 @@ function renderingFloatingCards(currentBonus) {
     })
 }
 
-function renderingUseableCards(card, grade) {
-    let yPos = height - 55;
-    let xPos = 10;
+function renderingCardsCollection() {
+    let yPos = height - 70;
+    let xPos = 0;
 
-    for (let i = 0; i < useableCards.length; i++) {
-        xPos += 40
+    useableCards = [];
+
+    for (let i = 0; i < cardsCollection.length; i++) {
+        useableCards.push(new UseableCard(
+            ...Object.values(cardsCollection[i]),
+            xPos,
+            yPos
+        ))
+        xPos += 70
     }
+}
 
-    useableCards.push(new UseableCard(card.ID, card.img, card.w, card.h, xPos, yPos, grade))
+function renderingFieldsForCards() {
+    let w = width / 21
+    let h = 70
+    let yPos = height - 70;
+    let xPos = 0;
 
+    for (let i = 0; i < fields; i++) {
+        fieldsForCards.push(new FieldForCard(xPos, yPos, w, h))
+        xPos += w
+    }
 }
 
 function preload() {
@@ -119,11 +138,11 @@ function preload() {
 
     // bonuses
     skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.png')
-    skinSloweBonus = loadImage('imagesOfBonuses/sloweBonus.png')
+    skinWebSpeedBonus = loadImage('imagesOfBonuses/sloweBonus.png')
 
     // cards
     skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
-    skinSloweCard = loadImage('imagesOfCards/sloweCard.png')
+    skinWebSpeedCard = loadImage('imagesOfCards/sloweCard.png')
 
 
     // -- score updating --
@@ -134,8 +153,6 @@ function preload() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight)
-
-    cardsCollectionBg = new CardsCollectionBg(0, height - 70, width, 70)
 
     // ------------ Data------------
     webs = new websData()
@@ -153,6 +170,7 @@ function setup() {
     renderingEnemies()
     renderingBonuses()
 
+    renderingFieldsForCards()
 }
 
 function windowResized() {
@@ -161,10 +179,7 @@ function windowResized() {
 
 function draw() {
     background(bgColor)
-
-    // -- collectionBg --
-    cardsCollectionBg.show()
-
+    
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
     var yPosOfHeart = 0
@@ -215,6 +230,10 @@ function draw() {
     }
 
     // ------------ cards ------------
+    for (let i = 0; i < fields; i++) {
+        fieldsForCards[i].show()
+    }
+
     for (let i = 0; i < floatingCards.length; i++) {
         floatingCards[i].show()
     }
@@ -222,6 +241,8 @@ function draw() {
     for (let i = 0; i < useableCards.length; i++) {
         useableCards[i].show()
     }
+
+
 
     // ------------ level-up ------------
     if (!enemies.length && !bonuses.length) {
@@ -239,14 +260,16 @@ function draw() {
 function mousePressed() {
     let web = getRandomWeb()
 
-    if (MouseCollision(cardsCollectionBg)) {
-        for (let i = 0; i < useableCards.length; i++) {
-            if (MouseCollision(useableCards[i]) && disabledCards.indexOf(useableCards[i].grade) === -1) {
-                useableCards[i].mouseCollision()
-                break;
+    for (let j = 0; j < fields; j++) {
+        if (MouseCollision(fieldsForCards[j])) {
+            for (let i = 0; i < useableCards.length; i++) {
+                if (MouseCollision(useableCards[i]) && disabledCards.indexOf(useableCards[i].grade) === -1) {
+                    useableCards[i].mouseCollision(useableCards[i])
+                    break;
+                }
             }
+            return null;
         }
-        return null
     }
 
     // -- changing web --

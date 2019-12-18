@@ -7,11 +7,11 @@ function cardsData() {
             img: skinFreezeCard,
             effect: "freeze",
         },
-        sloweCard: {
+        webSpeedCard: {
             ID: 1,
             w: 40,
             h: 40,
-            img: skinSloweCard,
+            img: skinWebSpeedCard,
             effect: "slowe",
         }
     }

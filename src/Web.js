@@ -53,19 +53,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
             enemies.splice(i, 1)
         }
 
-        //-- changing webs --
-        webs = [
-            ...webs.map((item) => {
-                if (item.ID === this.ID) {
-                    return {
-                        ...item,
-                        speed: webFastComeBackSpeed
-                    }
-                }
-                return item;
-            })
-        ]
-
+        FastWebComeBackSpeed(this)
     }
 
     // --------- Bonus collision ----------
@@ -85,42 +73,37 @@ function Web(ID, active, x, y, x2, y2, speed) {
             bonuses = [...bonuses.filter(el => el.ID !== bonus.ID)];
         }
 
-        // -- changing webs --
-        webs = [
-            ...webs.map((item) => {
-                if (item.ID === this.ID) {
-                    return {
-                        ...item,
-                        speed: webFastComeBackSpeed
-                    }
-                }
-                return item;
-            })
-        ]
+        FastWebComeBackSpeed(this)
     }
 
     // --------- CARDS COLLISIONS ----------
 
-    // -- cardHeart --
     this.collisionCard = function (card, grade) {
         // -- pushing card in cardsCollection
+        let widthOfCard = 70
+        let heightOfCard = 70
 
-        renderingUseableCards(card, grade)
+        cardsCollection.push({ ID: card.ID, img: card.img, w: widthOfCard, h: heightOfCard, grade })
+        renderingCardsCollection()
 
         // -- deleting card from cards --
         floatingCards = [...floatingCards.filter(el => el.ID !== card.ID)];
 
-        // -- changing webs --
-        webs = [
-            ...webs.map((item) => {
-                if (item.ID === this.ID) {
-                    return {
-                        ...item,
-                        speed: webFastComeBackSpeed
-                    }
-                }
-                return item;
-            })
-        ]
+        FastWebComeBackSpeed(this)
     }
+}
+
+function FastWebComeBackSpeed(web) {
+    // -- changing webs --
+    webs = [
+        ...webs.map((item) => {
+            if (item.ID === web.ID) {
+                return {
+                    ...item,
+                    speed: webFastComeBackSpeed
+                }
+            }
+            return item;
+        })
+    ]
 }
