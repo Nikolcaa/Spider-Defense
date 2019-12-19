@@ -6,14 +6,14 @@ function Spider(skin, hp) {
         this.x = width / 2 - this.w / 2
         this.y = height / 2 - this.h / 2
         this.hp = hp
-        push()
-        translate(width / 2, height / 2);
-        rotate(PI / 2.0);
-        let a = atan2(mouseY - height / 2, mouseX - width / 2);
-        rotate(a);
-        image(this.skin, -this.w / 2, -this.h / 2, this.w, this.h)
-        pop()
+        this.show = function(){
+            push()
+            translate(width / 2, height / 2);
+            rotate(PI / 2.0);
+            let a = atan2(mouseY - height / 2, mouseX - width / 2);
+            rotate(a);
+            image(this.skin, -this.w / 2, -this.h / 2, this.w, this.h)
+            pop()
+        }
     }
-
-    
 }

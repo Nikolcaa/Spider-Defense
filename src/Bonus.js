@@ -9,7 +9,9 @@ function Bonus(ID, x, y, img, speed, hp, w, h, drop){
     this.h = h
     this.drop = drop
     this.show = function(){
+        push()
         image(this.img, this.x, this.y, this.w, this.h)
+        pop()
     }
     this.move = function(){
         this.ySpeed = speed

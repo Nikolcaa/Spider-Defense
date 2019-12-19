@@ -18,19 +18,18 @@ function PowerOfCards(grade) {
             disabledCards.splice(disabledCards.indexOf(this.grade), 1);
 
             BackToNormalEnemiesSpeed()
-
-        }, 3000)
+        }, 1000)
     }
 
     //------------------------------------------------------------------------------------
 
     else if (grade === 'websComeBackCard') {
-        disabledCards.splice(disabledCards.indexOf(this.grade), 1);
         for(let i = 0; i < webs.length; i++){
             if(webs[i].active){
-                webs[i].comeBack()
+                webs[i].fastComeBack()
             }
         }
+        disabledCards.splice(disabledCards.indexOf(this.grade), 1);
     }
 
 }

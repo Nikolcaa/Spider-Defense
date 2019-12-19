@@ -1,4 +1,4 @@
-function UseableCard(ID, img, w, h, grade, x, y, ) {
+function UseableCard(ID, img, w, h, grade, x, y) {
     this.ID = ID
     this.img = img
     this.w = w
@@ -7,7 +7,9 @@ function UseableCard(ID, img, w, h, grade, x, y, ) {
     this.x = x
     this.y = y
     this.show = function(){
-        image(this.img, this.x, this.y, this.w, this.h)
+        push()
+        image(this.img, this.x, this.y)
+        pop()
     } 
 
     this.mouseCollision = function(card){

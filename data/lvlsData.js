@@ -19,7 +19,7 @@ function lvlsData() {
             }, */
             {
                 ID: 0,
-                freezeBonus: 1,
+                freezeBonus: 2,
                 websComeBackBonus: 1
             },
             {

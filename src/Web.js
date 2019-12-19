@@ -19,31 +19,32 @@ function Web(ID, active, x, y, x2, y2, speed) {
         if (this.x2 < this.x && this.y2 < this.y) {
             this.x2 += this.xSpeed
             this.y2 += this.ySpeed
-            if (this.y2 >= this.y && this.x2 >= this.x) {
-                this.y2 = this.y
-                this.x2 = this.x
-                this.active = false
-                this.speed = 2
-            }
+            this.ifWebComeBack()
         } else if (this.x2 < this.x && this.y2 > this.y) {
             this.x2 += this.xSpeed
             this.y2 -= this.ySpeed
         } else if (this.x2 > this.x && this.y2 < this.y) {
             this.x2 -= this.xSpeed
             this.y2 += this.ySpeed
-            if (this.x2 <= this.x && this.y2 >= this.y) {
-                this.y2 = this.y
-                this.x2 = this.x
-                this.active = false
-                this.speed = 2
-            }
+            this.ifWebComeBack()
         } else if (this.x2 > this.x && this.y2 > this.y) {
             this.x2 -= this.xSpeed
             this.y2 -= this.ySpeed
         }
     }
 
-    this.comeBack = function() {
+    this.ifWebComeBack = function(){
+        if (this.y2 >= this.y && this.x2 >= this.x || this.x2 <= this.x && this.y2 >= this.y) {
+            this.y2 = this.y
+            this.x2 = this.x
+            this.active = false
+            this.speed = 2
+            theRestOfWebs += 1
+            return true;
+        }
+    }
+
+    this.fastComeBack = function() {
         this.speed = 20
     }
 
@@ -84,10 +85,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
 
     this.collisionCard = function (card, grade) {
         // -- pushing card in cardsCollection
-        let widthOfCard = 70
-        let heightOfCard = 70
-
-        cardsCollection.push({ ID: card.ID, img: card.img, w: widthOfCard, h: heightOfCard, grade })
+        cardsCollection.push({ ID: card.ID, img: card.img, w: card.img.width, h: card.img.height, grade })
         renderingCardsCollection()
 
         // -- deleting card from cards --

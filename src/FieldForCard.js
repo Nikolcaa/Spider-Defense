@@ -6,7 +6,7 @@ function FieldForCard(x, y, w, h) {
     this.show = function(){
         push()
         fill("black")
-        stroke("blue")
+        stroke("white")
         strokeWeight(2)
         rect(this.x, this.y, this.w, this.h)
         pop()

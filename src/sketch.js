@@ -1,6 +1,7 @@
 var webs,
     webFastComeBackSpeed = 8,
     webComeBackSpeed = 2,
+    theRestOfWebs = 8,
 
     enemiesClasses,
     enemies = [],
@@ -23,7 +24,7 @@ var webs,
     useableCards = [],
     cardsCollection = [],
 
-    fields = 21,
+    fields = 20,
     fieldsForCards = [],
     cardsPower,
 
@@ -78,23 +79,24 @@ function renderingBonuses() {
 }
 
 function renderingFloatingCards(currentBonus) {
-    console.log(bonuses)
     // -- bonuses --  -- cards --
     Object.keys(cardsClasses).map((classes, index) => {
-        let xPos = mouseX - cardsClasses[classes].w / 2
-        let yPos = mouseY - cardsClasses[classes].h / 2
+        let xPos = mouseX - cardsClasses[classes].img.width / 2
+        let yPos = mouseY - cardsClasses[classes].img.height / 2
 
         if (currentBonus.drop === classes) {
             setTimeout(function () {
-                floatingCards.push(new FloatingCard(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].w, cardsClasses[classes].h, xPos, yPos, classes))
+                floatingCards.push(new FloatingCard(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].img.width, cardsClasses[classes].img.height, xPos, yPos, classes))
             }, 1)
         }
     })
 }
 
 function renderingCardsCollection() {
-    let yPos = height - 70;
-    let xPos = 0;
+    let widthOfCard = 70
+    let heightOfCard = 80
+    let yPos = fieldsForCards[0].y
+    let xPos = fieldsForCards[0].x
 
     useableCards = [];
 
@@ -104,15 +106,15 @@ function renderingCardsCollection() {
             xPos,
             yPos
         ))
-        xPos += 70
+        xPos += 72
     }
 }
 
 function renderingFieldsForCards() {
-    let w = width / 21
-    let h = 70
-    let yPos = height - 70;
-    let xPos = 0;
+    let w = 70 + 2
+    let h = 80 + 2
+    let yPos = height - h;
+    let xPos = (width - w * fields) / 2;
 
     for (let i = 0; i < fields; i++) {
         fieldsForCards.push(new FieldForCard(xPos, yPos, w, h))
@@ -182,6 +184,16 @@ function windowResized() {
 function draw() {
     background(bgColor)
 
+    // ------------ score ------------
+    textSize(20)
+    fill("white");
+    text("SCORE: " + score, 20, 30)
+
+    // ------------ counter of webs ------------
+    textSize(20)
+    fill("white");
+    text("THE REST OF WEBS: " + theRestOfWebs, 200, 30)
+
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
     var yPosOfHeart = 0
@@ -198,10 +210,7 @@ function draw() {
         xPosOfHeart += 30
     }
 
-    // ------------ score ------------
-    textSize(32)
-    fill("white");
-    text("SCORE: " + score, 0, 30)
+
 
     // ------------ spider ------------
     spider.show()
@@ -256,9 +265,7 @@ function draw() {
 }
 
 function mousePressed() {
-    let web = getRandomWeb()
-
-    for (let j = 0; j < fields; j++) {
+    for (let j = 0; j < fieldsForCards.length; j++) {
         if (MouseCollision(fieldsForCards[j])) {
             for (let i = 0; i < useableCards.length; i++) {
                 if (MouseCollision(useableCards[i]) && disabledCards.indexOf(useableCards[i].grade) === -1) {
@@ -269,6 +276,8 @@ function mousePressed() {
             return null;
         }
     }
+
+    let web = getRandomWeb()
 
     // -- changing web --
     webs = [
@@ -285,6 +294,9 @@ function mousePressed() {
         })
     ]
 
+    if(web){
+        theRestOfWebs -= 1
+    }
     // -- Collisions --
     // - Enemies -
     for (let i = 0; i < enemies.length; i++) {

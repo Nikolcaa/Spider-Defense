@@ -7,6 +7,6 @@ function FloatingCard(ID, img, w, h, x, y, grade) {
     this.y = y
     this.grade = grade
     this.show = function(){
-        image(this.img, this.x, this.y, this.w, this.h)
+        image(this.img, this.x, this.y)
     } 
 }

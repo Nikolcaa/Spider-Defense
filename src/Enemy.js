@@ -43,6 +43,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
                 alert("izgubio si")
             }
         }, 0.001)
+
+
     }
 
 }
