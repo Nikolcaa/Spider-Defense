@@ -1,77 +1,13 @@
 function websData() {
-    return [
-        {
-            ID: 0,
-            active: true,
+    return [0,1,2,3,4,5,6,7].map((i) => {
+        return {
+            ID: i,
+            active: false,
             x: width / 2,
             y: height / 2,
             x2: width / 2,
             y2: height / 2,
-            speed: 2,
-        },
-        {
-            ID: 1,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-        {
-            ID: 2,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-        {
-            ID: 3,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-        //------
-        {
-            ID: 4,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-        {
-            ID: 5,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-        {
-            ID: 6,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-        {
-            ID: 7,
-            active: true,
-            x: width / 2,
-            y: height / 2,
-            x2: width / 2,
-            y2: height / 2,
-            speed: 2,
-        },
-    ]
+            speed: webComeBackSpeed,
+        }
+    })
 }

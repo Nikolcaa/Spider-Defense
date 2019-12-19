@@ -26,14 +26,14 @@ function bonusData() {
             img: skinFreezeBonus,
             drop: "freezeCard",
         },
-        webSpeedBonus: {
+        websComeBackBonus: {
             ID: 3,
             speed: 1.5,
             hp: 1,
             w: 40,
             h: 40,
-            img: skinWebSpeedBonus,
-            drop: "webSpeedCard",
+            img: skinWebsComeBackBonus,
+            drop: "websComeBackCard",
         }
     }
 }

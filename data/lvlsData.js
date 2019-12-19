@@ -20,7 +20,7 @@ function lvlsData() {
             {
                 ID: 0,
                 freezeBonus: 1,
-                webSpeedBonus: 1
+                websComeBackBonus: 1
             },
             {
                 ID: 1,

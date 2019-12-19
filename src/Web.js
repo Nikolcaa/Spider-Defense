@@ -22,7 +22,7 @@ function Web(ID, active, x, y, x2, y2, speed) {
             if (this.y2 >= this.y && this.x2 >= this.x) {
                 this.y2 = this.y
                 this.x2 = this.x
-                this.active = true
+                this.active = false
                 this.speed = 2
             }
         } else if (this.x2 < this.x && this.y2 > this.y) {
@@ -34,13 +34,17 @@ function Web(ID, active, x, y, x2, y2, speed) {
             if (this.x2 <= this.x && this.y2 >= this.y) {
                 this.y2 = this.y
                 this.x2 = this.x
-                this.active = true
+                this.active = false
                 this.speed = 2
             }
         } else if (this.x2 > this.x && this.y2 > this.y) {
             this.x2 -= this.xSpeed
             this.y2 -= this.ySpeed
         }
+    }
+
+    this.comeBack = function() {
+        this.speed = 20
     }
 
     // --------- Enemy collision ----------

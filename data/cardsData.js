@@ -7,11 +7,11 @@ function cardsData() {
             img: skinFreezeCard,
             effect: "freeze",
         },
-        webSpeedCard: {
+        websComeBackCard: {
             ID: 1,
             w: 40,
             h: 40,
-            img: skinWebSpeedCard,
+            img: skinWebsComeBackCard,
             effect: "slowe",
         }
     }

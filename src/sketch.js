@@ -1,5 +1,6 @@
 var webs,
     webFastComeBackSpeed = 8,
+    webComeBackSpeed = 2,
 
     enemiesClasses,
     enemies = [],
@@ -77,6 +78,7 @@ function renderingBonuses() {
 }
 
 function renderingFloatingCards(currentBonus) {
+    console.log(bonuses)
     // -- bonuses --  -- cards --
     Object.keys(cardsClasses).map((classes, index) => {
         let xPos = mouseX - cardsClasses[classes].w / 2
@@ -138,11 +140,11 @@ function preload() {
 
     // bonuses
     skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.png')
-    skinWebSpeedBonus = loadImage('imagesOfBonuses/sloweBonus.png')
+    skinWebsComeBackBonus = loadImage('imagesOfBonuses/sloweBonus.png')
 
     // cards
     skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
-    skinWebSpeedCard = loadImage('imagesOfCards/sloweCard.png')
+    skinWebsComeBackCard = loadImage('imagesOfCards/sloweCard.png')
 
 
     // -- score updating --
@@ -179,7 +181,7 @@ function windowResized() {
 
 function draw() {
     background(bgColor)
-    
+
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
     var yPosOfHeart = 0
@@ -208,9 +210,7 @@ function draw() {
     for (let i = 0; i < webs.length; i++) {
         webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
         webs[i].show()
-        if (webs[i].active === false) {
-            webs[i].move()
-        }
+        webs[i].move()
     }
 
     // ------------ enemies ------------
@@ -241,8 +241,6 @@ function draw() {
     for (let i = 0; i < useableCards.length; i++) {
         useableCards[i].show()
     }
-
-
 
     // ------------ level-up ------------
     if (!enemies.length && !bonuses.length) {
@@ -280,7 +278,7 @@ function mousePressed() {
                     ...item,
                     x2: mouseX,
                     y2: mouseY,
-                    active: false
+                    active: true
                 }
             }
             return item;
@@ -372,5 +370,5 @@ function getRandomWeb() {
 }
 
 function filteredWebs() {
-    return webs.filter(item => item.active)
+    return webs.filter(item => !item.active)
 }

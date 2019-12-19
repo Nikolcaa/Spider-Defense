@@ -24,17 +24,13 @@ function PowerOfCards(grade) {
 
     //------------------------------------------------------------------------------------
 
-    else if (grade === 'webSpeedCard') {
-        let regularWebFastComeBackSpeed = webFastComeBackSpeed
-        webFastComeBackSpeed *= 2
-
-        setTimeout(() => {
-            disabledCards.splice(disabledCards.indexOf(this.grade), 1);
-            webFastComeBackSpeed = regularWebFastComeBackSpeed
-
-
-
-        }, 3000)
+    else if (grade === 'websComeBackCard') {
+        disabledCards.splice(disabledCards.indexOf(this.grade), 1);
+        for(let i = 0; i < webs.length; i++){
+            if(webs[i].active){
+                webs[i].comeBack()
+            }
+        }
     }
 
 }
