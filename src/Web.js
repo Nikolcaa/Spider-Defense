@@ -39,7 +39,6 @@ function Web(ID, active, x, y, x2, y2, speed) {
             this.x2 = this.x
             this.active = false
             this.speed = 2
-            theRestOfWebs += 1
             return true;
         }
     }

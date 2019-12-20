@@ -18,25 +18,10 @@ function lvlsData() {
                 emptyHeart: 1,
             }, */
             {
-                ID: 0,
-                freezeBonus: 2,
-                websComeBackBonus: 1
+                Hornet: 3,
             },
             {
-                ID: 1,
-                freezeBonus: 1,
-                tank: 5,
-                default: 3,
-            },
-            {
-                ID: 2,
-                freezeBonus: 1,
-                default: 2,
-            },
-            {
-                ID: 3,
-                freezeBonus: 1,
-                tank: 2
+                heart: 10,
             },
         ],
         /*stage1: [

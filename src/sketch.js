@@ -1,14 +1,14 @@
 var webs,
     webFastComeBackSpeed = 8,
     webComeBackSpeed = 2,
-    theRestOfWebs = 8,
-
-    enemiesClasses,
-    enemies = [],
+    numberOfWebs = 8,
 
     lvlsData,
     currentStage,
     currentGroup = 0,
+
+    enemiesClasses,
+    enemies = [],
 
     bonusClasses,
     bonuses = [],
@@ -18,24 +18,22 @@ var webs,
     heart,
     hearts = [],
 
-    cardsData,
+    cardsClasses,
     floatingCards = [],
-
     useableCards = [],
     cardsCollection = [],
+    disabledCards = [],
 
     fields = 20,
     fieldsForCards = [],
     cardsPower,
 
-    disabledCards = [],
-
-    bgColor = 'gray',
-
     spider,
     spiderHp = 400,
     maxSpiderHp = 8,
-    skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9;
+    skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
+
+    bgColor = 'gray';
 
 // ---------------- render functions -----------------
 function renderingStages() {
@@ -71,7 +69,7 @@ function renderingBonuses() {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
 
-                    bonuses.push(new Bonus(parseInt(_.uniqueId()) - 1, xPos, yPos, bonusClasses[grade].img, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].w, bonusClasses[grade].h, bonusClasses[grade].drop))
+                    bonuses.push(new Bonus(parseInt(_.uniqueId()), xPos, yPos, bonusClasses[grade].img, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].w, bonusClasses[grade].h, bonusClasses[grade].drop))
                 }
             }
         })
@@ -189,10 +187,8 @@ function draw() {
     fill("white");
     text("SCORE: " + score, 20, 30)
 
-    // ------------ counter of webs ------------
-    textSize(20)
-    fill("white");
-    text("THE REST OF WEBS: " + theRestOfWebs, 200, 30)
+
+
 
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -210,17 +206,28 @@ function draw() {
         xPosOfHeart += 30
     }
 
-
-
     // ------------ spider ------------
     spider.show()
 
     // ------------ webs ------------
-    for (let i = 0; i < webs.length; i++) {
+    let theRestOfWebs = []
+
+    for (let i = 0; i < numberOfWebs; i++) {
+        webs.length = numberOfWebs
         webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
         webs[i].show()
         webs[i].move()
+        if(!webs[i].active){
+            theRestOfWebs.push(i)
+        }
     }
+
+    // ------------ counter of webs ------------
+    textSize(20)
+    fill("white")
+    text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
+
+
 
     // ------------ enemies ------------
     for (let i = 0; i < enemies.length; i++) {
@@ -294,9 +301,6 @@ function mousePressed() {
         })
     ]
 
-    if(web){
-        theRestOfWebs -= 1
-    }
     // -- Collisions --
     // - Enemies -
     for (let i = 0; i < enemies.length; i++) {
@@ -382,5 +386,5 @@ function getRandomWeb() {
 }
 
 function filteredWebs() {
-    return webs.filter(item => !item.active)
+    return webs.filter(item => !item.active) 
 }

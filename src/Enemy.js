@@ -39,11 +39,16 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         setTimeout(function () {
             spiderHp -= 1
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
-            if (spiderHp <= 0) {
-                alert("izgubio si")
-            }
-        }, 0.001)
 
+            if(enemy.grade === "Hornet"){
+                numberOfWebs -= 1
+            }
+
+        }, 10)
+
+        if (spiderHp <= 0) {
+            alert("izgubio si")
+        }
 
     }
 
