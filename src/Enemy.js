@@ -35,12 +35,25 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
+    this.QueenBeeSplit = function (enemy) {
+        let xPos = enemy.x - 50
+        let yPos = enemy.y + 50
+        for (let i = 0; i < 2; i++) {
+            setTimeout(() => {
+                enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses.Bee.speed, enemiesClasses.Bee.hp, enemiesClasses.Bee.w, enemiesClasses.Bee.h, enemiesClasses.Bee.color, enemiesClasses.Bee.grade))
+                xPos += 50
+                yPos -= 50
+            }, 1)
+        }
+    }
+
+
     this.collisionSpider = function (enemy) {
         setTimeout(function () {
             spiderHp -= 1
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
 
-            if(enemy.grade === "Hornet"){
+            if (enemy.grade === "Hornet") {
                 numberOfWebs -= 1
             }
 

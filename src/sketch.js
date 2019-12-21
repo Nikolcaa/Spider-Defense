@@ -29,7 +29,7 @@ var webs,
     cardsPower,
 
     spider,
-    spiderHp = 400,
+    spiderHp = 4,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 

@@ -6,7 +6,7 @@ function enemiesData() {
             w: 40,
             h: 40,
             color: "orange",
-            grade: "Bee"
+            grade: "Bee",
         },
         Bumblebee: {
             speed: 3,
@@ -14,7 +14,7 @@ function enemiesData() {
             w: 80,
             h: 80,
             color: "red",
-            grade: "Bumblebee"
+            grade: "Bumblebee",
         },
         Hornet: {
             speed: 5,
@@ -22,7 +22,15 @@ function enemiesData() {
             w: 60,
             h: 60,
             color: "yellow",
-            grade: "Hornet"
-        }
+            grade: "Hornet",
+        },
+        QueenBee: {
+            speed: 3,
+            hp: 2,
+            w: 70,
+            h: 70,
+            color: "purple",
+            grade: "QueenBee",
+        },
     }
 }

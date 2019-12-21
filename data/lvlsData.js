@@ -18,7 +18,7 @@ function lvlsData() {
                 emptyHeart: 1,
             }, */
             {
-                Hornet: 3,
+                QueenBee: 3,
             },
             {
                 heart: 10,
