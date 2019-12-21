@@ -2,6 +2,9 @@ var webs,
     webFastComeBackSpeed = 8,
     webComeBackSpeed = 2,
     numberOfWebs = 8,
+    web,
+    mousex,
+    mousey,
 
     lvlsData,
     currentStage,
@@ -187,9 +190,6 @@ function draw() {
     fill("white");
     text("SCORE: " + score, 20, 30)
 
-
-
-
     // ------------ hearts ------------
     var xPosOfHeart = width / 2 - skinHeart.width / 5
     var yPosOfHeart = 0
@@ -214,12 +214,21 @@ function draw() {
 
     for (let i = 0; i < numberOfWebs; i++) {
         webs.length = numberOfWebs
-        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed)
+        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
         webs[i].show()
-        webs[i].move()
+
         if(!webs[i].active){
             theRestOfWebs.push(i)
         }
+
+        if(!webs[i].shouldComeBack){
+            webs[i].moveForward(i)
+        }
+
+        if(webs[i].shouldComeBack){
+            webs[i].moveBack()
+        }
+
     }
 
     // ------------ counter of webs ------------
@@ -284,7 +293,7 @@ function mousePressed() {
         }
     }
 
-    let web = getRandomWeb()
+    web = getRandomWeb()
 
     // -- changing web --
     webs = [
@@ -292,9 +301,9 @@ function mousePressed() {
             if (web && item.ID === web.ID) {
                 return {
                     ...item,
-                    x2: mouseX,
-                    y2: mouseY,
-                    active: true
+                    active: true,
+                    mousex: mouseX,
+                    mousey: mouseY,
                 }
             }
             return item;

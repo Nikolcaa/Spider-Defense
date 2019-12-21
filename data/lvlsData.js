@@ -2,7 +2,7 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                AssassinBee: 3,
+                Bumblebee: 1,
             },
             {
                 heart: 10,

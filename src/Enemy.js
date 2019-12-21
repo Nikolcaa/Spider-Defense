@@ -11,21 +11,19 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.show = function () {
         push()
         if (this.grade === "AssassinBee") {
+            fill(this.color)
             var d = dist(this.x, this.y, spider.x, spider.y)
             if(d <= 500 && d >= 350){
+                /* noStroke()
+                this.color = "grey" */
                 noStroke()
-                this.color = "grey"
-            } else{
-                this.color = "aqua"
+                noFill()
             }
-
-
+        } else{
+            fill(this.color)
         }
-
-        fill(this.color)
         rect(this.x, this.y, this.w, this.h)
         pop()
-
     }
 
     this.move = function () {
@@ -41,7 +39,6 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         } else if (this.x > width / 2 && this.y < height / 2) {
             this.x -= this.xSpeed
             this.y += this.ySpeed
-
         } else if (this.x > width / 2 && this.y > height / 2) {
             this.x -= this.xSpeed
             this.y -= this.ySpeed
