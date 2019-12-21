@@ -32,5 +32,13 @@ function enemiesData() {
             color: "purple",
             grade: "QueenBee",
         },
+        AssassinBee: {
+            speed: 3,
+            hp: 1,
+            w: 30,
+            h: 30,
+            color: "aqua",
+            grade: "AssassinBee",
+        }
     }
 }

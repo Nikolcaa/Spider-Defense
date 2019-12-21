@@ -10,9 +10,22 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.grade = grade
     this.show = function () {
         push()
+        if (this.grade === "AssassinBee") {
+            var d = dist(this.x, this.y, spider.x, spider.y)
+            if(d <= 500 && d >= 350){
+                noStroke()
+                this.color = "grey"
+            } else{
+                this.color = "aqua"
+            }
+
+
+        }
+
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
         pop()
+
     }
 
     this.move = function () {
