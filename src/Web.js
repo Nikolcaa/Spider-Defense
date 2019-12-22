@@ -18,59 +18,46 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     this.moveBack = function () {
         let ySpeed = Math.sqrt(Math.pow(this.speed, 2) / (Math.pow(Math.abs(this.x2 - this.x) / Math.abs(this.y2 - this.y), 2) + 1))
         let xSpeed = (Math.abs(this.x2 - this.x) / Math.abs(this.y2 - this.y)) * ySpeed
-        if (this.x2 < this.x && this.y2 < this.y) {
+        if (this.x2 <= this.x && this.y2 <= this.y) {
             this.x2 += xSpeed
             this.y2 += ySpeed
             this.ifWebComeBack()
-        } else if (this.x2 < this.x && this.y2 > this.y) {
+        } else if (this.x2 <= this.x && this.y2 >= this.y) {
             this.x2 += xSpeed
             this.y2 -= ySpeed
-        } else if (this.x2 > this.x && this.y2 < this.y) {
+        } else if (this.x2 >= this.x && this.y2 <= this.y) {
             this.x2 -= xSpeed
             this.y2 += ySpeed
             this.ifWebComeBack()
-        } else if (this.x2 > this.x && this.y2 > this.y) {
+        } else if (this.x2 >= this.x && this.y2 >= this.y) {
             this.x2 -= xSpeed
             this.y2 -= ySpeed
         }
     }
 
     this.moveForward = function (i) {
-        let speed = 60
+        let speed = 30
         let ySpeed = Math.sqrt(Math.pow(speed, 2) / (Math.pow(Math.abs(this.x - this.mousex) / Math.abs(this.y - this.mousey), 2) + 1))
         let xSpeed = (Math.abs(this.x - this.mousex) / Math.abs(this.y - this.mousey)) * ySpeed
 
         let d = dist(this.x2, this.y2, this.mousex, this.mousey)
 
-        if (this.mousex < this.x && this.mousey < this.y) {
+        if (this.mousex <= this.x2 && this.mousey <= this.y2) {
             this.x2 -= xSpeed
             this.y2 -= ySpeed
-        } else if (this.mousex < this.x && this.mousey > this.y) {
+        } else if (this.mousex <= this.x2 && this.mousey >= this.y2) {
             this.x2 -= xSpeed
             this.y2 += ySpeed
-        } else if (this.mousex > this.x && this.mousey < this.y) {
+        } else if (this.mousex >= this.x2 && this.mousey <= this.y2) {
             this.x2 += xSpeed
             this.y2 -= ySpeed
-        } else if (this.mousex > this.x && this.mousey > this.y) {
+        } else if (this.mousex >= this.x2 && this.mousey >= this.y2) {
             this.x2 += xSpeed
             this.y2 += ySpeed
         }
 
         if (d <= 30) {
-            this.x2 = this.mousex
-            this.y2 = this.mousey
-            
-            webs = [
-                ...webs.map((item) => {
-                    if (item.ID === web.ID) {
-                        return {
-                            ...item,
-                            shouldComeBack: true
-                        }
-                    }
-                    return item;
-                })
-            ]
+            this.shouldComeBack = true
         }
 
     }
@@ -81,6 +68,9 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
             this.x2 = this.x
             this.active = false
             this.speed = 2
+            this.shouldComeBack = false
+            this.mousex = this.x
+            this.mousey = this.y
             return true;
         }
     }

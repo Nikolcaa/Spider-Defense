@@ -3,8 +3,6 @@ var webs,
     webComeBackSpeed = 2,
     numberOfWebs = 8,
     web,
-    mousex,
-    mousey,
 
     lvlsData,
     currentStage,
@@ -217,18 +215,19 @@ function draw() {
         webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
         webs[i].show()
 
-        if(!webs[i].active){
+        if (!webs[i].active) {
             theRestOfWebs.push(i)
         }
 
-        if(!webs[i].shouldComeBack){
-            webs[i].moveForward(i)
-        }
+        if (webs[i].active) {
+            if (!webs[i].shouldComeBack) {
+                webs[i].moveForward(i)
+            }
 
-        if(webs[i].shouldComeBack){
-            webs[i].moveBack()
+            if (webs[i].shouldComeBack) {
+                webs[i].moveBack()
+            }
         }
-
     }
 
     // ------------ counter of webs ------------
@@ -395,5 +394,5 @@ function getRandomWeb() {
 }
 
 function filteredWebs() {
-    return webs.filter(item => !item.active) 
+    return webs.filter(item => !item.active)
 }
