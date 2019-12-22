@@ -39,6 +39,15 @@ function enemiesData() {
             h: 30,
             color: "aqua",
             grade: "AssassinBee",
-        }
+        },
+        ShooterBee: {
+            speed: 0,
+            hp: 4,
+            w: 35,
+            h: 35,
+            color: "green",
+            grade: "ShooterBee",
+        },
+
     }
 }

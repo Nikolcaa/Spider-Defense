@@ -54,7 +54,8 @@ function renderingEnemies() {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
-                    enemies.push(new Enemy(parseInt(_.uniqueId()),
+                    enemies.push(new Enemy(
+                        parseInt(_.uniqueId()),
                         xPos,
                         yPos,
                         enemiesClasses[grade].speed,
@@ -80,7 +81,17 @@ function renderingBonuses() {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
 
-                    bonuses.push(new Bonus(parseInt(_.uniqueId()), xPos, yPos, bonusClasses[grade].img, bonusClasses[grade].speed, bonusClasses[grade].hp, bonusClasses[grade].w, bonusClasses[grade].h, bonusClasses[grade].drop))
+                    bonuses.push(new Bonus(
+                        parseInt(_.uniqueId()),
+                        xPos,
+                        yPos,
+                        bonusClasses[grade].img,
+                        bonusClasses[grade].speed,
+                        bonusClasses[grade].hp,
+                        bonusClasses[grade].w,
+                        bonusClasses[grade].h,
+                        bonusClasses[grade].drop
+                    ))
                 }
             }
         })
@@ -95,16 +106,23 @@ function renderingFloatingCards(currentBonus) {
 
         if (currentBonus.drop === classes) {
             setTimeout(function () {
-                floatingCards.push(new FloatingCard(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].img.width, cardsClasses[classes].img.height, xPos, yPos, classes))
+                floatingCards.push(new FloatingCard(
+                    parseInt(_.uniqueId()),
+                    cardsClasses[classes].img,
+                    cardsClasses[classes].img.width,
+                    cardsClasses[classes].img.height,
+                    xPos,
+                    yPos,
+                    classes
+                ))
+
+
                 for (let i = 0; i < floatingCards.length; i++) {
                     floatingCards[i].delete()
                 }
             }, 1)
         }
     })
-
-
-
 }
 
 function renderingCardsCollection() {
@@ -238,7 +256,7 @@ function draw() {
             theRestOfWebs.push(i)
         }
 
- 
+
     }
 
     // ------------ counter of webs ------------
@@ -252,6 +270,7 @@ function draw() {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].show()
         enemies[i].move()
+        enemies[i].enemiesPower()
 
         if (Collision(spider, enemies[i])) {
             enemies[i].collisionSpider(enemies[i])
