@@ -86,9 +86,15 @@ function renderingFloatingCards(currentBonus) {
         if (currentBonus.drop === classes) {
             setTimeout(function () {
                 floatingCards.push(new FloatingCard(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].img.width, cardsClasses[classes].img.height, xPos, yPos, classes))
+                for(let i = 0; i < floatingCards.length; i++){
+                    floatingCards[i].delete()
+                }
             }, 1)
         }
     })
+
+
+    
 }
 
 function renderingCardsCollection() {

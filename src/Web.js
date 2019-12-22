@@ -36,7 +36,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     }
 
     this.moveForward = function (i) {
-        let speed = 30
+        let speed = 50
         let ySpeed = Math.sqrt(Math.pow(speed, 2) / (Math.pow(Math.abs(this.x - this.mousex) / Math.abs(this.y - this.mousey), 2) + 1))
         let xSpeed = (Math.abs(this.x - this.mousex) / Math.abs(this.y - this.mousey)) * ySpeed
 
@@ -55,11 +55,11 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
             this.x2 += xSpeed
             this.y2 += ySpeed
         }
-
         if (d <= 30) {
+            this.x2 = mousex
+            this.y2 = mousey
             this.shouldComeBack = true
         }
-
     }
 
     this.ifWebComeBack = function () {
@@ -116,7 +116,6 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     }
 
     // --------- CARDS COLLISIONS ----------
-
     this.collisionCard = function (card, grade) {
         // -- pushing card in cardsCollection
         cardsCollection.push({ ID: card.ID, img: card.img, w: card.img.width, h: card.img.height, grade })
@@ -124,9 +123,9 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
 
         // -- deleting card from cards --
         floatingCards = [...floatingCards.filter(el => el.ID !== card.ID)];
-
         FastWebComeBackSpeed(this)
     }
+    
 }
 
 function FastWebComeBackSpeed(web) {

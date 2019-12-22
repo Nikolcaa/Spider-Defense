@@ -6,7 +6,12 @@ function FloatingCard(ID, img, w, h, x, y, grade) {
     this.x = x
     this.y = y
     this.grade = grade
-    this.show = function(){
+    this.show = function () {
         image(this.img, this.x, this.y)
-    } 
+    }
+    this.delete = function () {
+        setTimeout(() => {
+            floatingCards = [...floatingCards.filter(el => el.ID !== this.ID)];
+        }, 3000)
+    }
 }

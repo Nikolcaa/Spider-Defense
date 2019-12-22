@@ -2,7 +2,7 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                heart: 1
+                freezeBonus: 3,
             },
             {
                 heart: 10,
