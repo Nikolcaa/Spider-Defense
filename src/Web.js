@@ -86,9 +86,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
 
         //-- deleting enemy --
         if (enemy.hp === 0) {
-            if (enemy.grade === "QueenBee") {
-                enemy.QueenBeeSplit(enemy)
-            }
+            QueenBeeSplit(enemy)
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
         }
 

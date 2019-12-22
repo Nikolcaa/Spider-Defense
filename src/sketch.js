@@ -25,7 +25,7 @@ var webs,
     cardsCollection = [],
     disabledCards = [],
 
-    fields = 20,
+    fields = 7,
     fieldsForCards = [],
     cardsPower,
 
@@ -270,7 +270,6 @@ function draw() {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].show()
         enemies[i].move()
-        enemies[i].enemiesPower()
 
         if (Collision(spider, enemies[i])) {
             enemies[i].collisionSpider(enemies[i])
@@ -358,7 +357,11 @@ function mousePressed() {
     // - cards -
     for (let i = 0; i < floatingCards.length; i++) {
         if (web && MouseCollision(floatingCards[i])) {
-            web.collisionCard(floatingCards[i], floatingCards[i].grade)
+            if(useableCards.length < fields){
+                web.collisionCard(floatingCards[i], floatingCards[i].grade)
+            } else{
+                floatingCards[i].Tint()
+            }
         }
     }
 }

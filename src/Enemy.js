@@ -8,13 +8,11 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.h = h
     this.color = color
     this.grade = grade
-    this.enemiesPower = function(){
-        EnemiesPower(this)
-    }
-
     this.show = function () {
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
+
+        AssassinBeeInvisible(this)
     }
 
     this.move = function () {
@@ -33,19 +31,6 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         } else if (this.x > width / 2 && this.y > height / 2) {
             this.x -= this.xSpeed
             this.y -= this.ySpeed
-        }
-    }
-
-    this.QueenBeeSplit = function (enemy) {
-        let xPos = enemy.x - 50
-        let yPos = enemy.y + 50
-        let numOfNewBees = random(0, 3)
-        for (let i = 0; i < numOfNewBees; i++) {
-            setTimeout(() => {
-                enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses.Bee.speed, enemiesClasses.Bee.hp, enemiesClasses.Bee.w, enemiesClasses.Bee.h, enemiesClasses.Bee.color, enemiesClasses.Bee.grade))
-                xPos += 50
-                yPos -= 50
-            }, 1)
         }
     }
 

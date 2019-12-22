@@ -2,7 +2,8 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                QueenBee: 1,
+                websComeBackBonus: 8,
+                freezeBonus: 10
             },
             {
                 heart: 10,
