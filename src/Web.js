@@ -9,9 +9,11 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     this.shouldComeBack = shouldComeBack
     this.mousex = mousex
     this.mousey = mousey
+    this.stroke = 'rgb(255,255,255)'
+    this.isPoisoned = false
     this.show = function () {
         push()
-        stroke(255);
+        stroke(this.stroke);
         line(this.x, this.y, this.x2, this.y2);
         pop()
     }
@@ -75,6 +77,17 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         }
     }
 
+    this.poisoned = function () {
+        this.stroke = 'rgb(0,255,0)'
+        this.isPoisoned = true
+    }
+
+    this.unPoisoned = function () {
+        this.stroke = 'rgb(255,255,255)'
+        this.isPoisoned = false
+    }
+
+
     this.fastComeBack = function () {
         this.speed = 20
     }
@@ -84,11 +97,11 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         //-- changing enemy hp --
         enemy.hp -= 1
 
-        //-- deleting enemy --
-        if (enemy.hp === 0) {
-            QueenBeeSplit(enemy)
-            enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
+        if(this.isPoisoned){
+            enemy.poisoned()
         }
+
+        enemy.isDead()
 
         FastWebComeBackSpeed(this)
     }
@@ -123,7 +136,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         floatingCards = [...floatingCards.filter(el => el.ID !== card.ID)];
         FastWebComeBackSpeed(this)
     }
-    
+
 }
 
 function FastWebComeBackSpeed(web) {

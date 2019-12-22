@@ -1,6 +1,6 @@
 var currentEnemiesSpeed
 
-function PowerOfCards(grade) {
+function PowerOfFreezeCard(grade) {
     if (grade === 'freezeCard') {
         bgColor = 'cyan';
         enemies = [
@@ -12,7 +12,6 @@ function PowerOfCards(grade) {
                 }
             })
         ]
-
         setTimeout(() => {
             bgColor = 'gray';
             disabledCards.splice(disabledCards.indexOf(this.grade), 1);
@@ -20,19 +19,37 @@ function PowerOfCards(grade) {
             BackToNormalEnemiesSpeed()
         }, 1000)
     }
+}
 
-    //------------------------------------------------------------------------------------
-
-    else if (grade === 'websComeBackCard') {
-        for(let i = 0; i < webs.length; i++){
-            if(webs[i].active){
+function PowerOfWebsComeBackCard(grade) {
+    if (grade === 'websComeBackCard') {
+        for (let i = 0; i < webs.length; i++) {
+            if (webs[i].active) {
                 webs[i].fastComeBack()
             }
         }
         disabledCards.splice(disabledCards.indexOf(this.grade), 1);
     }
-
 }
+
+function PowerOfPoisonCard(grade) {
+    if (grade === 'poisonCard') {
+        for (let i = 0; i < webs.length; i++) {
+            webs[i].poisoned()
+        }
+        setTimeout(() => {
+            for (let i = 0; i < webs.length; i++) {
+                webs[i].unPoisoned()
+            }
+
+            disabledCards.splice(disabledCards.indexOf(this.grade), 1);
+        }, 3000)
+    }
+}
+
+
+
+
 
 function BackToNormalEnemiesSpeed() {
     Object.keys(enemiesClasses).map((cenemy, index) => {

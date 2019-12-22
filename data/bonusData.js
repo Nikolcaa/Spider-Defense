@@ -31,6 +31,14 @@ function bonusData() {
             h: 40,
             img: skinWebsComeBackBonus,
             drop: "websComeBackCard",
+        },
+        poisonBonus: {
+            speed: 1.5,
+            hp: 1,
+            w: 40,
+            h: 40,
+            img: skinFreezeBonus,
+            drop: "poisonCard",
         }
     }
 }

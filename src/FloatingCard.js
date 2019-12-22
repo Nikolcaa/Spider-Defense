@@ -9,24 +9,27 @@ function FloatingCard(ID, img, w, h, x, y, grade) {
     this.a = 255
     this.b = 255
     this.c = 255
+    this.tinted = function (a, b, c) {
+        this.a = a
+        this.b = b
+        this.c = c
+    }
     this.show = function () {
         push()
         tint(this.a, this.b, this.c)
         image(this.img, this.x, this.y)
         pop()
     }
-    this.Tint = function(){
-        this.b = 0
-        this.c = 0
+    this.BlinkRed = function () {
+        this.tinted(255, 0, 0)
         setTimeout(() => {
-            this.b = 255
-            this.c = 255
+            this.tinted(255, 255, 255)
         }, 100)
     }
 
     this.delete = function () {
         setTimeout(() => {
             floatingCards = [...floatingCards.filter(el => el.ID !== this.ID)];
-        }, 10000)
+        }, 6000)
     }
 }

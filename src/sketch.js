@@ -202,6 +202,9 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ rendering functions ------------
+    for (let i = 0; i < numberOfWebs; i++) {
+        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
+    }
 
     renderingStages()
     renderingEnemies()
@@ -246,7 +249,6 @@ function draw() {
 
     for (let i = 0; i < numberOfWebs; i++) {
         webs.length = numberOfWebs
-        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
         webs[i].show()
         if (webs[i].active) {
             webs[i].moveBack()
@@ -357,10 +359,10 @@ function mousePressed() {
     // - cards -
     for (let i = 0; i < floatingCards.length; i++) {
         if (web && MouseCollision(floatingCards[i])) {
-            if(useableCards.length < fields){
+            if (useableCards.length < fields) {
                 web.collisionCard(floatingCards[i], floatingCards[i].grade)
-            } else{
-                floatingCards[i].Tint()
+            } else {
+                floatingCards[i].BlinkRed()
             }
         }
     }

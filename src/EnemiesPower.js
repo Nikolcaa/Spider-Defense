@@ -26,7 +26,6 @@ function AssassinBeeInvisible(enemy){
     }
 }
 
-
 //------------------------------------------------------------------------------------
 /* else if (enemy.grade === "ShooterBee") {
     enemy.x = 100

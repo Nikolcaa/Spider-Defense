@@ -34,6 +34,26 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
+    this.poisoned = function () {
+        var poisonInterval = setInterval(() => {
+            this.hp -= 0.5
+            this.isDead(poisonInterval)
+            console.log(this.hp)
+        }, 1000)
+        
+    }
+
+    this.isDead = function (poisonInterval) {
+        if (this.hp <= 0) {
+            enemies = [...enemies.filter(el => el.ID !== this.ID)];
+            QueenBeeSplit(this)
+            clearInterval(poisonInterval)
+        }
+        
+    }
+
+
+
     this.collisionSpider = function (enemy) {
         setTimeout(function () {
             spiderHp -= 1
@@ -42,10 +62,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
             if (enemy.grade === "Hornet") {
                 numberOfWebs -= 1
             }
-
-        }, 10)
-
-        if (spiderHp <= 0) {
+        }, 1)
+        if (spiderHp <= 1) {
             alert("izgubio si")
         }
 

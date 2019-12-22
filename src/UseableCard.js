@@ -6,18 +6,22 @@ function UseableCard(ID, img, w, h, grade, x, y) {
     this.grade = grade
     this.x = x
     this.y = y
-    this.show = function(){
+    this.show = function () {
         push()
         image(this.img, this.x, this.y)
         pop()
-    } 
+    }
 
-    this.mouseCollision = function(card){
+    this.mouseCollision = function (card) {
         cardsCollection = [...cardsCollection.filter(el => el.ID !== card.ID)];
         renderingCardsCollection()
-        
+
         disabledCards.push(this.grade)
 
-        PowerOfCards(this.grade)
+        PowerOfFreezeCard(card.grade)
+        PowerOfWebsComeBackCard(card.grade)
+        if(card.grade === "poisonCard"){
+            PowerOfPoisonCard(card.grade)
+        }
     }
 }
