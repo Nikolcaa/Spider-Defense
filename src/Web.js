@@ -35,8 +35,8 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         }
     }
 
-    this.moveForward = function (i) {
-        let speed = 50
+    /* this.moveForward = function (i) {
+        let speed = 120
         let ySpeed = Math.sqrt(Math.pow(speed, 2) / (Math.pow(Math.abs(this.x - this.mousex) / Math.abs(this.y - this.mousey), 2) + 1))
         let xSpeed = (Math.abs(this.x - this.mousex) / Math.abs(this.y - this.mousey)) * ySpeed
 
@@ -60,7 +60,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
             this.y2 = mousey
             this.shouldComeBack = true
         }
-    }
+    } */
 
     this.ifWebComeBack = function () {
         if (this.y2 >= this.y && this.x2 >= this.x || this.x2 <= this.x && this.y2 >= this.y) {
@@ -68,9 +68,9 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
             this.x2 = this.x
             this.active = false
             this.speed = 2
-            this.shouldComeBack = false
-            this.mousex = this.x
-            this.mousey = this.y
+            //this.shouldComeBack = false
+            //this.mousex = this.x
+            //this.mousey = this.y
             return true;
         }
     }

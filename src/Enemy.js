@@ -2,8 +2,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.ID = ID
     this.x = x
     this.y = y
-    this.speed = speed
-    this.hp = hp
+    this.speed = grade === "AssassinBee" ? random(2, 3.5) : speed
+    this.hp = grade === "Bumblebee" ? int(random(2, 4)) : hp
     this.w = w
     this.h = h
     this.color = color
@@ -48,7 +48,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.QueenBeeSplit = function (enemy) {
         let xPos = enemy.x - 50
         let yPos = enemy.y + 50
-        for (let i = 0; i < 2; i++) {
+        let numOfNewBees = random(0, 3)
+        for (let i = 0; i < numOfNewBees; i++) {
             setTimeout(() => {
                 enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses.Bee.speed, enemiesClasses.Bee.hp, enemiesClasses.Bee.w, enemiesClasses.Bee.h, enemiesClasses.Bee.color, enemiesClasses.Bee.grade))
                 xPos += 50

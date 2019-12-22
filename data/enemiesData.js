@@ -9,8 +9,8 @@ function enemiesData() {
             grade: "Bee",
         },
         Bumblebee: {
-            speed: 3,
-            hp: 3,
+            speed: 1.5,
+            hp: 0,
             w: 80,
             h: 80,
             color: "red",
@@ -33,7 +33,7 @@ function enemiesData() {
             grade: "QueenBee",
         },
         AssassinBee: {
-            speed: 3,
+            speed: 2,
             hp: 1,
             w: 30,
             h: 30,

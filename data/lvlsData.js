@@ -2,7 +2,7 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                freezeBonus: 3,
+                AssassinBee: 5,
             },
             {
                 heart: 10,

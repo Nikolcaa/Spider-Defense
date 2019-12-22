@@ -54,7 +54,17 @@ function renderingEnemies() {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
 
-                    enemies.push(new Enemy(parseInt(_.uniqueId()), xPos, yPos, enemiesClasses[grade].speed, enemiesClasses[grade].hp, enemiesClasses[grade].w, enemiesClasses[grade].h, enemiesClasses[grade].color, enemiesClasses[grade].grade))
+                    enemies.push(new Enemy(parseInt(_.uniqueId()),
+                        xPos,
+                        yPos,
+                        enemiesClasses[grade].speed,
+                        enemiesClasses[grade].hp,
+                        enemiesClasses[grade].w,
+                        enemiesClasses[grade].h,
+                        enemiesClasses[grade].color,
+                        enemiesClasses[grade].grade
+                    ))
+
                 }
             }
         })
@@ -86,7 +96,7 @@ function renderingFloatingCards(currentBonus) {
         if (currentBonus.drop === classes) {
             setTimeout(function () {
                 floatingCards.push(new FloatingCard(parseInt(_.uniqueId()), cardsClasses[classes].img, cardsClasses[classes].img.width, cardsClasses[classes].img.height, xPos, yPos, classes))
-                for(let i = 0; i < floatingCards.length; i++){
+                for (let i = 0; i < floatingCards.length; i++) {
                     floatingCards[i].delete()
                 }
             }, 1)
@@ -94,7 +104,7 @@ function renderingFloatingCards(currentBonus) {
     })
 
 
-    
+
 }
 
 function renderingCardsCollection() {
@@ -220,20 +230,15 @@ function draw() {
         webs.length = numberOfWebs
         webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
         webs[i].show()
+        if (webs[i].active) {
+            webs[i].moveBack()
+        }
 
         if (!webs[i].active) {
             theRestOfWebs.push(i)
         }
 
-        if (webs[i].active) {
-            if (!webs[i].shouldComeBack) {
-                webs[i].moveForward(i)
-            }
-
-            if (webs[i].shouldComeBack) {
-                webs[i].moveBack()
-            }
-        }
+ 
     }
 
     // ------------ counter of webs ------------
@@ -307,8 +312,8 @@ function mousePressed() {
                 return {
                     ...item,
                     active: true,
-                    mousex: mouseX,
-                    mousey: mouseY,
+                    x2: mouseX,
+                    y2: mouseY,
                 }
             }
             return item;

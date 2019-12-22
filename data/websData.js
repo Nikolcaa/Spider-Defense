@@ -8,7 +8,7 @@ function websData() {
             x2: width / 2,
             y2: height / 2,
             speed: webComeBackSpeed,
-            shouldComeBack: false,
+            //shouldComeBack: false,
         }
     })
 }
