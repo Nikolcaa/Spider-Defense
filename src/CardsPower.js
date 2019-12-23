@@ -13,7 +13,7 @@ function PowerOfFreezeCard(grade) {
             })
         ]
         setTimeout(() => {
-            bgColor = 'gray';
+            bgColor = 'grey';
             disabledCards.splice(disabledCards.indexOf(this.grade), 1);
 
             BackToNormalEnemiesSpeed()

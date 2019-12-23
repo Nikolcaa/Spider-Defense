@@ -8,6 +8,7 @@ function UseableCard(ID, img, w, h, grade, x, y) {
     this.y = y
     this.show = function () {
         push()
+        tint(disabledCards.indexOf(this.grade) !== -1 ? (200, 200, 200) : (255, 255, 255))
         image(this.img, this.x, this.y)
         pop()
     }

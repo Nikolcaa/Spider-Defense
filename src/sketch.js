@@ -30,7 +30,7 @@ var webs,
     cardsPower,
 
     spider,
-    spiderHp = 4,
+    spiderHp = 400,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
@@ -259,16 +259,11 @@ function draw() {
         if (!webs[i].active) {
             theRestOfWebs.push(i)
         }
-
-
     }
-
     // ------------ counter of webs ------------
     textSize(20)
     fill("white")
     text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
-
-
 
     // ------------ enemies ------------
     for (let i = 0; i < enemies.length; i++) {

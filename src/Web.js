@@ -97,17 +97,17 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         //-- changing enemy hp --
         enemy.hp -= 1
 
-        if(enemy.isDead()){
+        if (enemy.isDead()) {
             enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
             QueenBeeSplit(enemy)
         }
 
         FastWebComeBackSpeed(this)
 
-        if(this.isPoisoned){
-            if(enemy.isPoisoned){
+        if (this.isPoisoned) {
+            if (enemy.isPoisoned) {
                 return null;
-            } else{
+            } else {
                 enemy.isPoisoned = true
                 enemy.poisonInterval()
             }
