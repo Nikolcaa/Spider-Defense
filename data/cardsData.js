@@ -7,7 +7,7 @@ function cardsData() {
             img: skinWebsComeBackCard,
         },
         poisonCard: {
-            img: skinFreezeCard,
+            img: skinPoisonCard,
         },
 
     }

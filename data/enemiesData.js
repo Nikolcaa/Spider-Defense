@@ -26,7 +26,7 @@ function enemiesData() {
         },
         QueenBee: {
             speed: 1,
-            hp: 2,
+            hp: 3,
             w: 70,
             h: 70,
             color: "purple",

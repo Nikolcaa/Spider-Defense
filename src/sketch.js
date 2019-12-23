@@ -176,10 +176,12 @@ function preload() {
     // bonuses
     skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.png')
     skinWebsComeBackBonus = loadImage('imagesOfBonuses/sloweBonus.png')
+    skinPoisonBonus = loadImage('imagesOfBonuses/poisonBonus.png')
 
     // cards
     skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
     skinWebsComeBackCard = loadImage('imagesOfCards/sloweCard.png')
+    skinPoisonCard = loadImage('imagesOfCards/poisonCard.png')
 
 
     // -- score updating --

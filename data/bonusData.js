@@ -37,7 +37,7 @@ function bonusData() {
             hp: 1,
             w: 40,
             h: 40,
-            img: skinFreezeBonus,
+            img: skinPoisonBonus,
             drop: "poisonCard",
         }
     }

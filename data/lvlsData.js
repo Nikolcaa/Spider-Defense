@@ -2,8 +2,8 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                QueenBee: 3,
-                poisonBonus: 3
+                poisonBonus: 10,
+                QueenBee: 3
             },
             {
                 heart: 10,

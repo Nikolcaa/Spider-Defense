@@ -1,3 +1,4 @@
+var interval
 function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.ID = ID
     this.x = x
@@ -8,6 +9,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.h = h
     this.color = color
     this.grade = grade
+    this.isPoisoned = false
     this.show = function () {
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
@@ -34,25 +36,24 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
-    this.poisoned = function () {
-        var poisonInterval = setInterval(() => {
-            this.hp -= 0.5
-            this.isDead(poisonInterval)
-            console.log(this.hp)
-        }, 1000)
-        
-    }
-
-    this.isDead = function (poisonInterval) {
-        if (this.hp <= 0) {
-            enemies = [...enemies.filter(el => el.ID !== this.ID)];
-            QueenBeeSplit(this)
-            clearInterval(poisonInterval)
+    this.poisonInterval = function(){
+        if (this.isPoisoned) {
+            interval = setInterval(() => {
+                this.hp -= 0.5
+                if(this.isDead()){
+                    enemies = [...enemies.filter(el => el.ID !== this.ID)];
+                    QueenBeeSplit(this)
+                }
+            }, 1000)
         }
-        
     }
 
-
+    this.isDead = function () {
+        if (this.hp <= 0) {
+            clearInterval(interval)
+            return true
+        }
+    }
 
     this.collisionSpider = function (enemy) {
         setTimeout(function () {

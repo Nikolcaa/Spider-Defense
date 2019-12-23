@@ -97,13 +97,21 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         //-- changing enemy hp --
         enemy.hp -= 1
 
-        if(this.isPoisoned){
-            enemy.poisoned()
+        if(enemy.isDead()){
+            enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
+            QueenBeeSplit(enemy)
         }
 
-        enemy.isDead()
-
         FastWebComeBackSpeed(this)
+
+        if(this.isPoisoned){
+            if(enemy.isPoisoned){
+                return null;
+            } else{
+                enemy.isPoisoned = true
+                enemy.poisonInterval()
+            }
+        }
     }
 
     // --------- Bonus collision ----------
