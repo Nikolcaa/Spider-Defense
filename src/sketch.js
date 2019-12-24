@@ -30,7 +30,7 @@ var webs,
     cardsPower,
 
     spider,
-    spiderHp = 4,
+    spiderHp = 400,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
@@ -218,8 +218,8 @@ function draw() {
 
     for (let i = 0; i < numberOfWebs; i++) {
         webs.length = numberOfWebs
-        webs[i].show()
         if (webs[i].active) {
+            webs[i].show()
             webs[i].moveBack()
         }
 
@@ -227,7 +227,7 @@ function draw() {
             theRestOfWebs.push(i)
         }
     }
-    // ------------ webs counter ------------
+    // -- webs counter --
     textSize(20)
     fill("white")
     text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
@@ -275,11 +275,13 @@ function draw() {
 }
 
 function mousePressed() {
+    web = getRandomWeb()
+
     for (let j = 0; j < fieldsForCards.length; j++) {
         if (MouseCollision(fieldsForCards[j])) {
             for (let i = 0; i < useableCards.length; i++) {
                 if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
-                    useableCards[i].mouseCollision(useableCards[i])
+                    useableCards[i].mouseCollision(web)
                 }
             }
             return null;
@@ -287,8 +289,6 @@ function mousePressed() {
     }
 
     // -- changing web --
-    web = getRandomWeb()
-
     webs = [
         ...webs.map((item) => {
             if (web && item.ID === web.ID) {

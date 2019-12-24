@@ -52,28 +52,6 @@ function PowerOfPoisonCard(grade) {
     }
 }
 
-function BackToNormalEnemiesSpeed() {
-    Object.keys(enemiesClasses).map((cenemy, index) => {
-        currentEnemiesSpeed = enemiesClasses[cenemy].speed
-        enemies = [
-            ...enemies.map(enemy => {
-                if (enemy.grade === cenemy) {
-                    return {
-                        ...enemy,
-                        speed: currentEnemiesSpeed
-                    }
-                }
-                return enemy;
-            })
-        ]
-    })
-}
-
-
-
-
-
-
 //-------------------- za slowe -------------------------
 /*     else if (grade === 'sloweCard') {
         enemies = [
