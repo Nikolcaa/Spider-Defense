@@ -11,6 +11,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     this.mousey = mousey
     this.stroke = 'rgb(255,255,255)'
     this.isPoisoned = false
+    this.comeBack = false
     this.show = function () {
         push()
         stroke(this.stroke);
@@ -70,10 +71,15 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
             this.x2 = this.x
             this.active = false
             this.speed = 2
+            this.comeBack = true
+            if(activeCards.indexOf('poisonCard') !== -1){
+                this.poisoned()
+            } else {
+                this.unPoisoned()
+            }
             //this.shouldComeBack = false
             //this.mousex = this.x
             //this.mousey = this.y
-            return true;
         }
     }
 

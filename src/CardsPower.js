@@ -14,7 +14,7 @@ function PowerOfFreezeCard(grade) {
         ]
         setTimeout(() => {
             bgColor = 'grey';
-            disabledCards.splice(disabledCards.indexOf(this.grade), 1);
+            activeCards.splice(activeCards.indexOf(this.grade), 1);
 
             BackToNormalEnemiesSpeed()
         }, 1000)
@@ -28,30 +28,29 @@ function PowerOfWebsComeBackCard(grade) {
                 webs[i].fastComeBack()
             }
         }
-        disabledCards.splice(disabledCards.indexOf(this.grade), 1);
+        activeCards.splice(activeCards.indexOf(this.grade), 1);
     }
 }
 
 function PowerOfPoisonCard(grade) {
     if (grade === 'poisonCard') {
         for (let i = 0; i < webs.length; i++) {
-            //if(!webs[i].active){
+            if (!webs[i].active) {
                 webs[i].poisoned()
-            //}
+            }
         }
+
         setTimeout(() => {
             for (let i = 0; i < webs.length; i++) {
-                webs[i].unPoisoned()
+                if(!webs[i].active){
+                    webs[i].unPoisoned()
+                }
             }
 
-            disabledCards.splice(disabledCards.indexOf(this.grade), 1);
-        }, 3000)
+            activeCards.splice(activeCards.indexOf(this.grade), 1);
+        }, 6000)
     }
 }
-
-
-
-
 
 function BackToNormalEnemiesSpeed() {
     Object.keys(enemiesClasses).map((cenemy, index) => {
@@ -88,7 +87,7 @@ function BackToNormalEnemiesSpeed() {
         ]
 
         setTimeout(() => {
-            disabledCards.splice(disabledCards.indexOf(this.grade), 1);
+            activeCards.splice(activeCards.indexOf(this.grade), 1);
 
             BackToNormalEnemiesSpeed()
 

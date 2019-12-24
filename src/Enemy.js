@@ -13,7 +13,6 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.show = function () {
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
-
         AssassinBeeInvisible(this)
     }
 

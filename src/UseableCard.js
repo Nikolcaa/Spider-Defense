@@ -8,7 +8,7 @@ function UseableCard(ID, img, w, h, grade, x, y) {
     this.y = y
     this.show = function () {
         push()
-        tint(disabledCards.indexOf(this.grade) !== -1 ? (200, 200, 200) : (255, 255, 255))
+        tint(activeCards.indexOf(this.grade) !== -1 ? (200, 200, 200) : (255, 255, 255))
         image(this.img, this.x, this.y)
         pop()
     }
@@ -17,12 +17,10 @@ function UseableCard(ID, img, w, h, grade, x, y) {
         cardsCollection = [...cardsCollection.filter(el => el.ID !== card.ID)];
         renderingCardsCollection()
 
-        disabledCards.push(this.grade)
+        activeCards.push(this.grade)
 
         PowerOfFreezeCard(card.grade)
         PowerOfWebsComeBackCard(card.grade)
-        if(card.grade === "poisonCard"){
-            PowerOfPoisonCard(card.grade)
-        }
+        PowerOfPoisonCard(card.grade)
     }
 }

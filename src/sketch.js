@@ -23,7 +23,7 @@ var webs,
     floatingCards = [],
     useableCards = [],
     cardsCollection = [],
-    disabledCards = [],
+    activeCards = [],
 
     fields = 7,
     fieldsForCards = [],
@@ -278,7 +278,7 @@ function mousePressed() {
     for (let j = 0; j < fieldsForCards.length; j++) {
         if (MouseCollision(fieldsForCards[j])) {
             for (let i = 0; i < useableCards.length; i++) {
-                if (MouseCollision(useableCards[i]) && disabledCards.indexOf(useableCards[i].grade) === -1) {
+                if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
                     useableCards[i].mouseCollision(useableCards[i])
                 }
             }
@@ -389,7 +389,8 @@ function randomEnemyPositionY(h) {
 
 // -- Webs --
 function getRandomWeb() {
-    return filteredWebs()[Math.floor(Math.random() * filteredWebs().length)]
+    let filterWebs = filteredWebs()
+    return filterWebs[Math.floor(Math.random() * filterWebs.length)]
 }
 
 function filteredWebs() {
