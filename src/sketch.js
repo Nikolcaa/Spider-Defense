@@ -30,13 +30,19 @@ var webs,
     cardsPower,
 
     spider,
-    spiderHp = 400,
+    spiderHp = 4,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
-    bgColor = 'gray';
+    bgColor = 'grey';
 
 // ---------------- render functions -----------------
+function renderingWebs() {
+    for (let i = 0; i < numberOfWebs; i++) {
+        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
+    }
+}
+
 function renderingStages() {
     // if (score === toliko) {
     currentStage = lvlsData.tutorial
@@ -53,7 +59,6 @@ function renderingEnemies() {
                 for (let i = 0; i < currentStage[currentGroup][classes]; i++) {
                     let xPos = randomEnemyPositionX(width)
                     let yPos = randomEnemyPositionY(height)
-
                     enemies.push(new Enemy(
                         parseInt(_.uniqueId()),
                         xPos,
@@ -80,7 +85,6 @@ function renderingBonuses() {
                 for (let i = 0; i < currentStage[currentGroup][classes]; i++) {
                     let xPos = randomBonusPositionX(width)
                     let yPos = randomBonusPositionY(height)
-
                     bonuses.push(new Bonus(
                         parseInt(_.uniqueId()),
                         xPos,
@@ -103,7 +107,6 @@ function renderingFloatingCards(currentBonus) {
     Object.keys(cardsClasses).map((classes, index) => {
         let xPos = mouseX - cardsClasses[classes].img.width / 2
         let yPos = mouseY - cardsClasses[classes].img.height / 2
-
         if (currentBonus.drop === classes) {
             setTimeout(function () {
                 floatingCards.push(new FloatingCard(
@@ -115,8 +118,6 @@ function renderingFloatingCards(currentBonus) {
                     yPos,
                     classes
                 ))
-
-
                 for (let i = 0; i < floatingCards.length; i++) {
                     floatingCards[i].delete()
                 }
@@ -126,8 +127,6 @@ function renderingFloatingCards(currentBonus) {
 }
 
 function renderingCardsCollection() {
-    let widthOfCard = 70
-    let heightOfCard = 80
     let yPos = fieldsForCards[0].y
     let xPos = fieldsForCards[0].x
 
@@ -156,34 +155,7 @@ function renderingFieldsForCards() {
 }
 
 function preload() {
-
-    // ------------ skins ------------
-    // spider
-    skin1 = loadImage('imagesOfSpider/spider1.png')
-    skin2 = loadImage('imagesOfSpider/spider2.png')
-    skin3 = loadImage('imagesOfSpider/spider3.png')
-    skin4 = loadImage('imagesOfSpider/spider4.png')
-    skin5 = loadImage('imagesOfSpider/spider5.png')
-    skin6 = loadImage('imagesOfSpider/spider6.png')
-    skin7 = loadImage('imagesOfSpider/spider7.png')
-    skin8 = loadImage('imagesOfSpider/spider8.png')
-    skin9 = loadImage('imagesOfSpider/spider9.png')
-
-    // heart
-    skinHeart = loadImage('imagesOfHeart/heart.png')
-    skinEmptyHeart = loadImage('imagesOfHeart/emptyHeart.png')
-
-    // bonuses
-    skinFreezeBonus = loadImage('imagesOfBonuses/freezeBonus.png')
-    skinWebsComeBackBonus = loadImage('imagesOfBonuses/sloweBonus.png')
-    skinPoisonBonus = loadImage('imagesOfBonuses/poisonBonus.png')
-
-    // cards
-    skinFreezeCard = loadImage('imagesOfCards/freezeCard.png')
-    skinWebsComeBackCard = loadImage('imagesOfCards/sloweCard.png')
-    skinPoisonCard = loadImage('imagesOfCards/poisonCard.png')
-
-
+    Skins()
     // -- score updating --
     var scoreupdate = setInterval(function () {
         score += 1
@@ -204,32 +176,27 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ rendering functions ------------
-    for (let i = 0; i < numberOfWebs; i++) {
-        webs[i] = new Web(webs[i].ID, webs[i].active, webs[i].x, webs[i].y, webs[i].x2, webs[i].y2, webs[i].speed, webs[i].shouldComeBack, webs[i].mousex, webs[i].mousey)
-    }
-
+    
+    renderingWebs()
     renderingStages()
     renderingEnemies()
     renderingBonuses()
-
     renderingFieldsForCards()
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
     background(bgColor)
 
     // ------------ score ------------
+    push()
     textSize(20)
     fill("white");
     text("SCORE: " + score, 20, 30)
+    pop()
 
     // ------------ hearts ------------
-    var xPosOfHeart = width / 2 - skinHeart.width / 5
-    var yPosOfHeart = 0
+    let xPosOfHeart = width / 2 - skinHeart.width / 5
+    let yPosOfHeart = 0
 
     // -- full hearts --
     for (let i = 0; i < spiderHp; i++) {
@@ -260,7 +227,7 @@ function draw() {
             theRestOfWebs.push(i)
         }
     }
-    // ------------ counter of webs ------------
+    // ------------ webs counter ------------
     textSize(20)
     fill("white")
     text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
@@ -313,16 +280,15 @@ function mousePressed() {
             for (let i = 0; i < useableCards.length; i++) {
                 if (MouseCollision(useableCards[i]) && disabledCards.indexOf(useableCards[i].grade) === -1) {
                     useableCards[i].mouseCollision(useableCards[i])
-                    break;
                 }
             }
             return null;
         }
     }
 
+    // -- changing web --
     web = getRandomWeb()
 
-    // -- changing web --
     webs = [
         ...webs.map((item) => {
             if (web && item.ID === web.ID) {
@@ -339,6 +305,7 @@ function mousePressed() {
 
     // -- Collisions --
     // - Enemies -
+
     for (let i = 0; i < enemies.length; i++) {
         if (web && MouseCollision(enemies[i])) {
             web.collisionEnemy(enemies[i], i)
@@ -427,4 +394,8 @@ function getRandomWeb() {
 
 function filteredWebs() {
     return webs.filter(item => !item.active)
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }

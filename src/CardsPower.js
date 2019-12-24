@@ -35,7 +35,9 @@ function PowerOfWebsComeBackCard(grade) {
 function PowerOfPoisonCard(grade) {
     if (grade === 'poisonCard') {
         for (let i = 0; i < webs.length; i++) {
-            webs[i].poisoned()
+            //if(!webs[i].active){
+                webs[i].poisoned()
+            //}
         }
         setTimeout(() => {
             for (let i = 0; i < webs.length; i++) {

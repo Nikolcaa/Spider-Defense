@@ -87,7 +87,6 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
         this.isPoisoned = false
     }
 
-
     this.fastComeBack = function () {
         this.speed = 20
     }
