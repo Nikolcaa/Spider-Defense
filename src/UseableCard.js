@@ -11,6 +11,8 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
     this.pressed = false
     this.xOffset = 0
     this.yOffset = 0
+    this.defX = x
+    this.defY = y
     this.show = function () {
         push()
         tint(activeCards.indexOf(this.grade) !== -1 ? (200, 200, 200) : (255, 255, 255))
@@ -44,15 +46,27 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
 
     this.mouseDragged = function () {
         this.dragging = true
-        this.x = mouseX - this.xOffset;
-        this.y = mouseY - this.yOffset;
+        
+        if (this.pressed) {
+            this.x = mouseX - this.xOffset;
+            this.y = mouseY - this.yOffset;
+        }
     }
 
     this.mouseReleased = function () {
-        if(this.dragging){
+        for (let i = 0; i < fieldsForCards.length; i++) {
+            if (MouseCollision(fieldsForCards[i])) {
+                this.dragging = false
+            }
+        }
+        if (this.dragging) {
             this.mouseCollision()
+        } else {
+            this.x = this.defX
+            this.y = this.defY
         }
         this.dragging = false
+        this.pressed = false
     }
 
 
