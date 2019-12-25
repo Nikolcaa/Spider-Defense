@@ -72,7 +72,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
             this.active = false
             this.speed = 2
             this.comeBack = true
-            if(activeCards.indexOf('poisonCard') !== -1){
+            if (activeCards.indexOf('poisonCard') !== -1) {
                 this.poisoned()
             } else {
                 this.unPoisoned()
@@ -142,7 +142,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     // --------- CARDS COLLISIONS ----------
     this.collisionCard = function (card, grade) {
         // -- pushing card in cardsCollection
-        cardsCollection.push({ ID: card.ID, img: card.img, w: card.img.width, h: card.img.height, grade })
+        cardsCollection.push({ ID: card.ID, img: card.img, w: card.img.width, h: card.img.height, grade, dragAndDrop: card.dragAndDrop })
         renderingCardsCollection()
 
         // -- deleting card from cards --

@@ -24,6 +24,7 @@ var webs,
     useableCards = [],
     cardsCollection = [],
     activeCards = [],
+    dragAndDropCards = [],
 
     fields = 7,
     fieldsForCards = [],
@@ -114,6 +115,7 @@ function renderingFloatingCards(currentBonus) {
                     cardsClasses[classes].img,
                     cardsClasses[classes].img.width,
                     cardsClasses[classes].img.height,
+                    cardsClasses[classes].dragAndDrop,
                     xPos,
                     yPos,
                     classes
@@ -139,6 +141,12 @@ function renderingCardsCollection() {
             yPos
         ))
         xPos += 72
+
+            //console.log(cardsCollection)
+
+        if(cardsCollection[i].dragAndDrop){
+            dragAndDropCards.push(useableCards[i].grade)
+        }
     }
 }
 
@@ -176,7 +184,7 @@ function setup() {
     spider = new Spider(skin9, spiderHp)
 
     // ------------ rendering functions ------------
-    
+
     renderingWebs()
     renderingStages()
     renderingEnemies()
@@ -277,13 +285,14 @@ function draw() {
 function mousePressed() {
     web = getRandomWeb()
 
+    for (let i = 0; i < useableCards.length; i++) {
+        if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
+            useableCards[i].mousePressed()
+        }
+    }
+
     for (let j = 0; j < fieldsForCards.length; j++) {
         if (MouseCollision(fieldsForCards[j])) {
-            for (let i = 0; i < useableCards.length; i++) {
-                if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
-                    useableCards[i].mouseCollision(web)
-                }
-            }
             return null;
         }
     }
@@ -328,6 +337,22 @@ function mousePressed() {
             } else {
                 floatingCards[i].BlinkRed()
             }
+        }
+    }
+}
+
+function mouseDragged() {
+    for (let i = 0; i < useableCards.length; i++) {
+        if (/*useableCards[i].dragAndDrop && */MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
+            useableCards[i].mouseDragged()
+        }
+    }
+}
+
+function mouseReleased() {
+    for (let i = 0; i < useableCards.length; i++) {
+        if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
+            useableCards[i].mouseReleased()
         }
     }
 }

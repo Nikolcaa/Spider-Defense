@@ -1,11 +1,16 @@
-function UseableCard(ID, img, w, h, grade, x, y) {
+function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
     this.ID = ID
     this.img = img
     this.w = w
     this.h = h
     this.grade = grade
+    this.dragAndDrop = dragAndDrop
     this.x = x
     this.y = y
+    this.dragging = false
+    this.pressed = false
+    this.xOffset = 0
+    this.yOffset = 0
     this.show = function () {
         push()
         tint(activeCards.indexOf(this.grade) !== -1 ? (200, 200, 200) : (255, 255, 255))
@@ -13,7 +18,7 @@ function UseableCard(ID, img, w, h, grade, x, y) {
         pop()
     }
 
-    this.mouseCollision = function (web) {
+    this.mouseCollision = function () {
         cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
         renderingCardsCollection()
 
@@ -23,12 +28,34 @@ function UseableCard(ID, img, w, h, grade, x, y) {
             this.PowerOfFreezeCard()
         }
         else if (this.grade === 'websComeBackCard') {
-            this.PowerOfWebsComeBackCard(web)
+            this.PowerOfWebsComeBackCard()
         }
         else if (this.grade === 'poisonCard') {
             this.PowerOfPoisonCard()
         }
     }
+
+    // -- Drag and drop --
+    this.mousePressed = function () {
+        this.pressed = true
+        this.xOffset = mouseX - this.x;
+        this.yOffset = mouseY - this.y;
+    }
+
+    this.mouseDragged = function () {
+        this.dragging = true
+        this.x = mouseX - this.xOffset;
+        this.y = mouseY - this.yOffset;
+    }
+
+    this.mouseReleased = function () {
+        if(this.dragging){
+            this.mouseCollision()
+        }
+        this.dragging = false
+    }
+
+
 
     this.PowerOfFreezeCard = function () {
         bgColor = 'cyan'
@@ -49,7 +76,7 @@ function UseableCard(ID, img, w, h, grade, x, y) {
         }, 1000)
     }
 
-    this.PowerOfWebsComeBackCard = function (web) {
+    this.PowerOfWebsComeBackCard = function () {
         for (let i = 0; i < webs.length; i++) {
             if (webs[i].active) {
                 webs[i].fastComeBack()
@@ -76,6 +103,7 @@ function UseableCard(ID, img, w, h, grade, x, y) {
             activeCards.splice(activeCards.indexOf(this.grade), 1);
         }, 6000)
     }
+
 }
 
 function BackToNormalEnemiesSpeed() {
