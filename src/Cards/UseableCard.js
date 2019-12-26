@@ -72,7 +72,7 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
 
 
     this.PowerOfFreezeCard = function () {
-        bgColor = 'cyan'
+        bgColor = "aqua"
         enemies = [
             ...enemies.map(enemy => {
                 currentEnemiesSpeed = 0
