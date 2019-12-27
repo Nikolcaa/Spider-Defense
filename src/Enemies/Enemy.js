@@ -8,6 +8,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.h = h
     this.color = color
     this.grade = grade
+
+    this.isFreezed = false
     this.isPoisoned = false
     this.interval = null
     this.show = function () {
@@ -33,6 +35,27 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
             this.x -= this.xSpeed
             this.y -= this.ySpeed
         }
+    }
+
+    this.update = function () {
+        // -- freezing --
+        if (this.isFreezed) {
+            this.speed = 0
+        } else {
+            this.speed = speed
+        }
+    }
+
+    this.CollisionFreezedArea = function () {
+        this.isFreezed = true
+        this.update()
+
+
+        setTimeout(() => {
+            this.isFreezed = false
+            this.update()
+
+        }, 3000)
     }
 
     this.poisonInterval = function () {
@@ -64,7 +87,5 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         if (spiderHp <= 1) {
             alert("izgubio si")
         }
-
     }
-
 }

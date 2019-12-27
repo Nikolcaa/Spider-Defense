@@ -2,11 +2,10 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                poisonBonus: 2,
+                //poisonBonus: 2,
                 QueenBee: 3,
-
-                freezeBonus: 1,
-                websComeBackBonus: 1,
+                Bee: 30,
+                freezeBonus: 2,
             },
             {
                 heart: 10,

@@ -25,10 +25,10 @@ var webs,
     cardsCollection = [],
     activeCards = [],
     dragAndDropCards = [],
+    freezeAreas = [],
 
     fields = 7,
     fieldsForCards = [],
-    cardsPower,
 
     spider,
     spiderHp = 400,
@@ -195,7 +195,13 @@ function setup() {
 function draw() {
     background(bgColor)
 
+    // ------------ cardsAreas ------------
+    for(let i = 0; i < freezeAreas.length; i++){
+        freezeAreas[i].show()
+    }
+
     // ------------ score ------------
+
     push()
     textSize(20)
     fill("white");
@@ -256,6 +262,18 @@ function draw() {
         bonuses[i].move()
     }
 
+    // ------------ level-up ------------
+    if (!enemies.length && !bonuses.length) {
+        if (currentStage === lvlsData.tutorial) {
+
+            currentGroup += 1
+        }/*  else {
+                currentGroup = int(random(0, currentStage.length))
+            } */
+        renderingEnemies()
+        renderingBonuses()
+    }
+
     // ------------ cards ------------
     for (let i = 0; i < fields; i++) {
         fieldsForCards[i].show()
@@ -269,22 +287,12 @@ function draw() {
         useableCards[i].show()
     }
 
-    // ------------ level-up ------------
-    if (!enemies.length && !bonuses.length) {
-        if (currentStage === lvlsData.tutorial) {
 
-            currentGroup += 1
-        }/*  else {
-                currentGroup = int(random(0, currentStage.length))
-            } */
-        renderingEnemies()
-        renderingBonuses()
-    }
 }
 
 function mousePressed() {
     web = getRandomWeb()
-
+    
     for (let i = 0; i < useableCards.length; i++) {
         if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
             useableCards[i].mousePressed()
@@ -363,6 +371,17 @@ function Collision(player1, player2) {
         player1.x + player1.w >= player2.x &&
         player1.y <= player2.y + player2.h / 2 &&
         player1.y + player1.h >= player2.y) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function CollisionEllipse(player1, player2){
+    if (player1.x - player1.w / 2 <= player2.x + player2.w / 2 &&
+        player1.x + player1.w / 2 >= player2.x &&
+        player1.y - player1.h / 2<= player2.y + player2.h / 2 &&
+        player1.y + player1.h / 2 >= player2.y) {
         return true
     } else {
         return false

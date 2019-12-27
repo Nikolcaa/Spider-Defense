@@ -19,24 +19,6 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
         image(this.img, this.x, this.y)
         pop()
     }
-
-    this.mouseCollision = function () {
-        cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
-        renderingCardsCollection()
-
-        activeCards.push(this.grade)
-
-        if (this.grade === 'freezeCard') {
-            this.PowerOfFreezeCard()
-        }
-        else if (this.grade === 'websComeBackCard') {
-            this.PowerOfWebsComeBackCard()
-        }
-        else if (this.grade === 'poisonCard') {
-            this.PowerOfPoisonCard()
-        }
-    }
-
     // -- Drag and drop --
     this.mousePressed = function () {
         this.pressed = true
@@ -46,7 +28,7 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
 
     this.mouseDragged = function () {
         this.dragging = true
-        
+
         if (this.pressed) {
             this.x = mouseX - this.xOffset;
             this.y = mouseY - this.yOffset;
@@ -60,7 +42,20 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
             }
         }
         if (this.dragging) {
-            this.mouseCollision()
+            cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
+            renderingCardsCollection()
+            activeCards.push(this.grade)
+
+            if (this.grade === 'freezeCard') {
+                this.PowerOfFreezeCard()
+            }
+            else if (this.grade === 'websComeBackCard') {
+                this.PowerOfWebsComeBackCard()
+            }
+            else if (this.grade === 'poisonCard') {
+                this.PowerOfPoisonCard()
+            }
+
         } else {
             this.x = this.defX
             this.y = this.defY
@@ -69,25 +64,17 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
         this.pressed = false
     }
 
-
-
     this.PowerOfFreezeCard = function () {
-        bgColor = "aqua"
-        enemies = [
-            ...enemies.map(enemy => {
-                currentEnemiesSpeed = 0
-                return {
-                    ...enemy,
-                    speed: currentEnemiesSpeed,
+        freezeAreas.push(new FreezeArea(parseInt(_.uniqueId()), mouseX, mouseY, 200, 200))
+        for (let i = 0; i < freezeAreas.length; i++) {
+            for (let j = 0; j < enemies.length; j++) {
+                if (CollisionEllipse(freezeAreas[i], enemies[j])) {
+                    enemies[j].CollisionFreezedArea(freezeAreas[i])
                 }
-            })
-        ]
-        setTimeout(() => {
-            bgColor = 'grey';
-            activeCards.splice(activeCards.indexOf(this.grade), 1);
+                freezeAreas[i].interval()
+            }
+        }
 
-            BackToNormalEnemiesSpeed()
-        }, 1000)
     }
 
     this.PowerOfWebsComeBackCard = function () {
@@ -118,21 +105,4 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
         }, 6000)
     }
 
-}
-
-function BackToNormalEnemiesSpeed() {
-    Object.keys(enemiesClasses).map((cenemy, index) => {
-        currentEnemiesSpeed = enemiesClasses[cenemy].speed
-        enemies = [
-            ...enemies.map(enemy => {
-                if (enemy.grade === cenemy) {
-                    return {
-                        ...enemy,
-                        speed: currentEnemiesSpeed
-                    }
-                }
-                return enemy;
-            })
-        ]
-    })
 }
