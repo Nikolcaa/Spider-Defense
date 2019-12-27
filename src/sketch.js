@@ -27,6 +27,8 @@ var webs,
     dragAndDropCards = [],
     freezeAreas = [],
 
+    currentlyDraggedCard = null,
+
     fields = 7,
     fieldsForCards = [],
 
@@ -142,9 +144,9 @@ function renderingCardsCollection() {
         ))
         xPos += 72
 
-            //console.log(cardsCollection)
+        //console.log(cardsCollection)
 
-        if(cardsCollection[i].dragAndDrop){
+        if (cardsCollection[i].dragAndDrop) {
             dragAndDropCards.push(useableCards[i].grade)
         }
     }
@@ -196,7 +198,7 @@ function draw() {
     background(bgColor)
 
     // ------------ cardsAreas ------------
-    for(let i = 0; i < freezeAreas.length; i++){
+    for (let i = 0; i < freezeAreas.length; i++) {
         freezeAreas[i].show()
     }
 
@@ -292,7 +294,7 @@ function draw() {
 
 function mousePressed() {
     web = getRandomWeb()
-    
+
     for (let i = 0; i < useableCards.length; i++) {
         if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
             useableCards[i].mousePressed()
@@ -350,11 +352,15 @@ function mousePressed() {
 }
 
 function mouseDragged() {
-    for (let i = 0; i < useableCards.length; i++) {
-        if (/*useableCards[i].dragAndDrop && */MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
-            useableCards[i].mouseDragged()
-        }
+    if (/*useableCards[i].dragAndDrop && */ currentlyDraggedCard && MouseCollision(currentlyDraggedCard) && activeCards.indexOf(currentlyDraggedCard.grade) === -1) {
+        currentlyDraggedCard.mouseStartDragged()
     }
+
+    // for (let i = 0; i < useableCards.length; i++) {
+    //     if (/*useableCards[i].dragAndDrop && */MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
+    //         useableCards[i].mouseStartDragged()
+    //     }
+    // }
 }
 
 function mouseReleased() {
@@ -377,10 +383,10 @@ function Collision(player1, player2) {
     }
 }
 
-function CollisionEllipse(player1, player2){
+function CollisionEllipse(player1, player2) {
     if (player1.x - player1.w / 2 <= player2.x + player2.w / 2 &&
         player1.x + player1.w / 2 >= player2.x &&
-        player1.y - player1.h / 2<= player2.y + player2.h / 2 &&
+        player1.y - player1.h / 2 <= player2.y + player2.h / 2 &&
         player1.y + player1.h / 2 >= player2.y) {
         return true
     } else {

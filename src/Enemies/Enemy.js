@@ -50,11 +50,9 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         this.isFreezed = true
         this.update()
 
-
         setTimeout(() => {
             this.isFreezed = false
             this.update()
-
         }, 3000)
     }
 

@@ -1,7 +1,7 @@
 function enemiesData() {
     return {
         Bee: {
-            speed: 3,
+            speed: 2,
             hp: 1,
             w: 40,
             h: 40,

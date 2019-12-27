@@ -12,7 +12,7 @@ function FreezeArea(ID, x, y, w, h) {
         pop()
     }
 
-    this.interval = function () {
+    this.timeout = function (enemy) {
         activeCards.splice(activeCards.indexOf(this.grade), 1)
 
         setTimeout(() => {
@@ -20,4 +20,10 @@ function FreezeArea(ID, x, y, w, h) {
         }, 3000)
     }
 
-}   
+    this.jebemliga = function(enemy){
+        if (CollisionEllipse(this, enemy)) {
+            enemy.CollisionFreezedArea(this)
+        }
+        this.timeout()
+    }
+}
