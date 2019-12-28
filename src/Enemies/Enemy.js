@@ -56,6 +56,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }, 3000)
     }
 
+    
+
     this.poisonInterval = function () {
         this.interval = setInterval(() => {
             this.hp -= 0.5

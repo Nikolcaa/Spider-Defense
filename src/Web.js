@@ -142,7 +142,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     // --------- CARDS COLLISIONS ----------
     this.collisionCard = function (card, grade) {
         // -- pushing card in cardsCollection
-        cardsCollection.push({ ID: card.ID, img: card.img, w: card.img.width, h: card.img.height, grade, dragAndDrop: card.dragAndDrop })
+        cardsCollection.push({ ID: card.ID, img: card.img, w: card.img.width, h: card.img.height, grade, dragAndDrop: card.dragAndDrop, dropArea: card.dropArea })
         renderingCardsCollection()
 
         // -- deleting card from cards --

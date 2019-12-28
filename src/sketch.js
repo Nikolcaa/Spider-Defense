@@ -25,7 +25,10 @@ var webs,
     cardsCollection = [],
     activeCards = [],
     dragAndDropCards = [],
-    freezeAreas = [],
+
+    cardsAreasData,
+    cardsAreas = [],
+    cardArea,
 
     currentlyDraggedCard = null,
 
@@ -117,10 +120,11 @@ function renderingFloatingCards(currentBonus) {
                     cardsClasses[classes].img,
                     cardsClasses[classes].img.width,
                     cardsClasses[classes].img.height,
-                    cardsClasses[classes].dragAndDrop,
                     xPos,
                     yPos,
-                    classes
+                    classes,
+                    cardsClasses[classes].dropArea,
+
                 ))
                 for (let i = 0; i < floatingCards.length; i++) {
                     floatingCards[i].delete()
@@ -143,9 +147,6 @@ function renderingCardsCollection() {
             yPos
         ))
         xPos += 72
-
-        //console.log(cardsCollection)
-
         if (cardsCollection[i].dragAndDrop) {
             dragAndDropCards.push(useableCards[i].grade)
         }
@@ -164,6 +165,30 @@ function renderingFieldsForCards() {
     }
 }
 
+function renderingCardsAreas(card) {
+    Object.keys(cardsAreasData).map((classes, index) => {
+        if (classes === card.dropArea) {
+            let xPos = mouseX
+            let yPos = mouseY
+            cardArea = new CardArea(
+                parseInt(_.uniqueId()),
+                xPos,
+                yPos,
+                cardsAreasData[classes].w,
+                cardsAreasData[classes].h,
+                cardsAreasData[classes].color,
+                classes,
+            )
+
+            cardArea.timeout()
+
+            cardsAreas.push(cardArea)
+
+        }
+    })
+}
+
+
 function preload() {
     Skins()
     // -- score updating --
@@ -181,6 +206,7 @@ function setup() {
     lvlsData = new lvlsData()
     bonusClasses = new bonusData()
     cardsClasses = new cardsData()
+    cardsAreasData = new cardsAreasData()
 
     // ------------ spider ------------
     spider = new Spider(skin9, spiderHp)
@@ -198,8 +224,8 @@ function draw() {
     background(bgColor)
 
     // ------------ cardsAreas ------------
-    for (let i = 0; i < freezeAreas.length; i++) {
-        freezeAreas[i].show()
+    for (let i = 0; i < cardsAreas.length; i++) {
+        cardsAreas[i].show()
     }
 
     // ------------ score ------------
@@ -287,6 +313,9 @@ function draw() {
 
     for (let i = 0; i < useableCards.length; i++) {
         useableCards[i].show()
+        /* if(useableCards[i].active){
+            useableCards[i].showeRangeOfCardArea()
+        } */
     }
 
 
@@ -352,15 +381,15 @@ function mousePressed() {
 }
 
 function mouseDragged() {
-    if (/*useableCards[i].dragAndDrop && */ currentlyDraggedCard && MouseCollision(currentlyDraggedCard) && activeCards.indexOf(currentlyDraggedCard.grade) === -1) {
-        currentlyDraggedCard.mouseStartDragged()
+    if (currentlyDraggedCard && !currentlyDraggedCard.active) {
+        if (currentlyDraggedCard && MouseCollision(currentlyDraggedCard) && activeCards.indexOf(currentlyDraggedCard.grade) === -1) {
+            currentlyDraggedCard.mouseDragging()
+        }
+    } else {
+        if (currentlyDraggedCard) {
+            currentlyDraggedCard.mouseDragging()
+        }
     }
-
-    // for (let i = 0; i < useableCards.length; i++) {
-    //     if (/*useableCards[i].dragAndDrop && */MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
-    //         useableCards[i].mouseStartDragged()
-    //     }
-    // }
 }
 
 function mouseReleased() {

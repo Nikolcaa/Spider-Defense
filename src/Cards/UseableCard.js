@@ -1,13 +1,14 @@
-function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
+function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
     this.ID = ID
     this.img = img
     this.w = w
     this.h = h
     this.grade = grade
     this.dragAndDrop = dragAndDrop
+    this.dropArea = dropArea
     this.x = x
     this.y = y
-    this.dragging = false
+    this.active = false
     this.pressed = false
     this.xOffset = 0
     this.yOffset = 0
@@ -21,34 +22,37 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
     }
     // -- Drag and drop --
     this.mousePressed = function () {
-        this.pressed = true
+        this.active = false
         this.xOffset = mouseX - this.x
         this.yOffset = mouseY - this.y
         currentlyDraggedCard = this
     }
 
-    this.mouseStartDragged = function () {
-        this.dragging = true
+    this.mouseDragging = function () {
+        this.active = true
 
-        if (this.pressed) {
-            this.x = mouseX - this.xOffset;
-            this.y = mouseY - this.yOffset;
-        }
+        this.x = mouseX - this.xOffset;
+        this.y = mouseY - this.yOffset;
     }
 
     this.mouseReleased = function () {
         for (let i = 0; i < fieldsForCards.length; i++) {
             if (MouseCollision(fieldsForCards[i])) {
-                this.dragging = false
+                this.active = false
             }
         }
-        if (this.dragging) {
+        if (this.active) {
             cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
             renderingCardsCollection()
             activeCards.push(this.grade)
 
             if (this.grade === 'freezeCard') {
-                this.PowerOfFreezeCard()
+                renderingCardsAreas(this)
+
+                for (let i = 0; i < enemies.length; i++) {
+                    cardArea.collision(enemies[i])
+                }
+
             }
             else if (this.grade === 'websComeBackCard') {
                 this.PowerOfWebsComeBackCard()
@@ -61,16 +65,24 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, x, y) {
             this.x = this.defX
             this.y = this.defY
         }
-        this.dragging = false
-        this.pressed = false
+        this.active = false
     }
 
+    /* this.showeRangeOfCardArea = function () {
+        push()
+        strokeWeight(10)
+        stroke("black")
+        ellipse(freezeArea.x, freezeArea.y, freezeArea.w, freezeArea.h)
+        pop()
+    } */
+
     this.PowerOfFreezeCard = function () {
-        let freezeArea = new FreezeArea(parseInt(_.uniqueId()), mouseX, mouseY, 200, 200)
-        freezeAreas.push(freezeArea)
-            for (let j = 0; j < enemies.length; j++) {
-                freezeArea.jebemliga(enemies[j])
-            }
+/*         freezeArea = new FreezeArea(parseInt(_.uniqueId()), mouseX, mouseY, 200, 200)
+        freezeAreas.push(freezeArea) */
+        
+        /* for (let j = 0; j < enemies.length; j++) {
+            cardArea.collision(enemies[j])
+        } */
     }
 
     this.PowerOfWebsComeBackCard = function () {

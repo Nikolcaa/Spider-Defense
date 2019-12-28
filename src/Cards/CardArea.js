@@ -1,26 +1,28 @@
-function FreezeArea(ID, x, y, w, h) {
+function CardArea(ID, x, y, w, h, color, grade) {
     this.ID = ID
     this.x = x
     this.y = y
     this.w = w
     this.h = h
+    this.color = color
+    this.grade = grade
     this.show = function () {
         push()
         noStroke()
-        fill("aqua")
+        fill(this.color)
         ellipse(this.x, this.y, this.w, this.h)
         pop()
     }
 
-    this.timeout = function (enemy) {
+    this.timeout = function () {
         activeCards.splice(activeCards.indexOf(this.grade), 1)
 
         setTimeout(() => {
-            freezeAreas = [...freezeAreas.filter(el => el.ID !== this.ID)];
+            cardsAreas = [...cardsAreas.filter(el => el.ID !== this.ID)];
         }, 3000)
     }
 
-    this.jebemliga = function(enemy){
+    this.collision = function (enemy) {
         if (CollisionEllipse(this, enemy)) {
             enemy.CollisionFreezedArea(this)
         }
