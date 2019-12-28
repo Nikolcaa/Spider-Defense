@@ -52,8 +52,18 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
                 for (let i = 0; i < enemies.length; i++) {
                     cardArea.collision(enemies[i])
                 }
-
             }
+
+            else if (this.grade === 'slowCard') {
+                renderingCardsAreas(this)
+
+                for (let i = 0; i < enemies.length; i++) {
+                    cardArea.collision(enemies[i])
+                }
+            }
+
+
+
             else if (this.grade === 'websComeBackCard') {
                 this.PowerOfWebsComeBackCard()
             }
@@ -66,23 +76,6 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
             this.y = this.defY
         }
         this.active = false
-    }
-
-    /* this.showeRangeOfCardArea = function () {
-        push()
-        strokeWeight(10)
-        stroke("black")
-        ellipse(freezeArea.x, freezeArea.y, freezeArea.w, freezeArea.h)
-        pop()
-    } */
-
-    this.PowerOfFreezeCard = function () {
-/*         freezeArea = new FreezeArea(parseInt(_.uniqueId()), mouseX, mouseY, 200, 200)
-        freezeAreas.push(freezeArea) */
-        
-        /* for (let j = 0; j < enemies.length; j++) {
-            cardArea.collision(enemies[j])
-        } */
     }
 
     this.PowerOfWebsComeBackCard = function () {

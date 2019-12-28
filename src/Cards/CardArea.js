@@ -6,6 +6,7 @@ function CardArea(ID, x, y, w, h, color, grade) {
     this.h = h
     this.color = color
     this.grade = grade
+    this.time = 3000
     this.show = function () {
         push()
         noStroke()
@@ -19,12 +20,12 @@ function CardArea(ID, x, y, w, h, color, grade) {
 
         setTimeout(() => {
             cardsAreas = [...cardsAreas.filter(el => el.ID !== this.ID)];
-        }, 3000)
+        }, this.time)
     }
 
     this.collision = function (enemy) {
         if (CollisionEllipse(this, enemy)) {
-            enemy.CollisionFreezedArea(this)
+            enemy.CollisionCardArea(this)
         }
         this.timeout()
     }

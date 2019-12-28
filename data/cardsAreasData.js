@@ -5,5 +5,10 @@ function cardsAreasData() {
             h: 200,
             color: "aqua",
         },
+        slowCardArea: {
+            w: 300,
+            h: 300,
+            color: "white",
+        },
     }
 }

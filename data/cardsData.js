@@ -5,6 +5,12 @@ function cardsData() {
             dragAndDrop: true,
             dropArea: "freezeCardArea",
         },
+
+        slowCard: {
+            img: skinWebsComeBackCard,
+            dragAndDrop: true,
+            dropArea: "slowCardArea",
+        },
         websComeBackCard: {
             img: skinWebsComeBackCard,
             dragAndDrop: false,

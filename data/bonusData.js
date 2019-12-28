@@ -24,6 +24,14 @@ function bonusData() {
             img: skinFreezeBonus,
             drop: "freezeCard",
         },
+        slowBonus: {
+            speed: 1.5,
+            hp: 1,
+            w: 40,
+            h: 40,
+            img: skinWebsComeBackBonus,
+            drop: "slowCard",
+        },
         websComeBackBonus: {
             speed: 1.5,
             hp: 1,

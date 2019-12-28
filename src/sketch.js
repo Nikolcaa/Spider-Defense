@@ -29,6 +29,7 @@ var webs,
     cardsAreasData,
     cardsAreas = [],
     cardArea,
+    cardAreaRange,
 
     currentlyDraggedCard = null,
 
@@ -179,13 +180,28 @@ function renderingCardsAreas(card) {
                 cardsAreasData[classes].color,
                 classes,
             )
-
             cardArea.timeout()
-
             cardsAreas.push(cardArea)
-
         }
     })
+}
+
+function renderingCardsAreaRange() {
+    Object.keys(cardsAreasData).map((classes, index) => {
+        if (currentlyDraggedCard.dropArea === classes) {
+            let xPos = mouseX
+            let yPos = mouseY
+            cardAreaRange = new CardAreaRange(
+                parseInt(_.uniqueId()),
+                xPos,
+                yPos,
+                cardsAreasData[classes].w,
+                cardsAreasData[classes].h,
+            )
+        }
+    })
+
+    cardAreaRange.show()
 }
 
 
@@ -313,12 +329,11 @@ function draw() {
 
     for (let i = 0; i < useableCards.length; i++) {
         useableCards[i].show()
-        /* if(useableCards[i].active){
-            useableCards[i].showeRangeOfCardArea()
-        } */
     }
 
-
+    if (currentlyDraggedCard && currentlyDraggedCard.active) {
+        renderingCardsAreaRange()
+    }
 }
 
 function mousePressed() {

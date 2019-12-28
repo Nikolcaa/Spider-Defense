@@ -10,6 +10,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.grade = grade
 
     this.isFreezed = false
+    this.isSlowed = false
     this.isPoisoned = false
     this.interval = null
     this.show = function () {
@@ -37,7 +38,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
-    this.update = function () {
+    this.freezeUpdate = function () {
         // -- freezing --
         if (this.isFreezed) {
             this.speed = 0
@@ -46,17 +47,36 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
-    this.CollisionFreezedArea = function () {
-        this.isFreezed = true
-        this.update()
-
-        setTimeout(() => {
-            this.isFreezed = false
-            this.update()
-        }, 3000)
+    this.slowUpdate = function(){
+        if(this.isSlowed) {
+            this.speed /= 3 
+        } else {
+            this.speed = speed
+        }
     }
 
+    this.CollisionCardArea = function (area) {
+        if(area.grade === "freezeCardArea"){
+            this.isFreezed = true
+            this.freezeUpdate()
     
+            setTimeout(() => {
+                this.isFreezed = false
+                this.freezeUpdate()
+            }, 3000)
+
+        } else if(area.grade === "slowCardArea"){
+            this.isSlowed = true
+            this.slowUpdate()
+
+            setTimeout(() => {
+                this.isSlowed = false
+                this.slowUpdate()
+            }, 3000)
+        }
+    }
+
+
 
     this.poisonInterval = function () {
         this.interval = setInterval(() => {
