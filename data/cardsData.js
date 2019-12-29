@@ -21,6 +21,11 @@ function cardsData() {
             dragAndDrop: false,
             dropArea: "",
         },
+        shieldCard: {
+            img: skinPoisonCard,
+            dragAndDrop: false,
+            dropArea: "",
+        },
 
     }
 }

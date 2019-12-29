@@ -4,7 +4,8 @@ function lvlsData() {
             {
                 Bee: 3,
                 freezeBonus: 2,
-                slowBonus: 2
+                shieldBonus: 10,
+                slowBonus: 2,
             },
             {
                 heart: 10,

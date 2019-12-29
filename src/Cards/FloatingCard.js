@@ -1,4 +1,4 @@
-function FloatingCard(ID, img, w, h, x, y, grade, dropArea) {
+function FloatingCard(ID, img, w, h, x, y, grade, dropArea, dragAndDrop) {
     this.ID = ID
     this.img = img
     this.w = w
@@ -7,6 +7,7 @@ function FloatingCard(ID, img, w, h, x, y, grade, dropArea) {
     this.y = y
     this.grade = grade
     this.dropArea = dropArea
+    this.dragAndDrop = dragAndDrop
     this.a = 255
     this.b = 255
     this.c = 255

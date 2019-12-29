@@ -32,6 +32,14 @@ function bonusData() {
             img: skinWebsComeBackBonus,
             drop: "slowCard",
         },
+        shieldBonus: {
+            speed: 1.5,
+            hp: 1,
+            w: 40,
+            h: 40,
+            img: skinWebsComeBackBonus,
+            drop: "slowCard",
+        },
         websComeBackBonus: {
             speed: 1.5,
             hp: 1,
@@ -47,6 +55,14 @@ function bonusData() {
             h: 40,
             img: skinPoisonBonus,
             drop: "poisonCard",
-        }
+        },
+        shieldBonus: {
+            speed: 1.5,
+            hp: 1,
+            w: 40,
+            h: 40,
+            img: skinPoisonBonus,
+            drop: "shieldCard",
+        },
     }
 }

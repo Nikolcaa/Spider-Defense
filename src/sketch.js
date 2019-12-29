@@ -30,6 +30,8 @@ var webs,
     cardsAreas = [],
     cardArea,
     cardAreaRange,
+    shields = [],
+    shields,
 
     currentlyDraggedCard = null,
 
@@ -125,7 +127,7 @@ function renderingFloatingCards(currentBonus) {
                     yPos,
                     classes,
                     cardsClasses[classes].dropArea,
-
+                    cardsClasses[classes].dragAndDrop,
                 ))
                 for (let i = 0; i < floatingCards.length; i++) {
                     floatingCards[i].delete()
@@ -200,9 +202,14 @@ function renderingCardsAreaRange() {
             )
         }
     })
-
     cardAreaRange.show()
 }
+
+function renderingShield() {
+    shield = new Shield()
+    shields.push(shield)
+}
+
 
 
 function preload() {
@@ -334,6 +341,13 @@ function draw() {
     if (currentlyDraggedCard && currentlyDraggedCard.active) {
         renderingCardsAreaRange()
     }
+
+
+    for(let i = 0; i < shields.length; i++){
+        shields[i].show()
+        shields[i].move()
+    }
+
 }
 
 function mousePressed() {

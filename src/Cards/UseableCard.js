@@ -10,8 +10,6 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
     this.y = y
     this.active = false
     this.pressed = false
-    this.xOffset = 0
-    this.yOffset = 0
     this.defX = x
     this.defY = y
     this.show = function () {
@@ -22,17 +20,33 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
     }
     // -- Drag and drop --
     this.mousePressed = function () {
-        this.active = false
-        this.xOffset = mouseX - this.x
-        this.yOffset = mouseY - this.y
-        currentlyDraggedCard = this
+        if (this.dragAndDrop) {
+            this.active = false
+            currentlyDraggedCard = this
+        } else {
+            this.activatePower()
+        }
+    }
+
+    this.activatePower = function () {
+        cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
+        renderingCardsCollection()
+        activeCards.push(this.grade)
+
+        if (this.grade === 'websComeBackCard') {
+            this.PowerOfWebsComeBackCard()
+        }
+        else if (this.grade === 'poisonCard') {
+            this.PowerOfPoisonCard()
+        } else if (this.grade === 'shieldCard') {
+            this.PowerOfShieldCard()
+        }
     }
 
     this.mouseDragging = function () {
         this.active = true
-
-        this.x = mouseX - this.xOffset;
-        this.y = mouseY - this.yOffset;
+        this.x = mouseX - this.w / 2
+        this.y = mouseY - this.h / 2
     }
 
     this.mouseReleased = function () {
@@ -61,16 +75,6 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
                     cardArea.collision(enemies[i])
                 }
             }
-
-
-
-            else if (this.grade === 'websComeBackCard') {
-                this.PowerOfWebsComeBackCard()
-            }
-            else if (this.grade === 'poisonCard') {
-                this.PowerOfPoisonCard()
-            }
-
         } else {
             this.x = this.defX
             this.y = this.defY
@@ -104,6 +108,12 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
 
             activeCards.splice(activeCards.indexOf(this.grade), 1);
         }, 6000)
+    }
+
+    this.PowerOfShieldCard = function () {
+        renderingShield()
+        activeCards.splice(activeCards.indexOf(this.grade), 1);
+
     }
 
 }
