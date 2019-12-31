@@ -39,12 +39,30 @@ var webs,
     fieldsForCards = [],
 
     spider,
-    spiderHp = 4,
+    spiderHp = 400,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
-    bgColor = 'grey';
+    enemyhp,
+    shieldEnemyCombinations = [],
+
+    bgColor;
 //animation;
+
+
+// Tools
+
+const isUniqueESCombination = (eID, sID) => {
+    let flag = true;
+
+    shieldEnemyCombinations.forEach((C) => {
+        if(C[0] === eID && C[1] === sID) {
+            flag = false;
+        };
+    });
+
+    return flag;
+}
 
 // ---------------- render functions -----------------
 function renderingWebs() {
@@ -118,22 +136,20 @@ function renderingFloatingCards(currentBonus) {
         let xPos = mouseX - cardsClasses[classes].img.width / 2
         let yPos = mouseY - cardsClasses[classes].img.height / 2
         if (currentBonus.drop === classes) {
-            setTimeout(function () {
-                floatingCards.push(new FloatingCard(
-                    parseInt(_.uniqueId()),
-                    cardsClasses[classes].img,
-                    cardsClasses[classes].img.width,
-                    cardsClasses[classes].img.height,
-                    xPos,
-                    yPos,
-                    classes,
-                    cardsClasses[classes].dropArea,
-                    cardsClasses[classes].dragAndDrop,
-                ))
-                for (let i = 0; i < floatingCards.length; i++) {
-                    floatingCards[i].delete()
-                }
-            }, 1)
+            floatingCards.push(new FloatingCard(
+                parseInt(_.uniqueId()),
+                cardsClasses[classes].img,
+                cardsClasses[classes].img.width,
+                cardsClasses[classes].img.height,
+                xPos,
+                yPos,
+                classes,
+                cardsClasses[classes].dropArea,
+                cardsClasses[classes].dragAndDrop,
+            ))
+            for (let i = 0; i < floatingCards.length; i++) {
+                floatingCards[i].delete()
+            }
         }
     })
 }
@@ -256,7 +272,7 @@ function draw() {
     // ------------ score ------------
     push()
     textSize(20)
-    fill("white");
+    fill("black");
     text("SCORE: " + score, 20, 30)
     pop()
 
@@ -295,7 +311,7 @@ function draw() {
     }
     // -- webs counter --
     textSize(20)
-    fill("white")
+    fill("black")
     text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
 
     // ------------ enemies ------------
@@ -308,8 +324,11 @@ function draw() {
         }
 
         for (let j = 0; j < shields.length; j++) {
-            if (Collision(shields[j], enemies[i])) {
-                enemies[i].collisionShield()
+            if (Collision(shields[j], enemies[i]) && isUniqueESCombination(enemies[i].ID, shields[j].ID)) {
+                enemies[i].collisionShield();
+                shields[j].collisionEnemy();
+                shieldEnemyCombinations.push([enemies[i].ID, shields[j].ID]);
+                // shields = [...shields.filter(el => el.ID !== shields[j].ID)];
             }
         }
 
@@ -357,6 +376,9 @@ function draw() {
     for (let i = 0; i < shields.length; i++) {
         shields[i].show()
         shields[i].move()
+        if(shields[i].hp <= 0){
+            shields[i].Dead()
+        }
     }
 
 }
@@ -403,7 +425,6 @@ function mousePressed() {
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
         if (web && MouseCollision(bonuses[i])) {
-            renderingFloatingCards(bonuses[i])
             web.collisionBonus(bonuses[i])
         }
     }

@@ -2,12 +2,15 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                Bee: 3,
+                Bee: 1,
+                Bumblebee: 1,
+                Hornet: 1,
+                QueenBee: 10,
                 shieldBonus: 3,
                 //poisonBonus: 2,
             },
             {
-                heart: 10,
+                AssassinBee: 3,
             },
         ],
         /*stage1: [

@@ -13,7 +13,6 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.isSlowed = false
     this.isPoisoned = false
     this.interval = null
-    this.shieldTouched = false
     this.show = function () {
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
@@ -96,25 +95,24 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         setTimeout(() => {
             enemies = [...enemies.filter(el => el.ID !== this.ID)];
             QueenBeeSplit(this)
+
+            // Delete all EnemyShield combinations that contain this enemy ID
+            shieldEnemyCombinations = shieldEnemyCombinations.filter(C => C[0] !== this.ID);
         }, 1)
     }
 
     this.collisionSpider = function (enemy) {
-        this.hp = 0
-
-        setTimeout(function () {
-            spiderHp -= 1
-            if (enemy.grade === "Hornet") {
-                numberOfWebs -= 1
-            }
-        }, 1)
-
-        if (spiderHp <= 1) {
+        this.Dead()
+        spiderHp -= 1
+        if (enemy.grade === "Hornet") {
+            numberOfWebs -= 1
+        }
+        if (spiderHp <= 0) {
             alert("izgubio si")
         }
     }
-
-    this.collisionShield = function () {
-        this.hp -= 1
+    this.collisionShield = function (shield) {
+        this.hp -= 1;
+        this.color = "red"
     }
 }

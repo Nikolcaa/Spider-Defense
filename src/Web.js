@@ -14,6 +14,7 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
     this.comeBack = false
     this.show = function () {
         push()
+        strokeWeight(2)
         stroke(this.stroke);
         line(this.x, this.y, this.x2, this.y2);
         pop()
@@ -129,6 +130,9 @@ function Web(ID, active, x, y, x2, y2, speed, shouldComeBack, mousex, mousey) {
 
             // -- deleting bonus --
             bonuses = [...bonuses.filter(el => el.ID !== bonus.ID)];
+            setTimeout(() => {
+                renderingFloatingCards(bonus)
+            }, 1)
         }
 
         FastWebComeBackSpeed(this)

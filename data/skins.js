@@ -26,4 +26,8 @@ function Skins() {
 
     //animation = createImg("Animations/animation.gif")
 
+    // Bakcground
+
+    bgColor = loadImage('Background/SandBackground.jpg');
+
 }
