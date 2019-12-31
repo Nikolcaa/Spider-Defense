@@ -31,7 +31,7 @@ var webs,
     cardArea,
     cardAreaRange,
     shields = [],
-    shields,
+    shield,
 
     currentlyDraggedCard = null,
 
@@ -39,11 +39,12 @@ var webs,
     fieldsForCards = [],
 
     spider,
-    spiderHp = 400,
+    spiderHp = 4,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
     bgColor = 'grey';
+//animation;
 
 // ---------------- render functions -----------------
 function renderingWebs() {
@@ -210,8 +211,6 @@ function renderingShield() {
     shields.push(shield)
 }
 
-
-
 function preload() {
     Skins()
     // -- score updating --
@@ -242,7 +241,6 @@ function setup() {
     renderingBonuses()
     renderingFieldsForCards()
 }
-
 function draw() {
     background(bgColor)
 
@@ -251,8 +249,11 @@ function draw() {
         cardsAreas[i].show()
     }
 
-    // ------------ score ------------
+    /* animation1.position(50, 350);
+    animation1.width
+    animation1.height */
 
+    // ------------ score ------------
     push()
     textSize(20)
     fill("white");
@@ -302,6 +303,16 @@ function draw() {
         enemies[i].show()
         enemies[i].move()
 
+        if (enemies[i].hp <= 0) {
+            enemies[i].Dead()
+        }
+
+        for (let j = 0; j < shields.length; j++) {
+            if (Collision(shields[j], enemies[i])) {
+                enemies[i].collisionShield()
+            }
+        }
+
         if (Collision(spider, enemies[i])) {
             enemies[i].collisionSpider(enemies[i])
         }
@@ -343,7 +354,7 @@ function draw() {
     }
 
 
-    for(let i = 0; i < shields.length; i++){
+    for (let i = 0; i < shields.length; i++) {
         shields[i].show()
         shields[i].move()
     }
@@ -431,10 +442,10 @@ function mouseReleased() {
 
 //--------- collision -----------
 function Collision(player1, player2) {
-    if (player1.x <= player2.x + player2.w / 2 &&
-        player1.x + player1.w >= player2.x &&
-        player1.y <= player2.y + player2.h / 2 &&
-        player1.y + player1.h >= player2.y) {
+    if (player1.x + player1.w >= player2.x &&
+        player1.x <= player2.x + player2.w &&
+        player1.y + player1.h >= player2.y &&
+        player1.y <= player2.y + player2.h) {
         return true
     } else {
         return false

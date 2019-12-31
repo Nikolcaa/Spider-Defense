@@ -25,7 +25,7 @@ function enemiesData() {
             grade: "Hornet",
         },
         QueenBee: {
-            speed: 1,
+            speed: 2,
             hp: 3,
             w: 70,
             h: 70,

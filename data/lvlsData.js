@@ -3,9 +3,8 @@ function lvlsData() {
         tutorial: [
             {
                 Bee: 3,
-                freezeBonus: 2,
-                shieldBonus: 10,
-                slowBonus: 2,
+                shieldBonus: 3,
+                //poisonBonus: 2,
             },
             {
                 heart: 10,

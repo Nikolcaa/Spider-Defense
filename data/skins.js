@@ -23,4 +23,7 @@ function Skins() {
     skinFreezeCard = loadImage('Images/imagesOfCards/freezeCard.png')
     skinWebsComeBackCard = loadImage('Images/imagesOfCards/sloweCard.png')
     skinPoisonCard = loadImage('Images/imagesOfCards/poisonCard.png')
+
+    //animation = createImg("Animations/animation.gif")
+
 }

@@ -1,8 +1,8 @@
 function Spider(skin, hp) {
     this.show = function () {
         this.skin = skin
-        this.w = this.skin.width / 10
-        this.h = this.skin.height / 10
+        this.w = this.skin.width / 12
+        this.h = this.skin.height / 12
         this.x = width / 2 - this.w / 2
         this.y = height / 2 - this.h / 2
         this.hp = hp

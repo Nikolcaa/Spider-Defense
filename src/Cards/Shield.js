@@ -1,19 +1,24 @@
 function Shield() {
-    this.ID = parseInt(_.uniqueId())
-    this.r = 200
-    this.w = 20
-    this.h = 20
-    this.speed = 3
-    this.angle = 0.0
-    this.show = function () {
+    this.base = createVector(width / 2, height / 2)
+    this.vec = createVector(300, 0)
+    this.w = 15
+    this.h = 40
+    this.angle = 0
+    this.speed = 0.025
+    this.show = function() {
+        this.x = int(this.vec.x + width/2)
+        this.y = int(this.vec.y + height/2)
+
         push()
-        fill("white");
-        translate(width/2, height/2);
-        rotate(this.angle)
-        ellipse(-this.r, -this.r, this.w, this.h);
+        fill("white")
+        translate(this.base.x, this.base.y)
+        rotate(this.vec.heading())
+        translate(this.vec.mag() - this.w, 0)
+        rect(0, 0, this.w, this.h)
         pop()
     }
+        
     this.move = function () {
-        this.angle += 0.05;
+        this.vec.rotate(this.speed)
     }
 }

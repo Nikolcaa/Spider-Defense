@@ -13,6 +13,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.isSlowed = false
     this.isPoisoned = false
     this.interval = null
+    this.shieldTouched = false
     this.show = function () {
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
@@ -47,25 +48,25 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
-    this.slowUpdate = function(){
-        if(this.isSlowed) {
-            this.speed /= 3 
+    this.slowUpdate = function () {
+        if (this.isSlowed) {
+            this.speed /= 3
         } else {
             this.speed = speed
         }
     }
 
     this.CollisionCardArea = function (area) {
-        if(area.grade === "freezeCardArea"){
+        if (area.grade === "freezeCardArea") {
             this.isFreezed = true
             this.freezeUpdate()
-    
+
             setTimeout(() => {
                 this.isFreezed = false
                 this.freezeUpdate()
             }, 3000)
 
-        } else if(area.grade === "slowCardArea"){
+        } else if (area.grade === "slowCardArea") {
             this.isSlowed = true
             this.slowUpdate()
 
@@ -76,36 +77,44 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
 
-
-
     this.poisonInterval = function () {
         this.interval = setInterval(() => {
             this.hp -= 0.5
-            if (this.isDead()) {
-                enemies = [...enemies.filter(el => el.ID !== this.ID)];
-                QueenBeeSplit(this)
-            }
         }, 1000)
     }
 
-    this.isDead = function () {
+    /* this.isDead = function () {
         if (this.hp <= 0) {
+            //animation.position(this.x, this.y)
+
             clearInterval(this.interval)
             return true
         }
+    } */
+
+    this.Dead = function () {
+        setTimeout(() => {
+            enemies = [...enemies.filter(el => el.ID !== this.ID)];
+            QueenBeeSplit(this)
+        }, 1)
     }
 
     this.collisionSpider = function (enemy) {
+        this.hp = 0
+
         setTimeout(function () {
             spiderHp -= 1
-            enemies = [...enemies.filter(el => el.ID !== enemy.ID)];
-
             if (enemy.grade === "Hornet") {
                 numberOfWebs -= 1
             }
         }, 1)
+
         if (spiderHp <= 1) {
             alert("izgubio si")
         }
+    }
+
+    this.collisionShield = function () {
+        this.hp -= 1
     }
 }
