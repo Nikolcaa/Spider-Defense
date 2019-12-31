@@ -98,6 +98,8 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
 
             // Delete all EnemyShield combinations that contain this enemy ID
             shieldEnemyCombinations = shieldEnemyCombinations.filter(C => C[0] !== this.ID);
+            markedEnemies = [...markedEnemies.filter(el => el.ID !== this.ID)];
+
         }, 1)
     }
 
@@ -112,7 +114,12 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }
     }
     this.collisionShield = function (shield) {
-        this.hp -= 1;
+        this.hp -= 1
         this.color = "red"
+    }
+
+    this.collisionMiniSpider = function(){
+        this.Dead()
+        miniSpider.active = true
     }
 }

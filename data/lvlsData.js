@@ -1,58 +1,86 @@
 function lvlsData() {
     return {
         tutorial: [
-            {
+/*             {
                 Bee: 1,
                 Bumblebee: 1,
                 Hornet: 1,
                 QueenBee: 10,
                 shieldBonus: 3,
-                //poisonBonus: 2,
-            },
-            {
+                poisonBonus: 2,
+            }, */
+/*             {
                 AssassinBee: 3,
             },
-        ],
-        /*stage1: [
             {                
-                default: 1,
+                Bee: 1,
                 heart: 1,
             },
             {                
-                default: 2,
-                tank: 0,
+                Bee: 2,
+                BumbleBee: 0,
                 heart: 1,
                 emptyHeart: 1,
-                sloweBonus: 2,
+                slowBonus: 2,
             },
             {                
-                default: 3,
-                tank: 1,
+                Bee: 3,
+                BumbleBee: 1,
                 heart: 1,
-            },
+                Hornet: 2,
+            }, */
             {                
-                default: 8,
+                QueenBee: 3,
+/*                 heart: 5,
                 heart: 3,
+                AssassinBee: 5,
+                QueenBee: 3,
+                // Hornet: 6,
+                Bumblebee: 3,
+                emptyHeart: 1,
+                freezeBonus: 2,
+                slowBonus: 1,
+                shieldBonus: 7,
+                poisonBonus: 3,
+                websComeBackBonus: 2 */
             },
             {                
-                default: 4,
+/*                 Bee: 8,
+                heart: 3,
+                AssassinBee: 5,
+                QueenBee: 4,
+                // Hornet: 2,
+                Bumblebee: 1,
+                emptyHeart: 2,
+                freezeBonus: 2,
+                slowBonus: 1,
+                shieldBonus: 7,
+                poisonBonus: 3,
+                websComeBackBonus: 1 */
+            },
+/*             {                
+                Bee: 4,
                 heart: 1,
             },
             {                
-                default: 5,
-                tank: 2,
+                Bee: 5,
+                BumbleBee: 2,
             },
             {                
-                default: 1,
-                tank: 3,
+                Bee: 1,
+                BumbleBee: 3,
                 emptyHeart: 1,
             },
             {                
-                tank: 5,
+                BumbleBee: 5,
+                QueenBee: 3
             },
             {
-                tank: 6,
-            }, 
+                BumbleBee: 6,
+            },  */
+        ],
+        /*stage1: [
+            
         ],*/
     }
 } 

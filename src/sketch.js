@@ -39,9 +39,14 @@ var webs,
     fieldsForCards = [],
 
     spider,
-    spiderHp = 400,
+    spiderHp = 4,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
+
+    miniSpiders = [],
+    miniSpiders,
+    miniSpiderRadius,
+    markedEnemies = [],
 
     enemyhp,
     shieldEnemyCombinations = [],
@@ -56,7 +61,7 @@ const isUniqueESCombination = (eID, sID) => {
     let flag = true;
 
     shieldEnemyCombinations.forEach((C) => {
-        if(C[0] === eID && C[1] === sID) {
+        if (C[0] === eID && C[1] === sID) {
             flag = false;
         };
     });
@@ -227,6 +232,11 @@ function renderingShield() {
     shields.push(shield)
 }
 
+function renderingMiniSpiders() {
+    //miniSpiders.push(miniSpider)
+
+}
+
 function preload() {
     Skins()
     // -- score updating --
@@ -237,6 +247,9 @@ function preload() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight)
+
+    miniSpider = new MiniSpider()
+    miniSpiderRadius = new MiniSpiderRadius()
 
     // ------------ Data------------
     webs = new websData()
@@ -259,6 +272,8 @@ function setup() {
 }
 function draw() {
     background(bgColor)
+
+    miniSpiderRadius.show()
 
     // ------------ cardsAreas ------------
     for (let i = 0; i < cardsAreas.length; i++) {
@@ -328,8 +343,11 @@ function draw() {
                 enemies[i].collisionShield();
                 shields[j].collisionEnemy();
                 shieldEnemyCombinations.push([enemies[i].ID, shields[j].ID]);
-                // shields = [...shields.filter(el => el.ID !== shields[j].ID)];
             }
+        }
+
+        if (Collision(enemies[i], miniSpider)) {
+            enemies[i].collisionMiniSpider()
         }
 
         if (Collision(spider, enemies[i])) {
@@ -347,9 +365,9 @@ function draw() {
     if (!enemies.length && !bonuses.length) {
         if (currentStage === lvlsData.tutorial) {
 
-            currentGroup += 1
-        }/*  else {
-                currentGroup = int(random(0, currentStage.length))
+            currentGroup = int(random(0, currentStage.length))
+        }/* else {
+                
             } */
         renderingEnemies()
         renderingBonuses()
@@ -376,10 +394,25 @@ function draw() {
     for (let i = 0; i < shields.length; i++) {
         shields[i].show()
         shields[i].move()
-        if(shields[i].hp <= 0){
+        if (shields[i].hp <= 0) {
             shields[i].Dead()
         }
     }
+
+
+    // -------- miniSpiders --------
+    miniSpider.show()
+
+    for (let j = 0; j < enemies.length; j++) {
+        if (Collision(enemies[j], miniSpiderRadius)) {
+            markedEnemies.push(enemies[j])
+            miniSpider.move(markedEnemies[0])
+
+        }
+    }
+
+    renderingMiniSpiders()
+
 
 }
 

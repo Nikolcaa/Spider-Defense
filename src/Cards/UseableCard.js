@@ -115,5 +115,4 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
         activeCards.splice(activeCards.indexOf(this.grade), 1);
 
     }
-
 }
