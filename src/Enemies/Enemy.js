@@ -13,6 +13,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.isSlowed = false
     this.isPoisoned = false
     this.interval = null
+    this.isMarkedByMiniSpider = false
     this.show = function () {
         fill(this.color)
         rect(this.x, this.y, this.w, this.h)
@@ -82,15 +83,6 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         }, 1000)
     }
 
-    /* this.isDead = function () {
-        if (this.hp <= 0) {
-            //animation.position(this.x, this.y)
-
-            clearInterval(this.interval)
-            return true
-        }
-    } */
-
     this.Dead = function () {
         setTimeout(() => {
             enemies = [...enemies.filter(el => el.ID !== this.ID)];
@@ -120,6 +112,5 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
 
     this.collisionMiniSpider = function(){
         this.Dead()
-        miniSpider.active = true
     }
 }

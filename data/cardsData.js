@@ -26,6 +26,11 @@ function cardsData() {
             dragAndDrop: false,
             dropArea: "",
         },
+        miniSpiderCard: {
+            img: skinWebsComeBackCard,
+            dragAndDrop: false,
+            dropArea: "",
+        }
 
     }
 }

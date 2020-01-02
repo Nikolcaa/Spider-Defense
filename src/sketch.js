@@ -39,7 +39,7 @@ var webs,
     fieldsForCards = [],
 
     spider,
-    spiderHp = 4,
+    spiderHp = 400,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
@@ -233,8 +233,8 @@ function renderingShield() {
 }
 
 function renderingMiniSpiders() {
-    //miniSpiders.push(miniSpider)
-
+    miniSpider = new MiniSpider()
+    miniSpiders.push(miniSpider)
 }
 
 function preload() {
@@ -346,10 +346,6 @@ function draw() {
             }
         }
 
-        if (Collision(enemies[i], miniSpider)) {
-            enemies[i].collisionMiniSpider()
-        }
-
         if (Collision(spider, enemies[i])) {
             enemies[i].collisionSpider(enemies[i])
         }
@@ -401,19 +397,27 @@ function draw() {
 
 
     // -------- miniSpiders --------
-    miniSpider.show()
 
-    for (let j = 0; j < enemies.length; j++) {
-        if (Collision(enemies[j], miniSpiderRadius)) {
-            markedEnemies.push(enemies[j])
-            miniSpider.move(markedEnemies[0])
+    for(let i = 0; i < miniSpiders.length; i++){   
+        miniSpiders[i].show()
+        if(miniSpiders[i].markedEnemy){
+            miniSpiders[i].move()
+        }
 
+        for (let j = 0; j < enemies.length; j++) {
+            if (Collision(enemies[j], miniSpiderRadius) && !miniSpiders[i].active && !enemies[j].isMarkedByMiniSpider) {
+                enemies[j].isMarkedByMiniSpider = true
+                if(enemies[j].isMarkedByMiniSpider){
+                    miniSpiders[i].shouldMoveNow(enemies[j])
+                }
+            }
+            
+            if (Collision(enemies[j], miniSpiders[i])) {
+                enemies[j].collisionMiniSpider()
+                miniSpiders[i].collisionEnemy()
+            }
         }
     }
-
-    renderingMiniSpiders()
-
-
 }
 
 function mousePressed() {

@@ -30,7 +30,8 @@ function lvlsData() {
                 Hornet: 2,
             }, */
             {                
-                QueenBee: 3,
+                Bee: 20,
+                miniSpiderBonus: 7,
 /*                 heart: 5,
                 heart: 3,
                 AssassinBee: 5,

@@ -5,6 +5,7 @@ function MiniSpider() {
     this.w = 30
     this.h = 30
     this.active = false
+    this.markedEnemy
     this.show = function () {
         push()
         fill("black")
@@ -12,26 +13,41 @@ function MiniSpider() {
         pop()
     }
 
-    this.move = function (enemy) {
+    this.move = function () {
+        this.active = true
+
         let speed = 10
-        let ySpeed = Math.sqrt(Math.pow(speed, 2) / (Math.pow(Math.abs(this.x - enemy.x) / Math.abs(this.y - enemy.y), 2) + 1))
-        let xSpeed = (Math.abs(this.x - enemy.x) / Math.abs(this.y - enemy.y)) * ySpeed
+        let ySpeed = Math.sqrt(Math.pow(speed, 2) / (Math.pow(Math.abs(this.x - this.markedEnemy.x) / Math.abs(this.y - this.markedEnemy.y), 2) + 1))
+        let xSpeed = (Math.abs(this.x - this.markedEnemy.x) / Math.abs(this.y - this.markedEnemy.y)) * ySpeed
 
-        let d = dist(this.x, this.y, enemy.x, enemy.y)
-
-        if (enemy.x <= this.x && enemy.y <= this.y) {
+        if (this.markedEnemy.x <= this.x && this.markedEnemy.y <= this.y) {
             this.x -= xSpeed
             this.y -= ySpeed
-        } else if (enemy.x <= this.x && enemy.y >= this.y) {
+        } else if (this.markedEnemy.x <= this.x && this.markedEnemy.y >= this.y) {
             this.x -= xSpeed
             this.y += ySpeed
-        } else if (enemy.x >= this.x && enemy.y <= this.y) {
+        } else if (this.markedEnemy.x >= this.x && this.markedEnemy.y <= this.y) {
             this.x += xSpeed
             this.y -= ySpeed
-        } else if (enemy.x >= this.x && enemy.y >= this.y) {
+        } else if (this.markedEnemy.x >= this.x && this.markedEnemy.y >= this.y) {
             this.x += xSpeed
             this.y += ySpeed
         }
+
     }
 
+    this.Dead = function () {
+        setTimeout(() => {
+            miniSpiders = [...miniSpiders.filter(el => el.ID !== this.ID)];
+        }, 1)
+    }
+
+    this.collisionEnemy = function () {
+        this.active = false
+        this.Dead()
+    }
+
+    this.shouldMoveNow = function (markedEnemy) {
+        this.markedEnemy = markedEnemy
+    }
 }

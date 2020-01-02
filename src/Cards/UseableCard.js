@@ -40,7 +40,9 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
             this.PowerOfPoisonCard()
         } else if (this.grade === 'shieldCard') {
             this.PowerOfShieldCard()
-        }
+        } else if (this.grade === 'miniSpiderCard') {
+            this.PowerOfMiniSpiderCard()
+        } 
     }
 
     this.mouseDragging = function () {
@@ -113,6 +115,10 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
     this.PowerOfShieldCard = function () {
         renderingShield()
         activeCards.splice(activeCards.indexOf(this.grade), 1);
+    }
 
+    this.PowerOfMiniSpiderCard = function () {
+        renderingMiniSpiders()
+        activeCards.splice(activeCards.indexOf(this.grade), 1);
     }
 }
