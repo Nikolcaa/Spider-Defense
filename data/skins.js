@@ -27,7 +27,7 @@ function Skins() {
     //animation = createImg("Animations/animation.gif")
 
     // Background
-    bgColor = loadImage('Background/SandBackground.jpg');
+    bgImage = loadImage('Background/IceBackground.jpg');
 
     // field for card bg
     fieldForCardBackgroundImage = loadImage('Images/FieldsForCards/Background.png')

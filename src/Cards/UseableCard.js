@@ -24,63 +24,72 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
             this.active = false
             currentlyDraggedCard = this
         } else {
-            this.activatePower()
+            this.PowerOfCardsWithoutDragAndDrop()
         }
-    }
-
-    this.activatePower = function () {
-        cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
-        renderingCardsCollection()
-        activeCards.push(this.grade)
-
-        if (this.grade === 'websComeBackCard') {
-            this.PowerOfWebsComeBackCard()
-        }
-        else if (this.grade === 'poisonCard') {
-            this.PowerOfPoisonCard()
-        } else if (this.grade === 'shieldCard') {
-            this.PowerOfShieldCard()
-        } else if (this.grade === 'miniSpiderCard') {
-            this.PowerOfMiniSpiderCard()
-        } 
     }
 
     this.mouseDragging = function () {
         this.active = true
         this.x = mouseX - this.w / 2
         this.y = mouseY - this.h / 2
-        if (MouseCollision(fieldForCardBackground)) {
+        if (CollisionMouseRect(fieldForCardBackground)) {
             this.active = false
         }
     }
 
     this.mouseReleased = function () {
         if (this.active) {
-            cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
-            renderingCardsCollection()
-            activeCards.push(this.grade)
-
-            if (this.grade === 'freezeCard') {
-                renderingCardsAreas(this)
-
-                for (let i = 0; i < enemies.length; i++) {
-                    cardArea.collision(enemies[i])
-                }
-            }
-
-            else if (this.grade === 'slowCard') {
-                renderingCardsAreas(this)
-
-                for (let i = 0; i < enemies.length; i++) {
-                    cardArea.collision(enemies[i])
-                }
-            }
+            this.PowerOfCardsWithDragAndDrop()
         } else {
             this.x = this.defX
             this.y = this.defY
         }
         currentlyDraggedCard = null
         this.active = false
+    }
+
+    this.PowerOfCardsWithDragAndDrop = function () {
+        cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
+        renderingCardsCollection()
+        activeCards.push(this.grade)
+
+        if (this.grade === 'freezeCard') {
+            this.PowerOfFreezeCard()
+        }
+
+        else if (this.grade === 'slowCard') {
+            this.PowerOfSlowCard()
+        }
+    }
+
+    this.PowerOfCardsWithoutDragAndDrop = function () {
+        cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
+        renderingCardsCollection()
+        activeCards.push(this.grade)
+
+        if (this.grade === 'websComeBackCard') {
+            this.PowerOfWebsComeBackCard()
+        } else if (this.grade === 'poisonCard') {
+            this.PowerOfPoisonCard()
+        } else if (this.grade === 'shieldCard') {
+            this.PowerOfShieldCard()
+        } /* else if (this.grade === 'miniSpiderCard') {
+            this.PowerOfMiniSpiderCard()
+        }  */
+    }
+
+    this.PowerOfFreezeCard = function () {
+        renderingCardsAreas(this)
+/*         for (let i = 0; i < enemies.length; i++) {
+            cardArea.collision(enemies[i])
+        } */
+    }
+
+    this.PowerOfSlowCard = function () {
+        renderingCardsAreas(this)
+/*         for (let i = 0; i < enemies.length; i++) {
+            cardArea.collision(enemies[i])
+        } */
     }
 
     this.PowerOfWebsComeBackCard = function () {
@@ -116,8 +125,8 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
         activeCards.splice(activeCards.indexOf(this.grade), 1);
     }
 
-    this.PowerOfMiniSpiderCard = function () {
+    /* this.PowerOfMiniSpiderCard = function () {
         renderingMiniSpiders()
         activeCards.splice(activeCards.indexOf(this.grade), 1);
-    }
+    } */
 }

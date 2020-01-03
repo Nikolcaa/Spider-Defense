@@ -24,7 +24,6 @@ var webs,
     useableCards = [],
     cardsCollection = [],
     activeCards = [],
-    dragAndDropCards = [],
 
     cardsAreasData,
     cardsAreas = [],
@@ -45,14 +44,14 @@ var webs,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
-/*     miniSpiders = [],
-    miniSpiders,
-    miniSpiderRadius,
-    markedEnemies = [], */
+    /*     miniSpiders = [],
+        miniSpiders,
+        miniSpiderRadius,
+        markedEnemies = [], */
 
     shieldEnemyCombinations = [],
 
-    bgColor;
+    bgImage;
 
 // Tools
 
@@ -166,9 +165,6 @@ function renderingCardsCollection() {
             xPos + i * 80,
             yPos
         ))
-        if (cardsCollection[i].dragAndDrop) {
-            dragAndDropCards.push(useableCards[i].grade)
-        }
     }
 }
 
@@ -198,8 +194,10 @@ function renderingCardsAreas(card) {
                 cardsAreasData[classes].h,
                 cardsAreasData[classes].color,
                 classes,
+                cardsAreasData[classes].time,
             )
             cardArea.timeout()
+            cardArea.update()
             cardsAreas.push(cardArea)
         }
     })
@@ -235,7 +233,7 @@ function renderingMiniSpiders() {
 function preload() {
     Skins()
     // -- score updating --
-    var scoreupdate = setInterval(function () {
+    var scoreUpdateInterval = setInterval(function () {
         score += 1
     }, 1000)
 }
@@ -243,8 +241,8 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight)
 
-    miniSpider = new MiniSpider()
-    miniSpiderRadius = new MiniSpiderRadius()
+    /* miniSpider = new MiniSpider()
+    miniSpiderRadius = new MiniSpiderRadius() */
 
     // ------------ Data------------
     webs = new websData()
@@ -266,27 +264,66 @@ function setup() {
     renderingFieldsForCards()
 }
 function draw() {
-    background(bgColor)
+    background(bgImage)
 
+    // ------------ cards ------------
+    for (let i = 0; i < cardsAreas.length; i++) {
+        cardsAreas[i].show()
+        cardsAreas[i].update()
+    }
+
+    for (let i = 0; i < floatingCards.length; i++) {
+        floatingCards[i].show()
+    }
+
+    fieldForCardBackground.show()
+
+    for (let i = 0; i < fields; i++) {
+        fieldsForCards[i].show()
+    }
+
+    for (let i = 0; i < useableCards.length; i++) {
+        useableCards[i].show()
+    }
+
+    for (let i = 0; i < shields.length; i++) {
+        shields[i].show()
+        shields[i].move()
+        if (shields[i].hp <= 0) {
+            shields[i].Dead()
+        }
+    }
+
+    // ------------ enemies ------------
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].show()
+        enemies[i].move()
+        enemies[i].update()
+
+        if (enemies[i].hp <= 0) {
+            enemies[i].Dead()
+        }
+
+        for (let j = 0; j < shields.length; j++) {
+            if (CollisionRectRect(shields[j], enemies[i]) && isUniqueESCombination(enemies[i].ID, shields[j].ID)) {
+                enemies[i].collisionShield();
+                shields[j].collisionEnemy();
+                shieldEnemyCombinations.push([enemies[i].ID, shields[j].ID]);
+            }
+        }
+
+        if (CollisionRectRect(spider, enemies[i])) {
+            enemies[i].collisionSpider(enemies[i])
+        }
+    }
+
+
+    // ------------ cardArea ------------
     if (currentlyDraggedCard && currentlyDraggedCard.active) {
         renderingCardsAreaRange()
     }
 
     //miniSpiderRadius.show()
-
-    // ------------ cardsAreas ------------
-
-
-    /* animation1.position(50, 350);
-    animation1.width
-    animation1.height */
-
-    // ------------ score ------------
-    push()
-    textSize(20)
-    fill("black");
-    text("SCORE: " + score, 20, 30)
-    pop()
 
     // ------------ hearts ------------
     let xPosOfHeart = width / 2 - skinHeart.width / 5
@@ -321,33 +358,6 @@ function draw() {
             theRestOfWebs.push(i)
         }
     }
-    // -- webs counter --
-    textSize(20)
-    fill("black")
-    text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
-
-    // ------------ enemies ------------
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].show()
-        enemies[i].move()
-        //enemies[i].update()
-
-        if (enemies[i].hp <= 0) {
-            enemies[i].Dead()
-        }
-
-        for (let j = 0; j < shields.length; j++) {
-            if (Collision(shields[j], enemies[i]) && isUniqueESCombination(enemies[i].ID, shields[j].ID)) {
-                enemies[i].collisionShield();
-                shields[j].collisionEnemy();
-                shieldEnemyCombinations.push([enemies[i].ID, shields[j].ID]);
-            }
-        }
-
-        if (Collision(spider, enemies[i])) {
-            enemies[i].collisionSpider(enemies[i])
-        }
-    }
 
     // ------------ bonuses ------------
     for (let i = 0; i < bonuses.length; i++) {
@@ -355,43 +365,25 @@ function draw() {
         bonuses[i].move()
     }
 
+    // ------------ score ------------
+    push()
+    textSize(20)
+    fill("black");
+    text("SCORE: " + score, 20, 30)
+    pop()
+
+    // ------------ webs counter ------------
+    textSize(20)
+    fill("black")
+    text("THE REST OF WEBS: " + theRestOfWebs.length, 200, 30)
+
     // ------------ level-up ------------
     if (!enemies.length && !bonuses.length) {
         if (currentStage === lvlsData.tutorial) {
-
             currentGroup = int(random(0, currentStage.length))
-        }/* else {
-                
-            } */
+        }
         renderingEnemies()
         renderingBonuses()
-    }
-
-    // ------------ cards ------------
-    for (let i = 0; i < cardsAreas.length; i++) {
-        cardsAreas[i].show()
-    }
-
-    fieldForCardBackground.show()
-    
-    for (let i = 0; i < fields; i++) {
-        fieldsForCards[i].show()
-    }
-
-    for (let i = 0; i < floatingCards.length; i++) {
-        floatingCards[i].show()
-    }
-
-    for (let i = 0; i < useableCards.length; i++) {
-        useableCards[i].show()
-    }
-
-    for (let i = 0; i < shields.length; i++) {
-        shields[i].show()
-        shields[i].move()
-        if (shields[i].hp <= 0) {
-            shields[i].Dead()
-        }
     }
 
     // -------- miniSpiders --------
@@ -404,7 +396,7 @@ function draw() {
         miniSpiders[i].update()
 
         for (let j = 0; j < enemies.length; j++) {
-            if (Collision(enemies[j], miniSpiders[i])) {
+            if (CollisionRectRect(enemies[j], miniSpiders[i])) {
                 enemies[j].collisionMiniSpider()
                 miniSpiders[i].collisionEnemy(enemies[j])
             }
@@ -416,12 +408,12 @@ function mousePressed() {
     web = getRandomWeb()
 
     for (let i = 0; i < useableCards.length; i++) {
-        if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
+        if (CollisionMouseRect(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
             useableCards[i].mousePressed()
         }
     }
 
-    if (MouseCollision(fieldForCardBackground)) {
+    if (CollisionMouseRect(fieldForCardBackground)) {
         return null;
     }
 
@@ -444,21 +436,21 @@ function mousePressed() {
     // - Enemies -
 
     for (let i = 0; i < enemies.length; i++) {
-        if (web && MouseCollision(enemies[i])) {
+        if (web && CollisionMouseRect(enemies[i])) {
             web.collisionEnemy(enemies[i], i)
         }
     }
 
     // - bonuses -
     for (let i = 0; i < bonuses.length; i++) {
-        if (web && MouseCollision(bonuses[i])) {
+        if (web && CollisionMouseRect(bonuses[i])) {
             web.collisionBonus(bonuses[i])
         }
     }
 
     // - cards -
     for (let i = 0; i < floatingCards.length; i++) {
-        if (web && MouseCollision(floatingCards[i])) {
+        if (web && CollisionMouseRect(floatingCards[i])) {
             if (useableCards.length < fields) {
                 web.collisionCard(floatingCards[i], floatingCards[i].grade)
             } else {
@@ -482,40 +474,53 @@ function mouseDragged() {
 
 function mouseReleased() {
     for (let i = 0; i < useableCards.length; i++) {
-        if (MouseCollision(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
+        if (CollisionMouseRect(useableCards[i]) && activeCards.indexOf(useableCards[i].grade) === -1) {
             useableCards[i].mouseReleased()
         }
     }
 }
 
 //--------- collision -----------
-function Collision(player1, player2) {
-    if (player1.x + player1.w >= player2.x &&
-        player1.x <= player2.x + player2.w &&
-        player1.y + player1.h >= player2.y &&
-        player1.y <= player2.y + player2.h) {
+function CollisionRectRect(r1, r2) {
+    if (r1.x + r1.w >= r2.x &&
+        r1.x <= r2.x + r2.w &&
+        r1.y + r1.h >= r2.y &&
+        r1.y <= r2.y + r2.h) {
         return true
     } else {
         return false
     }
 }
 
-function CollisionEllipse(player1, player2) {
-    if (player1.x - player1.w / 2 <= player2.x + player2.w / 2 &&
-        player1.x + player1.w / 2 >= player2.x &&
-        player1.y - player1.h / 2 <= player2.y + player2.h / 2 &&
-        player1.y + player1.h / 2 >= player2.y) {
-        return true
-    } else {
-        return false
+function CollisionRectEllipse(r, c) {
+    var testX = c.x
+    var testY = c.y
+
+    if (c.x <= r.x) {
+        testX = r.x
+    } else if (c.x >= r.x + r.w) {
+        testX = r.x + r.w
     }
+    if (c.y <= r.y) {
+        testY = r.y
+    } else if (c.y >= r.y + r.h) {
+        testY = r.y + r.h
+    }
+
+    let distance = dist(c.x, c.y, testX, testY)
+
+    if (distance <= c.w / 2) {
+        return true;
+    }
+    return false;
+
 }
 
-function MouseCollision(player2) {
-    if (mouseX <= player2.x + player2.w &&
-        mouseX >= player2.x &&
-        mouseY <= player2.y + player2.h &&
-        mouseY >= player2.y) {
+function CollisionMouseRect(r) {
+    if (mouseX <= r.x + r.w &&
+        mouseX >= r.x &&
+        mouseY <= r.y + r.h &&
+        mouseY >= r.y) {
         return true
     } else {
         return false

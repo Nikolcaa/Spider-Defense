@@ -4,9 +4,7 @@ function lvlsData() {
             {
                 freezeBonus: 1,
                 slowBonus: 1,
-                websComeBackBonus: 1,
-                poisonBonus: 1,
-                shieldBonus: 1,
+                Bumblebee: 10
             },
 /*             {
                 AssassinBee: 3,
