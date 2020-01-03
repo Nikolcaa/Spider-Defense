@@ -30,30 +30,29 @@ var webs,
     cardsAreas = [],
     cardArea,
     cardAreaRange,
+
     shields = [],
     shield,
 
     currentlyDraggedCard = null,
 
-    fields = 7,
+    fields = 6,
     fieldsForCards = [],
+    fieldForCardBackground,
 
     spider,
     spiderHp = 400,
     maxSpiderHp = 8,
     skin1, skin2, skin3, skin4, skin5, skin6, skin7, skin8, skin9,
 
-    miniSpiders = [],
+/*     miniSpiders = [],
     miniSpiders,
     miniSpiderRadius,
-    markedEnemies = [],
+    markedEnemies = [], */
 
-    enemyhp,
     shieldEnemyCombinations = [],
 
     bgColor;
-//animation;
-
 
 // Tools
 
@@ -77,11 +76,7 @@ function renderingWebs() {
 }
 
 function renderingStages() {
-    // if (score === toliko) {
     currentStage = lvlsData.tutorial
-    //} else {
-    //currentStage = lvlsData.stage2
-    //}
 }
 
 function renderingEnemies() {
@@ -168,10 +163,9 @@ function renderingCardsCollection() {
     for (let i = 0; i < cardsCollection.length; i++) {
         useableCards.push(new UseableCard(
             ...Object.values(cardsCollection[i]),
-            xPos,
+            xPos + i * 80,
             yPos
         ))
-        xPos += 72
         if (cardsCollection[i].dragAndDrop) {
             dragAndDropCards.push(useableCards[i].grade)
         }
@@ -179,15 +173,16 @@ function renderingCardsCollection() {
 }
 
 function renderingFieldsForCards() {
-    let w = 70 + 2
-    let h = 80 + 2
-    let yPos = height - h;
-    let xPos = (width - w * fields) / 2;
+    let w = 70
+    let h = 80
+    let yPos = height - h - 8;
+    let xPos = (width - w * fields) / 2 - 25;
 
     for (let i = 0; i < fields; i++) {
-        fieldsForCards.push(new FieldForCard(xPos, yPos, w, h))
-        xPos += w
+        fieldsForCards.push(new FieldForCard(xPos + i * 80, yPos, w, h))
     }
+
+    fieldForCardBackground = new FieldForCardBackground()
 }
 
 function renderingCardsAreas(card) {
@@ -273,12 +268,14 @@ function setup() {
 function draw() {
     background(bgColor)
 
-    miniSpiderRadius.show()
+    if (currentlyDraggedCard && currentlyDraggedCard.active) {
+        renderingCardsAreaRange()
+    }
+
+    //miniSpiderRadius.show()
 
     // ------------ cardsAreas ------------
-    for (let i = 0; i < cardsAreas.length; i++) {
-        cardsAreas[i].show()
-    }
+
 
     /* animation1.position(50, 350);
     animation1.width
@@ -333,6 +330,7 @@ function draw() {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].show()
         enemies[i].move()
+        //enemies[i].update()
 
         if (enemies[i].hp <= 0) {
             enemies[i].Dead()
@@ -370,6 +368,12 @@ function draw() {
     }
 
     // ------------ cards ------------
+    for (let i = 0; i < cardsAreas.length; i++) {
+        cardsAreas[i].show()
+    }
+
+    fieldForCardBackground.show()
+    
     for (let i = 0; i < fields; i++) {
         fieldsForCards[i].show()
     }
@@ -382,11 +386,6 @@ function draw() {
         useableCards[i].show()
     }
 
-    if (currentlyDraggedCard && currentlyDraggedCard.active) {
-        renderingCardsAreaRange()
-    }
-
-
     for (let i = 0; i < shields.length; i++) {
         shields[i].show()
         shields[i].move()
@@ -395,29 +394,22 @@ function draw() {
         }
     }
 
-
     // -------- miniSpiders --------
 
-    for(let i = 0; i < miniSpiders.length; i++){   
+    /* for (let i = 0; i < miniSpiders.length; i++) {
         miniSpiders[i].show()
-        if(miniSpiders[i].markedEnemy){
+        if (miniSpiders[i].markedEnemy) {
             miniSpiders[i].move()
         }
+        miniSpiders[i].update()
 
         for (let j = 0; j < enemies.length; j++) {
-            if (Collision(enemies[j], miniSpiderRadius) && !miniSpiders[i].active && !enemies[j].isMarkedByMiniSpider) {
-                enemies[j].isMarkedByMiniSpider = true
-                if(enemies[j].isMarkedByMiniSpider){
-                    miniSpiders[i].shouldMoveNow(enemies[j])
-                }
-            }
-            
             if (Collision(enemies[j], miniSpiders[i])) {
                 enemies[j].collisionMiniSpider()
-                miniSpiders[i].collisionEnemy()
+                miniSpiders[i].collisionEnemy(enemies[j])
             }
         }
-    }
+    } */
 }
 
 function mousePressed() {
@@ -429,10 +421,8 @@ function mousePressed() {
         }
     }
 
-    for (let j = 0; j < fieldsForCards.length; j++) {
-        if (MouseCollision(fieldsForCards[j])) {
-            return null;
-        }
+    if (MouseCollision(fieldForCardBackground)) {
+        return null;
     }
 
     // -- changing web --
@@ -480,7 +470,7 @@ function mousePressed() {
 
 function mouseDragged() {
     if (currentlyDraggedCard && !currentlyDraggedCard.active) {
-        if (currentlyDraggedCard && MouseCollision(currentlyDraggedCard) && activeCards.indexOf(currentlyDraggedCard.grade) === -1) {
+        if (currentlyDraggedCard && activeCards.indexOf(currentlyDraggedCard.grade) === -1) {
             currentlyDraggedCard.mouseDragging()
         }
     } else {

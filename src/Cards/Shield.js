@@ -1,7 +1,7 @@
 function Shield() {
     this.ID = parseInt(_.uniqueId());
     this.base = createVector(width / 2, height / 2)
-    this.vec = createVector(350, 0)
+    this.vec = createVector(200, 0)
     this.w = 15
     this.h = 40
     this.angle = 0

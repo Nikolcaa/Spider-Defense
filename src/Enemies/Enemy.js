@@ -15,9 +15,30 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
     this.interval = null
     this.isMarkedByMiniSpider = false
     this.show = function () {
-        fill(this.color)
+        push()
+        this.Fill()
         rect(this.x, this.y, this.w, this.h)
-        AssassinBeeInvisible(this)
+
+        // hp
+
+        textSize(15)
+        fill("black");
+        let hp = this.hp
+        text(hp, this.x + this.w / 2 - 5, this.y + this.h + 15)
+        pop()
+    }
+
+    this.Fill = function () {
+        let Fill = fill(this.color)
+
+        if (this.grade === "AssassinBee") {
+            let d = dist(this.x, this.y, spider.x, spider.y)
+            if (d <= 500 && d >= 350) {
+                Fill = noFill()
+            }
+        }
+
+        return Fill
     }
 
     this.move = function () {
@@ -90,7 +111,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
 
             // Delete all EnemyShield combinations that contain this enemy ID
             shieldEnemyCombinations = shieldEnemyCombinations.filter(C => C[0] !== this.ID);
-            markedEnemies = [...markedEnemies.filter(el => el.ID !== this.ID)];
+            //markedEnemies = [...markedEnemies.filter(el => el.ID !== this.ID)];
 
         }, 1)
     }
@@ -110,7 +131,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
         this.color = "red"
     }
 
-    this.collisionMiniSpider = function(){
+    this.collisionMiniSpider = function () {
         this.Dead()
     }
 }

@@ -1,14 +1,13 @@
 function lvlsData() {
     return {
         tutorial: [
-/*             {
-                Bee: 1,
-                Bumblebee: 1,
-                Hornet: 1,
-                QueenBee: 10,
-                shieldBonus: 3,
-                poisonBonus: 2,
-            }, */
+            {
+                freezeBonus: 1,
+                slowBonus: 1,
+                websComeBackBonus: 1,
+                poisonBonus: 1,
+                shieldBonus: 1,
+            },
 /*             {
                 AssassinBee: 3,
             },
@@ -30,8 +29,6 @@ function lvlsData() {
                 Hornet: 2,
             }, */
             {                
-                Bee: 20,
-                miniSpiderBonus: 7,
 /*                 heart: 5,
                 heart: 3,
                 AssassinBee: 5,

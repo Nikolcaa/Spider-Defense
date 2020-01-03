@@ -1,11 +1,12 @@
 function MiniSpider() {
     this.ID = parseInt(_.uniqueId())
-    this.x = width / 2 + 50
-    this.y = height / 2 - 50
+    this.x = random(width / 2 - 50, width / 2 + 50)
+    this.y = random(height / 2 + 50, height / 2 - 50)
     this.w = 30
     this.h = 30
     this.active = false
     this.markedEnemy
+    this.d
     this.show = function () {
         push()
         fill("black")
@@ -43,11 +44,21 @@ function MiniSpider() {
     }
 
     this.collisionEnemy = function () {
-        this.active = false
         this.Dead()
     }
 
-    this.shouldMoveNow = function (markedEnemy) {
-        this.markedEnemy = markedEnemy
+    this.update = function () {
+        for (let j = 0; j < enemies.length; j++) {
+            this.d = dist(this.x, this.y, enemies[j].x, enemies[j].y)
+            if (this.d <= 500 && !this.active && !enemies[j].isMarkedByMiniSpider) {
+                enemies[j].isMarkedByMiniSpider = true
+                markedEnemies.push(enemies[j])
+                if (enemies[j].isMarkedByMiniSpider) {
+                    this.markedEnemy = enemies[j]
+                }
+                //enemies[j].isMarkedByMiniSpider = false
+            }
+        }
+
     }
 }

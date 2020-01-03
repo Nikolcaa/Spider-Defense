@@ -49,14 +49,12 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
         this.active = true
         this.x = mouseX - this.w / 2
         this.y = mouseY - this.h / 2
+        if (MouseCollision(fieldForCardBackground)) {
+            this.active = false
+        }
     }
 
     this.mouseReleased = function () {
-        for (let i = 0; i < fieldsForCards.length; i++) {
-            if (MouseCollision(fieldsForCards[i])) {
-                this.active = false
-            }
-        }
         if (this.active) {
             cardsCollection = [...cardsCollection.filter(el => el.ID !== this.ID)];
             renderingCardsCollection()
@@ -81,6 +79,7 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
             this.x = this.defX
             this.y = this.defY
         }
+        currentlyDraggedCard = null
         this.active = false
     }
 
