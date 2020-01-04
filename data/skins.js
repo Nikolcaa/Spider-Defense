@@ -27,9 +27,10 @@ function Skins() {
     //animation = createImg("Animations/animation.gif")
 
     // Background
-    bgImage = loadImage('Background/IceBackground.jpg');
+    bgImage = loadImage('Images/Background/SandBackground.jpg');
 
     // field for card bg
-    fieldForCardBackgroundImage = loadImage('Images/FieldsForCards/Background.png')
+    fieldForCardBackgroundImage = loadImage('Images/FieldsForCards/Iz PS/Background.png')
+    fieldForCardImage = loadImage('Images/FieldsForCards/Iz PS/Field3.png')
 
 }

@@ -94,7 +94,7 @@ function Enemy(ID, x, y, speed, hp, w, h, color, grade) {
             setTimeout(() => {
                 this.isSlowed = false
                 this.slowUpdate()
-            }, 3000)
+            }, 5000)
         }
     }
 

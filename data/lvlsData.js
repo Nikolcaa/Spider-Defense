@@ -2,9 +2,9 @@ function lvlsData() {
     return {
         tutorial: [
             {
-                freezeBonus: 1,
+                freezeBonus: 10,
                 slowBonus: 1,
-                Bumblebee: 10
+                Bumblebee: 20
             },
 /*             {
                 AssassinBee: 3,

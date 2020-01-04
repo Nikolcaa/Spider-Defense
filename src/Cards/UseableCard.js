@@ -80,16 +80,16 @@ function UseableCard(ID, img, w, h, grade, dragAndDrop, dropArea, x, y) {
 
     this.PowerOfFreezeCard = function () {
         renderingCardsAreas(this)
-/*         for (let i = 0; i < enemies.length; i++) {
+        for (let i = 0; i < enemies.length; i++) {
             cardArea.collision(enemies[i])
-        } */
+        }
     }
 
     this.PowerOfSlowCard = function () {
         renderingCardsAreas(this)
-/*         for (let i = 0; i < enemies.length; i++) {
+        for (let i = 0; i < enemies.length; i++) {
             cardArea.collision(enemies[i])
-        } */
+        }
     }
 
     this.PowerOfWebsComeBackCard = function () {

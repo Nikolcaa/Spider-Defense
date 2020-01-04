@@ -1,17 +1,16 @@
-function CardArea(ID, x, y, w, h, color, grade) {
+function CardArea(ID, x, y, size, color, grade, time) {
     this.ID = ID
     this.x = x
     this.y = y
-    this.w = w
-    this.h = h
+    this.size = size
     this.color = color
     this.grade = grade
-    this.time = 3000
+    this.time = time
     this.show = function () {
         push()
         noStroke()
         fill(this.color)
-        ellipse(this.x, this.y, this.w, this.h)
+        ellipse(this.x, this.y, this.size, this.size)
         pop()
     }
 
@@ -24,7 +23,7 @@ function CardArea(ID, x, y, w, h, color, grade) {
     }
 
     this.collision = function (enemy) {
-        if (CollisionEllipse(this, enemy)) {
+        if (CollisionRectEllipse(enemy, this)) {
             enemy.CollisionCardArea(this)
         }
         this.timeout()

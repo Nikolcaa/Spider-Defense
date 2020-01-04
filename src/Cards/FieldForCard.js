@@ -5,10 +5,7 @@ function FieldForCard(x, y, w, h) {
     this.h = h
     this.show = function () {
         push()
-        fill("black")
-        stroke("white")
-        strokeWeight(2)
-        rect(this.x, this.y, this.w, this.h)
+        image(fieldForCardImage, this.x, this.y)
         pop()
     }
 }

@@ -154,8 +154,8 @@ function renderingFloatingCards(currentBonus) {
 }
 
 function renderingCardsCollection() {
-    let yPos = fieldsForCards[0].y
-    let xPos = fieldsForCards[0].x
+    let yPos = fieldsForCards[0].y + 2
+    let xPos = fieldsForCards[0].x + 2
 
     useableCards = [];
 
@@ -169,10 +169,10 @@ function renderingCardsCollection() {
 }
 
 function renderingFieldsForCards() {
-    let w = 70
-    let h = 80
+    let w = fieldForCardImage.width
+    let h = fieldForCardImage.height
     let yPos = height - h - 8;
-    let xPos = (width - w * fields) / 2 - 25;
+    let xPos = (width - w * fields) / 2 - 15;
 
     for (let i = 0; i < fields; i++) {
         fieldsForCards.push(new FieldForCard(xPos + i * 80, yPos, w, h))
@@ -190,14 +190,12 @@ function renderingCardsAreas(card) {
                 parseInt(_.uniqueId()),
                 xPos,
                 yPos,
-                cardsAreasData[classes].w,
-                cardsAreasData[classes].h,
+                cardsAreasData[classes].maxSize,
                 cardsAreasData[classes].color,
                 classes,
                 cardsAreasData[classes].time,
             )
             cardArea.timeout()
-            cardArea.update()
             cardsAreas.push(cardArea)
         }
     })
@@ -212,8 +210,7 @@ function renderingCardsAreaRange() {
                 parseInt(_.uniqueId()),
                 xPos,
                 yPos,
-                cardsAreasData[classes].w,
-                cardsAreasData[classes].h,
+                cardsAreasData[classes].maxSize,
             )
         }
     })
@@ -225,10 +222,10 @@ function renderingShield() {
     shields.push(shield)
 }
 
-function renderingMiniSpiders() {
+/* function renderingMiniSpiders() {
     miniSpider = new MiniSpider()
     miniSpiders.push(miniSpider)
-}
+} */
 
 function preload() {
     Skins()
@@ -266,11 +263,59 @@ function setup() {
 function draw() {
     background(bgImage)
 
-    // ------------ cards ------------
     for (let i = 0; i < cardsAreas.length; i++) {
         cardsAreas[i].show()
-        cardsAreas[i].update()
     }
+
+    // ------------ enemies ------------
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].show()
+        enemies[i].move()
+
+        if (enemies[i].hp <= 0) {
+            enemies[i].Dead()
+        }
+
+        for (let j = 0; j < shields.length; j++) {
+            if (CollisionRectRect(shields[j], enemies[i]) && isUniqueESCombination(enemies[i].ID, shields[j].ID)) {
+                enemies[i].collisionShield();
+                shields[j].collisionEnemy();
+                shieldEnemyCombinations.push([enemies[i].ID, shields[j].ID]);
+            }
+        }
+
+        if (CollisionRectRect(spider, enemies[i])) {
+            enemies[i].collisionSpider(enemies[i])
+        }
+    }
+
+    // ------------ webs ------------
+    let theRestOfWebs = []
+
+    for (let i = 0; i < numberOfWebs; i++) {
+        webs.length = numberOfWebs
+        if (webs[i].active) {
+            webs[i].show()
+            webs[i].moveBack()
+        }
+
+        if (!webs[i].active) {
+            theRestOfWebs.push(i)
+        }
+    }
+
+    // ------------ bonuses ------------
+    for (let i = 0; i < bonuses.length; i++) {
+        bonuses[i].show()
+        bonuses[i].move()
+    }
+
+    // ------------ cardArea ------------
+    if (currentlyDraggedCard && currentlyDraggedCard.active) {
+        renderingCardsAreaRange()
+    }
+
+    // ------------ cards ------------
 
     for (let i = 0; i < floatingCards.length; i++) {
         floatingCards[i].show()
@@ -294,35 +339,6 @@ function draw() {
         }
     }
 
-    // ------------ enemies ------------
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].show()
-        enemies[i].move()
-        enemies[i].update()
-
-        if (enemies[i].hp <= 0) {
-            enemies[i].Dead()
-        }
-
-        for (let j = 0; j < shields.length; j++) {
-            if (CollisionRectRect(shields[j], enemies[i]) && isUniqueESCombination(enemies[i].ID, shields[j].ID)) {
-                enemies[i].collisionShield();
-                shields[j].collisionEnemy();
-                shieldEnemyCombinations.push([enemies[i].ID, shields[j].ID]);
-            }
-        }
-
-        if (CollisionRectRect(spider, enemies[i])) {
-            enemies[i].collisionSpider(enemies[i])
-        }
-    }
-
-
-    // ------------ cardArea ------------
-    if (currentlyDraggedCard && currentlyDraggedCard.active) {
-        renderingCardsAreaRange()
-    }
-
     //miniSpiderRadius.show()
 
     // ------------ hearts ------------
@@ -344,26 +360,7 @@ function draw() {
     // ------------ spider ------------
     spider.show()
 
-    // ------------ webs ------------
-    let theRestOfWebs = []
 
-    for (let i = 0; i < numberOfWebs; i++) {
-        webs.length = numberOfWebs
-        if (webs[i].active) {
-            webs[i].show()
-            webs[i].moveBack()
-        }
-
-        if (!webs[i].active) {
-            theRestOfWebs.push(i)
-        }
-    }
-
-    // ------------ bonuses ------------
-    for (let i = 0; i < bonuses.length; i++) {
-        bonuses[i].show()
-        bonuses[i].move()
-    }
 
     // ------------ score ------------
     push()
@@ -509,7 +506,7 @@ function CollisionRectEllipse(r, c) {
 
     let distance = dist(c.x, c.y, testX, testY)
 
-    if (distance <= c.w / 2) {
+    if (distance <= c.size / 2) {
         return true;
     }
     return false;
